@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carioca Viagens — Síntese: Editorial + Wayfinding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0C2132;
+    --deep-blue:#0F2C42;
+    --carioca-blue:#2E83C5;
+    --carioca-green:#71B73B;
+    --light-blue:#51B6E8;
+    --light-green:#9DC86C;
+    --graphite:#615E5D;
+    --light-graphite:#7B7B79;
+    --off-white:#F7F3EC;
+    --sand:#EFE6D8;
+    --hair: rgba(12,33,50,0.14);
+    --hair-light: rgba(247,243,236,0.24);
+    --display:'Manrope', sans-serif;
+    --body:'Inter', sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:var(--body);color:var(--graphite);background:var(--off-white);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  img,svg{display:block;}
+  .icon{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 40px;}
+  .wrap-wide{max-width:1440px;margin:0 auto;padding:0 40px;}
+  h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-0.015em;color:var(--ink);}
+  h1{font-weight:700;}
+  h2{font-weight:700;font-size:clamp(1.9rem,3.2vw,2.5rem);}
+  h3{font-weight:600;font-size:1.05rem;}
+  p{line-height:1.75;margin:0;}
+
+  /* ---------- wayfinding microtypography ---------- */
+  .eyebrow{
+    font-family:var(--mono);font-size:0.74rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--carioca-blue);margin-bottom:22px;display:block;
+  }
+  .eyebrow.on-dark{color:var(--light-blue);}
+  .micro{font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--light-graphite);}
+  .chip{
+    font-family:var(--mono);font-size:0.68rem;letter-spacing:0.06em;text-transform:uppercase;
+    border:1px solid var(--carioca-blue);color:var(--carioca-blue);padding:6px 13px;border-radius:3px;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .chip.on-dark{border-color:var(--light-blue);color:var(--light-blue);}
+
+  .btn{
+    font-family:var(--body);font-weight:500;font-size:0.92rem;text-decoration:none;
+    padding:14px 26px;display:inline-flex;align-items:center;gap:10px;border:1px solid;
+    letter-spacing:0.01em;transition:opacity .15s ease;border-radius:2px;
+  }
+  .btn:hover{opacity:0.8;}
+  .btn:focus-visible{outline:2px solid var(--light-blue);outline-offset:2px;}
+  .btn-solid{background:var(--off-white);color:var(--deep-blue);border-color:var(--off-white);}
+  .btn-outline{border-color:var(--hair-light);color:var(--off-white);}
+  .btn-outline.on-light{border-color:var(--carioca-blue);color:var(--carioca-blue);}
+
+  /* ---------- hero (full-bleed, header integrated) ---------- */
+  .hero{
+    position:relative;min-height:100vh;display:flex;flex-direction:column;overflow:hidden;
+    background:
+      linear-gradient(180deg, rgba(15,44,66,0.25) 0%, rgba(15,44,66,0.88) 82%, var(--deep-blue) 100%),
+      linear-gradient(120deg, #0F2C42 0%, #2E83C5 50%, #71B73B 100%);
+    color:var(--off-white);
+    border-bottom:1px dashed rgba(81,182,232,0.45);
+  }
+  .utility-strip{
+    font-family:var(--mono);font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;
+    background:rgba(12,33,50,0.35);border-bottom:1px solid var(--hair-light);
+  }
+  .utility-strip .wrap-wide{display:flex;justify-content:space-between;align-items:center;padding:9px 40px;gap:16px;flex-wrap:wrap;color:rgba(247,243,236,0.82);}
+  .utility-strip strong{color:var(--light-blue);font-weight:500;}
+  header.top{border-bottom:1px solid var(--hair-light);}
+  header.top .wrap-wide{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;gap:20px;}
+  .brand{display:flex;align-items:center;gap:14px;}
+  .logo-img{height:auto;display:block;}
+  .logo-lg{width:200px;}
+  .logo-xl{width:260px;}
+  .brand .tag{
+    font-family:var(--mono);font-size:0.65rem;letter-spacing:0.1em;color:var(--light-blue);
+    border:1px solid var(--light-blue);padding:3px 7px;border-radius:3px;
+  }
+  .hero-body{flex:1;display:flex;align-items:flex-end;position:relative;}
+  .hero-body .wrap-wide{padding-bottom:80px;position:relative;z-index:1;}
+  .hero-placeholder-note{
+    position:absolute;bottom:24px;right:40px;z-index:1;
+    font-family:var(--mono);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;
+    color:rgba(247,243,236,0.55);text-align:right;max-width:260px;
+  }
+  .hero-eyebrow{margin-bottom:20px;}
+  .hero h1{font-size:clamp(2.8rem,6.2vw,5.2rem);line-height:1.03;max-width:920px;color:var(--off-white);}
+  .hero-sub{margin-top:24px;max-width:480px;font-size:1.15rem;color:rgba(247,243,236,0.86);}
+  .hero-ctas{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;}
+
+  /* ---------- sobre ---------- */
+  .sobre{background:var(--off-white);padding:104px 0;}
+  .sobre .wrap{max-width:900px;}
+  .sobre p{font-size:1.28rem;line-height:1.65;color:var(--graphite);font-weight:400;}
+  .sobre p::first-letter{
+    font-family:var(--display);font-weight:800;font-size:3.6rem;line-height:0.75;
+    float:left;padding-right:12px;color:var(--carioca-blue);
+  }
+
+  /* ---------- media band ---------- */
+  .band{
+    height:42vh;min-height:300px;position:relative;overflow:hidden;
+    background:linear-gradient(125deg, rgba(46,131,197,0.94), rgba(113,183,59,0.86));
+  }
+  .band .media-note{
+    position:absolute;bottom:26px;left:40px;color:rgba(247,243,236,0.75);
+    font-family:var(--mono);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;
+  }
+
+  /* ---------- diferenciais (list + media, no cards) ---------- */
+  .diferenciais{background:var(--off-white);padding:100px 0;}
+  .dif-layout{display:grid;grid-template-columns:1.3fr 0.9fr;gap:64px;align-items:start;}
+  .dif-list{border-top:1px solid var(--hair);margin-top:36px;}
+  .dif-row{
+    display:grid;grid-template-columns:32px 1fr;gap:22px;padding:26px 0;
+    border-bottom:1px solid var(--hair);align-items:center;
+  }
+  .dif-row .icon{stroke:var(--carioca-blue);width:24px;height:24px;stroke-width:1.3;}
+  .dif-row span{font-family:var(--display);font-size:1.2rem;font-weight:600;color:var(--ink);}
+  .dif-media{
+    aspect-ratio:3/4;border-radius:3px;position:relative;overflow:hidden;
+    background:linear-gradient(160deg, rgba(46,131,197,0.85), rgba(113,183,59,0.7));
+  }
+  .dif-media .media-note{
+    position:absolute;bottom:20px;left:20px;right:20px;color:rgba(247,243,236,0.85);
+    font-family:var(--mono);font-size:0.66rem;letter-spacing:0.08em;text-transform:uppercase;
+  }
+
+  /* ---------- atendimento ---------- */
+  .atendimento{background:var(--sand);padding:100px 0;}
+  .atendimento .wrap{display:grid;grid-template-columns:0.8fr 1.2fr;gap:64px;}
+  .atendimento .intro p{font-size:1.1rem;color:var(--graphite);max-width:480px;}
+  .oferta-list{border-top:1px solid var(--hair);}
+  .oferta-item{display:grid;grid-template-columns:28px 1fr;gap:18px;padding:26px 0;border-bottom:1px solid var(--hair);align-items:start;}
+  .oferta-item .icon{stroke:var(--carioca-green);margin-top:2px;}
+  .oferta-item .micro{display:block;margin-bottom:6px;}
+  .oferta-item h3{font-weight:600;font-size:1.08rem;}
+
+  /* ---------- operacional (wayfinding language) ---------- */
+  .operacional{background:var(--deep-blue);color:var(--off-white);padding:104px 0;}
+  .operacional h2{color:var(--off-white);margin-bottom:56px;max-width:640px;}
+  .op-block-head{margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid var(--hair-light);}
+  .op-block-head .micro{color:var(--light-blue);font-size:0.78rem;}
+  .op-cols{display:grid;grid-template-columns:1fr 1fr;gap:48px;}
+  .op-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:16px;}
+  .op-list li{
+    display:flex;gap:12px;align-items:flex-start;font-size:1rem;color:rgba(247,243,236,0.88);
+    padding-bottom:16px;border-bottom:1px solid rgba(247,243,236,0.09);
+  }
+  .op-list li .icon{width:16px;height:16px;stroke:var(--carioca-green);flex-shrink:0;margin-top:3px;}
+  .op-chips{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;}
+  .op-divider{height:1px;background:var(--hair-light);margin:56px 0;}
+  .op-block-compact{max-width:640px;}
+
+  /* ---------- clientes ---------- */
+  .clientes{background:var(--off-white);padding:100px 0;}
+  .clientes .head{max-width:640px;margin-bottom:48px;}
+  .logo-grid{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--hair);border-left:1px solid var(--hair);}
+  .logo-slot{
+    aspect-ratio:3/2;display:flex;align-items:center;justify-content:center;
+    border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);
+    color:var(--light-graphite);font-family:var(--mono);font-size:0.66rem;letter-spacing:0.08em;text-transform:uppercase;
+  }
+
+  /* ---------- contato (institutional close) ---------- */
+  .contato{
+    position:relative;min-height:64vh;display:flex;align-items:center;color:var(--off-white);
+    background:
+      linear-gradient(200deg, rgba(15,44,66,0.6), rgba(15,44,66,0.96)),
+      linear-gradient(120deg, #0F2C42 0%, #2E83C5 55%, #71B73B 100%);
+    padding:100px 0 48px;
+  }
+  .contato .wrap-wide{position:relative;z-index:1;}
+  .contato-columns{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;padding-bottom:56px;}
+  .contato-brand-col .logo-img{margin-bottom:28px;}
+  .address{font-size:1rem;color:rgba(247,243,236,0.82);line-height:1.7;}
+  .contato-info-col h2{color:var(--off-white);margin-bottom:28px;}
+  .contact-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px;}
+  .contact-list li{display:flex;gap:14px;align-items:flex-start;font-size:1.05rem;}
+  .contact-list .icon{stroke:var(--light-blue);flex-shrink:0;margin-top:2px;}
+  .social-row{display:flex;gap:26px;margin-top:22px;flex-wrap:wrap;}
+  .social-row a{display:flex;align-items:center;gap:8px;font-size:0.96rem;text-decoration:underline;text-decoration-color:rgba(247,243,236,0.35);text-underline-offset:6px;}
+  .social-row .icon{width:16px;height:16px;stroke:var(--off-white);}
+  .foot-note{
+    padding-top:24px;border-top:1px solid var(--hair-light);
+    font-family:var(--mono);font-size:0.7rem;letter-spacing:0.04em;color:rgba(247,243,236,0.5);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+
+  @media (max-width:900px){
+    .dif-layout, .atendimento .wrap, .op-cols, .contato-columns{grid-template-columns:1fr;}
+    .logo-grid{grid-template-columns:repeat(2,1fr);}
+    .dif-media{aspect-ratio:16/9;}
+    .contato-columns{align-items:start;}
+  }
+</style>
+</head>
+<body>
+
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><line x1="12" y1="12" x2="12" y2="7.3"/><line x1="12" y1="12" x2="15.6" y2="13.9"/></symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24"><polygon points="3,11 20,4 11,13 13,21 9.5,15.5"/></symbol>
+  <symbol id="i-cards" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><line x1="3" y1="10.3" x2="21" y2="10.3"/><rect x="6" y="14" width="5" height="1.8" rx="0.4" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><line x1="12" y1="3" x2="12" y2="6.4"/><line x1="12" y1="21" x2="12" y2="17.6"/><line x1="19.8" y1="7.5" x2="16.9" y2="9.2"/><line x1="4.2" y1="16.5" x2="7.1" y2="14.8"/><line x1="19.8" y1="16.5" x2="16.9" y2="14.8"/><line x1="4.2" y1="7.5" x2="7.1" y2="9.2"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 19s-7-4.4-7-9.5A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 7 2.5C19 14.6 12 19 12 19z"/></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="2"/><line x1="15" y1="7" x2="15" y2="17" stroke-dasharray="2 2"/></symbol>
+  <symbol id="i-handshake" viewBox="0 0 24 24"><polyline points="2,17 9,10 12,13"/><polyline points="22,17 15,10 12,13"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="5,13 10,18 19,6"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.2-6.5-10.5A6.5 6.5 0 1 1 18.5 10.5C18.5 15.8 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.1"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="4,6.5 12,13 20,6.5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 10.8a15.9 15.9 0 0 0 6.6 6.6l2.2-2.2a1.6 1.6 0 0 1 1.7-.4c1.2.4 2.4.7 3.7.8a1.6 1.6 0 0 1 1.5 1.6V21a1.6 1.6 0 0 1-1.6 1.6C10.6 22.6 1.4 13.4 1.4 2.6A1.6 1.6 0 0 1 3 1h3.8a1.6 1.6 0 0 1 1.6 1.5c.1 1.3.4 2.5.8 3.7a1.6 1.6 0 0 1-.4 1.7z"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M14 21v-7h3l.5-4H14V7.5A1.5 1.5 0 0 1 15.5 6H17V2h-2.5A5 5 0 0 0 9.5 7v3H7v4h2.5v7z"/></symbol>
+</svg>
+
+<section class="hero">
+  <div class="utility-strip">
+    <div class="wrap-wide">
+      <span>Carioca Viagens · Rio de Janeiro, RJ</span>
+      <span><strong>Operacional desde 1999</strong> · Corporativo · Lazer · Receptivo</span>
+    </div>
+  </div>
+  <header class="top">
+    <div class="wrap-wide">
+      <div class="brand">
+        <img src="../../references/logo-carioca-viagens-horizontal-lettering-claro.svg" alt="Carioca Viagens" class="logo-img logo-lg">
+        <span class="tag">RIO · GIG</span>
+      </div>
+      <a href="#contato" class="btn btn-outline">Fale conosco</a>
+    </div>
+  </header>
+  <div class="hero-body">
+    <span class="hero-placeholder-note">— vídeo institucional em loop (placeholder)<br>imagem de fallback + overlay para legibilidade</span>
+    <div class="wrap-wide">
+      <span class="eyebrow on-dark hero-eyebrow">— Abertura</span>
+      <h1>Nossa agência.<br>Sua agência.</h1>
+      <p class="hero-sub">Viagens corporativas com atendimento próximo e operação eficiente.</p>
+      <div class="hero-ctas">
+        <a href="#contato" class="btn btn-solid">Fale conosco</a>
+        <a href="#contato" class="btn btn-outline">Solicite atendimento</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sobre">
+  <div class="wrap">
+    <span class="eyebrow">— Sobre</span>
+    <p>A CARIOCA VIAGENS atua no mercado nacional e internacional, atendendo viagens corporativas, de lazer e receptivos. Desde 1999 conquistando a confiança e recebendo a credibilidade de inúmeros clientes que a elegeram sua agência de conta corrente. O atendimento personalizado, ágil e qualificado facilita a realização de metas a custos mais viáveis. Na busca pela excelência, estabelecemos parcerias com grandes operadoras e consolidadoras que flexibilizam a negociação, sem comprometer a qualidade dos serviços.</p>
+  </div>
+</section>
+
+<div class="band"><span class="media-note">— placeholder de fotografia/vídeo · viagem corporativa</span></div>
+
+<section class="diferenciais">
+  <div class="wrap-wide dif-layout">
+    <div>
+      <span class="eyebrow">— Diferenciais</span>
+      <h2>O que nossos clientes buscam?</h2>
+      <div class="dif-list">
+        <div class="dif-row"><svg class="icon"><use href="#i-clock"/></svg><span>Agilidade no atendimento</span></div>
+        <div class="dif-row"><svg class="icon"><use href="#i-plane"/></svg><span>Eficiência nos processos de viagens</span></div>
+        <div class="dif-row"><svg class="icon"><use href="#i-cards"/></svg><span>Melhores preços e condições de pagamento</span></div>
+        <div class="dif-row"><svg class="icon"><use href="#i-gear"/></svg><span>Soluções operacionais</span></div>
+      </div>
+    </div>
+    <div class="dif-media">
+      <span class="media-note">— atendimento em movimento<br>placeholder de imagem/vídeo</span>
+    </div>
+  </div>
+</section>
+
+<section class="atendimento">
+  <div class="wrap">
+    <div class="intro">
+      <span class="eyebrow">— Atendimento</span>
+      <h2>O que nós oferecemos?</h2>
+      <p style="margin-top:20px;">Atendimento as solicitações de maneira adequada e eficiente. Para isso, buscamos entender o perfil e as necessidades de cada cliente individualmente e dar o retorno esperado. Nos colocamos a disposição por diversos meios de comunicação tais como presencial, telefone, WhatsApp, e-mail, para que possamos atender de forma ágil e segura. A Carioca Viagens oferece ainda:</p>
+    </div>
+    <div class="oferta-list">
+      <div class="oferta-item">
+        <svg class="icon"><use href="#i-heart"/></svg>
+        <div><span class="micro">SUP · 24H</span><h3>Suporte emergencial</h3></div>
+      </div>
+      <div class="oferta-item">
+        <svg class="icon"><use href="#i-ticket"/></svg>
+        <div><span class="micro">RESERVAS · ONLINE</span><h3>Sistema de reservas on line</h3></div>
+      </div>
+      <div class="oferta-item">
+        <svg class="icon"><use href="#i-handshake"/></svg>
+        <div><span class="micro">REDE · GLOBAL</span><h3>Parceria com os melhores canais de distribuição do mundo</h3></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="operacional">
+  <div class="wrap-wide">
+    <span class="eyebrow on-dark">— Operacional</span>
+    <h2>Nosso operacional</h2>
+
+    <div class="op-block">
+      <div class="op-block-head"><span class="micro">Corporativo</span></div>
+      <div class="op-cols">
+        <ul class="op-list">
+          <li><svg class="icon"><use href="#i-check"/></svg>Reserva de aéreo e hotel on line com self booking (opcional)</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Locação de carro</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Seguro viagem</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Organização de eventos</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Locação de sala, equipamentos (som, iluminação, telão, palco, gerador)</li>
+        </ul>
+        <ul class="op-list">
+          <li><svg class="icon"><use href="#i-check"/></svg>Atendimento emergencial</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Relatório de vendas em PDF, Excel e gráficos</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>Vendas por centro de custo</li>
+          <li><svg class="icon"><use href="#i-check"/></svg>STUR WEB: plataforma desenvolvida para facilitar e automatizar as rotinas operacionais e a gestão financeira da empresa.</li>
+        </ul>
+      </div>
+      <div class="op-chips">
+        <span class="chip on-dark">Self booking</span>
+        <span class="chip on-dark">Relatórios</span>
+        <span class="chip on-dark">Centro de custo</span>
+      </div>
+    </div>
+
+    <div class="op-divider"></div>
+
+    <div class="op-block op-block-compact">
+      <div class="op-block-head"><span class="micro">Receptivo</span></div>
+      <div class="op-cols">
+        <ul class="op-list"><li><svg class="icon"><use href="#i-check"/></svg>Reserva de aéreo e hotel on line</li></ul>
+        <ul class="op-list"><li><svg class="icon"><use href="#i-check"/></svg>Passeios privativos com ou sem guia</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="clientes">
+  <div class="wrap-wide">
+    <div class="head">
+      <span class="eyebrow">— Clientes</span>
+      <h2>Nossos clientes</h2>
+    </div>
+    <div class="logo-grid">
+      <div class="logo-slot">Logo 01</div>
+      <div class="logo-slot">Logo 02</div>
+      <div class="logo-slot">Logo 03</div>
+      <div class="logo-slot">Logo 04</div>
+      <div class="logo-slot">Logo 05</div>
+    </div>
+  </div>
+</section>
+
+<section class="contato" id="contato">
+  <div class="wrap-wide">
+    <span class="eyebrow on-dark">— Contato</span>
+    <div class="contato-columns">
+      <div class="contato-brand-col">
+        <img src="../../references/logo-carioca-viagens-horizontal-lettering-claro.svg" alt="Carioca Viagens" class="logo-img logo-xl">
+        <p class="address">R. Senador Vergueiro, 116/603<br>Flamengo — Rio de Janeiro, RJ</p>
+      </div>
+      <div class="contato-info-col">
+        <h2>Vamos conversar</h2>
+        <ul class="contact-list">
+          <li><svg class="icon"><use href="#i-mail"/></svg>carioca@cariocaviagens.com.br</li>
+          <li><svg class="icon"><use href="#i-phone"/></svg>(21) 98816-6588 (WhatsApp) / (21) 2221-1410</li>
+        </ul>
+        <div class="social-row">
+          <a href="https://www.instagram.com/carioca.viagens/"><svg class="icon"><use href="#i-instagram"/></svg>@carioca.viagens</a>
+          <a href="#"><svg class="icon"><use href="#i-facebook"/></svg>cariocaviagens</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-note">
+      <span>Carioca Viagens © 1999–2026</span>
+      <span>Mockup 04 — Síntese Editorial + Wayfinding — não implementado</span>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

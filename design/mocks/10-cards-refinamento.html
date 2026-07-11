@@ -1,0 +1,1669 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Carioca Viagens — Cards Refinamento (v10)</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Manrope:wght@200;300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,600;1,9..144,700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --ink: #0c2132;
+                --deep-blue: #0f2c42;
+                --carioca-blue: #2e83c5;
+                --carioca-green: #71b73b;
+                --light-blue: #51b6e8;
+                --pale-blue: #e0f0ff;
+                --light-green: #9dc86c;
+                --dark-green: #39681d;
+                --graphite: #615e5d;
+                --light-graphite: #7b7b79;
+                --off-white: #f7f3ec;
+                --sand: #efe6d8;
+                --near-black: #141414;
+                --hair: rgba(12, 33, 50, 0.14);
+                --hair-light: rgba(247, 243, 236, 0.24);
+                --display: "Manrope", sans-serif;
+                --body: "Inter", sans-serif;
+                --mono: "IBM Plex Mono", ui-monospace, monospace;
+                --accent-serif: "Fraunces", serif;
+                --radius: 6px;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                margin: 0;
+                font-family: var(--body);
+                color: var(--graphite);
+                background: var(--off-white);
+                -webkit-font-smoothing: antialiased;
+            }
+            a {
+                color: inherit;
+            }
+            img,
+            svg {
+                display: block;
+            }
+            .icon {
+                width: 20px;
+                height: 20px;
+                stroke: var(--light-green);
+                fill: none;
+                stroke-width: 1.4;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+            .icon-green {
+                width: 20px;
+                height: 20px;
+                stroke: var(--dark-green);
+                fill: none;
+                stroke-width: 1.4;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+            .icon-blue {
+                width: 20px;
+                height: 20px;
+                stroke: var(--pale-blue);
+                fill: none;
+                stroke-width: 1.4;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+            .wrap {
+                max-width: 1180px;
+                margin: 0 auto;
+                padding: 0 40px;
+            }
+            .wrap-wide {
+                max-width: 1440px;
+                margin: 0 auto;
+                padding: 0 40px;
+            }
+            h1,
+            h2,
+            h3 {
+                font-family: var(--display);
+                margin: 0;
+                letter-spacing: -0.015em;
+                color: var(--ink);
+            }
+            h1 {
+                font-weight: 800;
+            }
+            h2 {
+                font-weight: 800;
+                font-size: clamp(1.9rem, 3.2vw, 2.5rem);
+            }
+            h3 {
+                font-weight: 600;
+                font-size: 1.05rem;
+            }
+            p {
+                line-height: 1.75;
+                margin: 0;
+            }
+            .material-symbols-outlined {
+                font-variation-settings:
+                    "FILL" 0,
+                    "wght" 400,
+                    "GRAD" 0,
+                    "opsz" 48;
+                line-height: 1;
+                display: block;
+            }
+
+            /* ---------- wayfinding microtypography ---------- */
+            .eyebrow {
+                font-family: var(--mono);
+                font-size: 0.85rem;
+                font-weight: 500;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--carioca-blue);
+                margin-bottom: 22px;
+                display: block;
+                text-align: left;
+            }
+            .eyebrow.on-dark {
+                color: var(--light-blue);
+            }
+            .micro {
+                font-family: var(--mono);
+                font-size: 0.7rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--light-graphite);
+            }
+            .chip {
+                font-family: var(--mono);
+                font-size: 0.68rem;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                border: 1px solid var(--carioca-blue);
+                color: var(--carioca-blue);
+                padding: 6px 13px;
+                border-radius: 3px;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+            }
+            .chip.on-dark {
+                border-color: var(--light-blue);
+                color: var(--light-blue);
+            }
+            .chip-inline {
+                display: inline-block;
+                vertical-align: middle;
+                margin: 0 1px;
+                transform: translateY(-1px);
+                font-size: 0.95rem;
+                padding: 2px 8px;
+                font-weight: 500;
+            }
+
+            .btn {
+                font-family: var(--body);
+                font-weight: 500;
+                font-size: 0.92rem;
+                text-decoration: none;
+                padding: 14px 26px;
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                border: 1px solid;
+                letter-spacing: 0.01em;
+                transition:
+                    background-color 0.15s ease,
+                    opacity 0.15s ease;
+                border-radius: var(--radius);
+            }
+            .btn:focus-visible {
+                outline: 2px solid var(--light-blue);
+                outline-offset: 2px;
+            }
+            .btn-solid {
+                background: var(--carioca-green);
+                color: var(--deep-blue);
+                border-color: var(--carioca-green);
+            }
+            .btn-solid:hover {
+                opacity: 0.88;
+            }
+            .btn-outline {
+                border-color: var(--hair-light);
+                color: var(--off-white);
+                background: transparent;
+            }
+            .btn-outline:hover {
+                background: rgba(0, 0, 0, 0.3);
+            }
+            .btn-outline.on-light {
+                border-color: var(--carioca-blue);
+                color: var(--carioca-blue);
+            }
+
+            /* ---------- hero (full-bleed atmosphere, header integrated) ---------- */
+            .hero {
+                position: relative;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                background:
+                    radial-gradient(
+                        1100px 700px at 82% 8%,
+                        rgba(81, 182, 232, 0.35),
+                        transparent 60%
+                    ),
+                    linear-gradient(
+                        180deg,
+                        rgba(15, 44, 66, 0.35) 0%,
+                        rgba(15, 44, 66, 0.9) 78%,
+                        var(--deep-blue) 100%
+                    ),
+                    linear-gradient(
+                        128deg,
+                        #0f2c42 0%,
+                        #2e83c5 52%,
+                        #71b73b 100%
+                    );
+                color: var(--off-white);
+            }
+            /* structural divider: hero's own bottom border / sobre's top border — wayfinding line, not decorative */
+            .hero::after {
+                content: "";
+                position: absolute;
+                inset: auto 0 0 0;
+                height: 3px;
+                z-index: 2;
+                background: repeating-linear-gradient(
+                    90deg,
+                    var(--light-blue) 0 12px,
+                    transparent 12px 26px
+                );
+                opacity: 0.9;
+            }
+            .utility-strip {
+                position: relative;
+                z-index: 1;
+                font-family: var(--mono);
+                font-size: 0.7rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                background: rgba(12, 33, 50, 0.35);
+                border-bottom: 1px solid var(--hair-light);
+            }
+            .utility-strip .wrap-wide {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 9px 40px;
+                gap: 16px;
+                flex-wrap: wrap;
+                color: rgba(247, 243, 236, 0.82);
+            }
+            .utility-strip strong {
+                color: var(--light-blue);
+                font-weight: 500;
+            }
+            .utility-left {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            header.top {
+                position: relative;
+                z-index: 1;
+                border-bottom: 1px solid var(--hair-light);
+            }
+            header.top .wrap-wide {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px 40px;
+                gap: 20px;
+            }
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+            }
+            .logo-img {
+                height: auto;
+                display: block;
+            }
+            .logo-lg {
+                width: 200px;
+            }
+            .logo-footer {
+                width: 225px;
+            }
+            .brand .tag,
+            .utility-left .tag {
+                font-family: var(--mono);
+                font-size: 0.65rem;
+                letter-spacing: 0.1em;
+                color: var(--light-blue);
+                border: 1px solid var(--light-blue);
+                padding: 3px 7px;
+                border-radius: 3px;
+            }
+            .hero-body {
+                flex: 1;
+                display: flex;
+                align-items: flex-end;
+                position: relative;
+                z-index: 1;
+            }
+            .hero-body .wrap-wide {
+                padding-bottom: 72px;
+                position: relative;
+                z-index: 1;
+            }
+            .hero-placeholder-note {
+                position: absolute;
+                bottom: 24px;
+                right: 40px;
+                z-index: 1;
+                font-family: var(--mono);
+                font-size: 0.68rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: rgba(247, 243, 236, 0.55);
+                text-align: right;
+                max-width: 260px;
+            }
+            .hero-locus {
+                position: absolute;
+                top: 36px;
+                right: 40px;
+                z-index: 1;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                background: rgba(12, 33, 50, 0.4);
+                border: 1px solid var(--hair-light);
+                border-radius: 30px;
+                padding: 9px 16px 9px 12px;
+                font-family: var(--mono);
+                font-size: 0.68rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: rgba(247, 243, 236, 0.88);
+            }
+            .hero-locus .icon {
+                width: 14px;
+                height: 14px;
+                color: var(--light-green);
+            }
+            .hero-eyebrow {
+                margin-bottom: 20px;
+            }
+            .hero h1 {
+                font-size: clamp(2.8rem, 6.2vw, 5.2rem);
+                line-height: 1.03;
+                max-width: 920px;
+                color: var(--off-white);
+                font-weight: 800;
+                letter-spacing: -0.03em;
+            }
+            .hero-title-accent {
+                font-family: var(--accent-serif);
+                font-style: italic;
+                font-weight: 700;
+                color: var(--light-blue);
+                letter-spacing: -0.01em;
+            }
+            .hero-sub {
+                margin-top: 24px;
+                max-width: 480px;
+                font-size: 1.15rem;
+                color: rgba(247, 243, 236, 0.86);
+            }
+            .hero-ctas {
+                display: flex;
+                gap: 14px;
+                margin-top: 36px;
+                flex-wrap: wrap;
+            }
+
+            /* ---------- support graphics (pin / plane — arrival motif, original artwork, Carioca Blue) ---------- */
+            .support-graphic {
+                position: absolute;
+                pointer-events: none;
+                display: block;
+                height: auto;
+                width: auto;
+            }
+
+            /* ---------- sobre (editorial, left-anchored, marker rail) ---------- */
+            .sobre {
+                background: var(--off-white);
+                padding: 72px 0 104px;
+                position: relative;
+                overflow: hidden;
+            }
+            .sobre .support-graphic {
+                top: 40px;
+                right: 0px;
+                height: 160px;
+            }
+            .sobre .wrap {
+                max-width: 980px;
+                position: relative;
+                z-index: 1;
+            }
+            .sobre-grid {
+                display: grid;
+                grid-template-columns: 64px 1fr;
+                gap: 28px;
+            }
+            .sobre-rail {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 6px;
+            }
+            .sobre-rail .icon {
+                width: 22px;
+                height: 22px;
+                color: var(--carioca-blue);
+                flex-shrink: 0;
+            }
+            .sobre-rail .rail-line {
+                width: 1px;
+                flex: 1;
+                margin-top: 14px;
+                min-height: 140px;
+                background: repeating-linear-gradient(
+                    180deg,
+                    var(--hair) 0 5px,
+                    transparent 5px 11px
+                );
+            }
+            .sobre .head {
+                text-align: left;
+                margin: 0;
+            }
+            .sobre h2 {
+                text-align: left;
+            }
+            .sobre p {
+                font-size: 1.15rem;
+                line-height: 1.78;
+                color: var(--graphite);
+                font-weight: 400;
+                margin-top: 22px;
+                text-align: left;
+                max-width: 680px;
+            }
+
+            /* ---------- media band ---------- */
+            .band {
+                height: 42vh;
+                min-height: 300px;
+                position: relative;
+                overflow: hidden;
+                background: linear-gradient(
+                    125deg,
+                    rgba(46, 131, 197, 0.94),
+                    rgba(113, 183, 59, 0.86)
+                );
+            }
+            .band .media-note {
+                position: absolute;
+                bottom: 26px;
+                left: 40px;
+                color: rgba(247, 243, 236, 0.75);
+                font-family: var(--mono);
+                font-size: 0.7rem;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+            }
+
+            /* ---------- diferenciais (list + media, 50/50, matched height) ---------- */
+            .diferenciais {
+                background: var(--off-white);
+                padding: 100px 0;
+            }
+            .dif-layout {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 64px;
+                align-items: stretch;
+            }
+            .dif-layout h2 {
+                text-align: left;
+            }
+            .dif-list {
+                border-top: 1px solid var(--hair);
+                margin-top: 36px;
+            }
+            .dif-row {
+                display: grid;
+                grid-template-columns: 32px 1fr;
+                gap: 22px;
+                padding: 26px 0;
+                border-bottom: 1px solid var(--hair);
+                align-items: center;
+            }
+            .dif-row .icon {
+                stroke: var(--carioca-blue);
+                width: 22px;
+                height: 22px;
+                stroke-width: 1.6;
+            }
+            .dif-row span {
+                font-family: var(--display);
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: var(--ink);
+            }
+            .dif-media {
+                height: 100%;
+                min-height: 340px;
+                border-radius: 3px;
+                position: relative;
+                overflow: hidden;
+                background:
+                    linear-gradient(
+                        160deg,
+                        rgba(46, 131, 197, 0.85),
+                        rgba(113, 183, 59, 0.7)
+                    ),
+                    repeating-linear-gradient(
+                        0deg,
+                        rgba(247, 243, 236, 0.08) 0 1px,
+                        transparent 1px 64px
+                    ),
+                    repeating-linear-gradient(
+                        90deg,
+                        rgba(247, 243, 236, 0.08) 0 1px,
+                        transparent 1px 64px
+                    );
+            }
+            .dif-media .corner {
+                position: absolute;
+                width: 22px;
+                height: 22px;
+                border-color: rgba(247, 243, 236, 0.55);
+            }
+            .dif-media .corner.tl {
+                top: 20px;
+                left: 20px;
+                border-top: 1.5px solid;
+                border-left: 1.5px solid;
+            }
+            .dif-media .corner.br {
+                bottom: 20px;
+                right: 20px;
+                border-bottom: 1.5px solid;
+                border-right: 1.5px solid;
+            }
+            .dif-media .chip {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                background: rgba(12, 33, 50, 0.32);
+                border-color: rgba(247, 243, 236, 0.55);
+                color: var(--off-white);
+            }
+            .dif-media .media-note {
+                position: absolute;
+                bottom: 20px;
+                left: 20px;
+                right: 20px;
+                color: rgba(247, 243, 236, 0.85);
+                font-family: var(--mono);
+                font-size: 0.66rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+
+            /* ---------- atendimento (rich cards, aligned, equal height, color exploration) ---------- */
+            .atendimento {
+                background: var(--sand);
+                padding: 108px 0 116px;
+                position: relative;
+                overflow: hidden;
+            }
+            .atendimento .support-graphic {
+                top: 50px;
+                left: 0px;
+                height: 265px;
+            }
+            .atendimento-center {
+                text-align: center;
+                position: relative;
+                z-index: 1;
+            }
+            .atendimento-center .head {
+                width: fit-content;
+                margin: 0 auto;
+                text-align: left;
+            }
+            .atendimento-center p {
+                font-size: 1.08rem;
+                color: var(--graphite);
+                max-width: 620px;
+                margin: 20px auto 0;
+            }
+            .oferta-cards {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 26px;
+                margin-top: 60px;
+                align-items: stretch;
+            }
+            /* Vertical rhythm uses CSS Grid `fr` rows directly on the card,
+               not nested flex percentages — fr rows divide the card's own
+               definite height (from aspect-ratio) exactly, regardless of
+               nesting, avoiding the % math error found in the previous pass
+               (see HANDOFF.md sec. 11). Rows: 27 title-zone / 10 gap /
+               20 text-row / 3 gap / 40 media. */
+            /* box-shadow lives on the -frame wrapper, not on .oferta-card
+               itself: .oferta-card needs overflow:hidden to clip the media
+               zone's square corners to the card's rounded corners, but
+               overflow:hidden also clips that same element's own box-shadow.
+               Splitting shadow (frame) from clipping (card) is the fix —
+               see HANDOFF.md sec. 11. */
+            .oferta-card-frame {
+                border-radius: 30px;
+                box-shadow: 9px 12px 16px -9px rgba(12, 33, 50, 0.5);
+            }
+            .oferta-card {
+                border-radius: 10px;
+                position: relative;
+                overflow: hidden;
+                text-align: left;
+                background: var(--off-white);
+                border: 1px solid var(--hair);
+                aspect-ratio: 1 / 1;
+                display: grid;
+                grid-template-rows: 27fr 10fr 20fr 3fr 40fr;
+            }
+            .oferta-card.card-blue {
+                background: color-mix(in srgb, var(--carioca-blue) 93%, black 7%);
+                color: #ffffff;
+                border-color: transparent;
+            }
+            .oferta-card.card-green {
+                background: var(--carioca-green);
+                color: color-mix(in srgb, var(--dark-green) 60%, black 40%);
+                border-color: transparent;
+            }
+            .oferta-card.card-dark {
+                background: var(--near-black);
+                color: #f0efec;
+                border-color: transparent;
+            }
+            .oferta-head {
+                grid-row: 1;
+                padding: 30px 20px 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 6px;
+                min-height: 0;
+            }
+            .oferta-meta {
+                display: flex;
+                align-items: center;
+                gap: 9px;
+                flex-shrink: 0;
+            }
+            .oferta-meta .icon {
+                width: 18px;
+                height: 18px;
+                stroke-width: 1.6;
+                flex-shrink: 0;
+            }
+            .oferta-rule {
+                height: 0.75px;
+                background: color-mix(
+                    in srgb,
+                    var(--pale-blue) 50%,
+                    transparent
+                );
+                flex-shrink: 0;
+                display: block;
+            }
+            .oferta-card.card-green .oferta-rule {
+                background: rgba(15, 44, 66, 0.22);
+            }
+            .oferta-title {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                margin: 0;
+                color: inherit;
+            }
+            .oferta-title .title-line {
+                font-family: var(--display);
+                font-weight: 200;
+                font-size: 1.75rem;
+                text-transform: uppercase;
+                letter-spacing: 0.075em;
+                line-height: 0.8;
+                color: inherit;
+            }
+            .oferta-row {
+                grid-row: 3;
+                padding: 0 20px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 16px;
+                min-height: 0;
+            }
+            .oferta-text {
+                max-width: 100%;
+            }
+            .oferta-index {
+                font-family: var(--mono);
+                font-weight: 100;
+                font-size: 2.5em;
+                line-height: 1;
+                margin-right: 6px;
+                vertical-align: 0px;
+                display: inline-block;
+            }
+            .oferta-card .oferta-desc {
+                font-family: var(--body);
+                font-weight: 100;
+                font-size: 1.05rem;
+                line-height: 1.2;
+                color: inherit;
+                max-width: none;
+                margin: 0;
+            }
+            .oferta-arrow {
+                width: 52px;
+                height: 52px;
+                stroke-width: 0.85;
+                flex-shrink: 0;
+            }
+            .oferta-card .micro {
+                color: var(--light-graphite);
+            }
+            .oferta-card.card-blue .micro {
+                color: #ffffff;
+            }
+            .oferta-card.card-green .micro {
+                color: color-mix(in srgb, var(--dark-green) 60%, black 40%);
+            }
+            .oferta-card.card-dark .micro {
+                color: var(--light-green);
+            }
+            .oferta-media {
+                grid-row: 5;
+                position: relative;
+                background: rgba(247, 243, 236, 0.1);
+                border-top: 1px solid rgba(247, 243, 236, 0.16);
+            }
+            .oferta-card.card-green .oferta-media {
+                background: rgba(15, 44, 66, 0.08);
+                border-top-color: rgba(15, 44, 66, 0.14);
+            }
+            .oferta-media .corner {
+                position: absolute;
+                width: 14px;
+                height: 14px;
+                border-color: rgba(247, 243, 236, 0.4);
+            }
+            .oferta-card.card-green .oferta-media .corner {
+                border-color: rgba(15, 44, 66, 0.3);
+            }
+            .oferta-media .corner.tl {
+                top: 14px;
+                left: 14px;
+                border-top: 1.5px solid;
+                border-left: 1.5px solid;
+            }
+            .oferta-media .corner.br {
+                bottom: 14px;
+                right: 14px;
+                border-bottom: 1.5px solid;
+                border-right: 1.5px solid;
+            }
+
+            /* ---------- operacional (wayfinding language, green labels/checks) ---------- */
+            .operacional {
+                background: var(--deep-blue);
+                color: var(--off-white);
+                padding: 104px 0;
+            }
+            .operacional h2 {
+                color: var(--off-white);
+            }
+            .operacional .head {
+                width: fit-content;
+                max-width: 640px;
+                margin: 0 auto 56px;
+                text-align: left;
+            }
+            .op-block-head {
+                margin-bottom: 22px;
+                padding-bottom: 14px;
+                border-bottom: 1px solid var(--hair-light);
+            }
+            .op-block-head .micro {
+                color: var(--light-green);
+                font-size: 0.85rem;
+                font-weight: 500;
+            }
+            .op-cols {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 48px;
+            }
+            .op-col-b {
+                display: flex;
+                flex-direction: column;
+            }
+            .op-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+            .op-list li {
+                display: flex;
+                gap: 12px;
+                align-items: flex-start;
+                font-size: 1rem;
+                color: rgba(247, 243, 236, 0.88);
+                padding-bottom: 16px;
+                border-bottom: 1px solid rgba(247, 243, 236, 0.09);
+            }
+            .op-list li .icon {
+                width: 16px;
+                height: 16px;
+                stroke: var(--carioca-green);
+                flex-shrink: 0;
+                margin-top: 3px;
+            }
+            .op-chips-slot {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                padding-top: 18px;
+            }
+            .op-divider {
+                margin: 56px 0;
+            }
+
+            /* ---------- clientes (centered, eyebrow left) ---------- */
+            .clientes {
+                background: var(--off-white);
+                padding: 100px 0;
+                text-align: center;
+            }
+            .clientes .head {
+                width: fit-content;
+                max-width: 640px;
+                margin: 0 auto 48px;
+                text-align: left;
+            }
+            .logo-grid {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                border-top: 1px solid var(--hair);
+                border-left: 1px solid var(--hair);
+            }
+            .logo-slot {
+                aspect-ratio: 3/2;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                border-right: 1px solid var(--hair);
+                border-bottom: 1px solid var(--hair);
+                color: var(--light-graphite);
+                font-family: var(--mono);
+                font-size: 0.66rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+            }
+            .logo-slot img {
+                max-width: 80%;
+                max-height: 50%;
+                width: auto;
+                height: auto;
+                object-fit: contain;
+            }
+
+            /* ---------- contato (institutional close, grouped contacts) ---------- */
+            .contato {
+                position: relative;
+                min-height: 64vh;
+                display: flex;
+                align-items: center;
+                color: var(--off-white);
+                background:
+                    linear-gradient(
+                        200deg,
+                        rgba(15, 44, 66, 0.6),
+                        rgba(15, 44, 66, 0.96)
+                    ),
+                    linear-gradient(
+                        120deg,
+                        #0f2c42 0%,
+                        #2e83c5 55%,
+                        #71b73b 100%
+                    );
+                padding: 100px 0 48px;
+            }
+            .contato .wrap-wide {
+                position: relative;
+                z-index: 1;
+            }
+            .contato-center {
+                width: fit-content;
+                margin: 0 auto 60px;
+                text-align: left;
+            }
+            .contato-center h2 {
+                color: var(--off-white);
+            }
+            .contato-columns {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 64px;
+                align-items: stretch;
+                padding-bottom: 56px;
+            }
+            .contato-brand-col .logo-img {
+                margin-bottom: 45px;
+            }
+            .address-label {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 12px;
+            }
+            .address-label .icon {
+                width: 15px;
+                height: 15px;
+                color: var(--light-blue);
+            }
+            .address {
+                font-size: 1rem;
+                color: rgba(247, 243, 236, 0.82);
+                line-height: 1.8;
+            }
+            .contato-info-col {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100%;
+            }
+            .contact-group {
+                margin-bottom: 26px;
+            }
+            .contact-group:last-child {
+                margin-bottom: 0;
+            }
+            .contact-group .micro {
+                display: block;
+                color: var(--light-green);
+                margin-bottom: 14px;
+            }
+            .contact-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+            .contact-list li {
+                display: flex;
+                gap: 14px;
+                align-items: flex-start;
+                font-size: 1.05rem;
+            }
+            .contact-list .icon,
+            .social-row .icon {
+                stroke: var(--light-blue);
+                flex-shrink: 0;
+                margin-top: 2px;
+                width: 20px;
+                height: 20px;
+            }
+            .social-row {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+            .social-row a {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.96rem;
+                text-decoration: underline;
+                text-decoration-color: rgba(247, 243, 236, 0.35);
+                text-underline-offset: 6px;
+            }
+            .foot-note {
+                padding-top: 24px;
+                border-top: 1px solid var(--hair-light);
+                font-family: var(--mono);
+                font-size: 0.7rem;
+                letter-spacing: 0.04em;
+                color: rgba(247, 243, 236, 0.5);
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            @media (max-width: 900px) {
+                .dif-layout,
+                .op-cols,
+                .contato-columns {
+                    grid-template-columns: 1fr;
+                }
+                .oferta-cards {
+                    grid-template-columns: 1fr;
+                }
+                .sobre-grid {
+                    grid-template-columns: 1fr;
+                }
+                .sobre-rail {
+                    flex-direction: row;
+                    padding-top: 0;
+                    margin-bottom: 16px;
+                }
+                .sobre-rail .rail-line {
+                    display: none;
+                }
+                .logo-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                .dif-media {
+                    height: 260px;
+                }
+                .utility-strip .wrap-wide {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 6px;
+                }
+                .contato-info-col {
+                    height: auto;
+                    gap: 36px;
+                }
+                .support-graphic {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <svg style="display: none" aria-hidden="true">
+            <symbol id="i-clock" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 6v6l4 2" />
+            </symbol>
+            <symbol id="i-plane" viewBox="0 0 24 24">
+                <path
+                    d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"
+                />
+            </symbol>
+            <symbol id="i-cards" viewBox="0 0 24 24">
+                <rect width="20" height="14" x="2" y="5" rx="2" />
+                <line x1="2" x2="22" y1="10" y2="10" />
+            </symbol>
+            <symbol id="i-gear" viewBox="0 0 24 24">
+                <path
+                    d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"
+                />
+                <circle cx="12" cy="12" r="3" />
+            </symbol>
+            <symbol id="i-check" viewBox="0 0 24 24">
+                <polyline points="5,13 10,18 19,6" />
+            </symbol>
+            <symbol id="i-mail" viewBox="0 0 24 24">
+                <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+            </symbol>
+            <symbol id="i-phone" viewBox="0 0 24 24">
+                <path
+                    d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"
+                />
+            </symbol>
+            <symbol id="i-whatsapp" viewBox="0 0 24 24">
+                <path
+                    d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"
+                />
+            </symbol>
+            <symbol id="i-instagram" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle
+                    cx="17.2"
+                    cy="6.8"
+                    r="1"
+                    fill="currentColor"
+                    stroke="none"
+                />
+            </symbol>
+            <symbol id="i-facebook" viewBox="0 0 24 24">
+                <path
+                    d="M14 21v-7h3l.5-4H14V7.5A1.5 1.5 0 0 1 15.5 6H17V2h-2.5A5 5 0 0 0 9.5 7v3H7v4h2.5v7z"
+                />
+            </symbol>
+            <symbol id="i-headset" viewBox="0 0 24 24">
+                <path
+                    d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"
+                />
+                <path d="M21 16v2a4 4 0 0 1-4 4h-5" />
+            </symbol>
+            <symbol id="i-plane-takeoff" viewBox="0 0 24 24">
+                <!--path d="M2 22h20" /-->
+                <path
+                    d="M6.36 17.4 4 17l-2-4 1.1-.55a2 2 0 0 1 1.8 0l.17.1a2 2 0 0 0 1.8 0L8 12 5 6l.9-.45a2 2 0 0 1 2.09.2l4.02 3a2 2 0 0 0 2.1.2l4.19-2.06a2.41 2.41 0 0 1 1.73-.17L21 7a1.4 1.4 0 0 1 .87 1.99l-.38.76c-.23.46-.6.84-1.07 1.08L7.58 17.2a2 2 0 0 1-1.22.18Z"
+                />
+            </symbol>
+            <symbol id="i-handshake" viewBox="0 0 24 24">
+                <path d="m11 17 2 2a1 1 0 1 0 3-3" />
+                <path
+                    d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"
+                />
+                <path d="m21 3 1 11h-2" />
+                <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" />
+                <path d="M3 4h8" />
+            </symbol>
+            <symbol id="i-map-pin" viewBox="0 0 24 24">
+                <path
+                    d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+                />
+                <circle cx="12" cy="10" r="3" />
+            </symbol>
+            <symbol id="i-arrow-up-right" viewBox="0 0 24 24">
+                <path d="M7 17 17 7" />
+                <path d="M7 7h10v10" />
+            </symbol>
+        </svg>
+
+        <section class="hero">
+            <div class="utility-strip">
+                <div class="wrap-wide">
+                    <span class="utility-left"
+                        ><span>Carioca Viagens · Rio de Janeiro, RJ</span
+                        ><span class="tag">RIO · GIG</span></span
+                    >
+                    <span
+                        ><strong>Operacional desde 1999</strong> · Corporativo ·
+                        Lazer · Receptivo</span
+                    >
+                </div>
+            </div>
+            <header class="top">
+                <div class="wrap-wide">
+                    <div class="brand">
+                        <img
+                            src="../../references/logo-carioca-viagens-horizontal-lettering-claro-nova.svg"
+                            alt="Carioca Viagens"
+                            class="logo-img logo-lg"
+                        />
+                    </div>
+                    <a href="#contato" class="btn btn-outline">Fale conosco</a>
+                </div>
+            </header>
+            <div class="hero-body">
+                <span class="hero-locus"
+                    ><svg class="icon"><use href="#i-map-pin" /></svg>Sede —
+                    Flamengo, RJ</span
+                >
+                <span class="hero-placeholder-note"
+                    >— vídeo institucional em loop (placeholder)<br />imagem de
+                    fallback + overlay para legibilidade</span
+                >
+                <div class="wrap-wide">
+                    <span class="eyebrow on-dark hero-eyebrow">— Abertura</span>
+                    <h1>
+                        Nossa agência.<br /><span class="hero-title-accent"
+                            >Sua agência.</span
+                        >
+                    </h1>
+                    <p class="hero-sub">
+                        Viagens corporativas com atendimento próximo e operação
+                        eficiente.
+                    </p>
+                    <div class="hero-ctas">
+                        <a href="#contato" class="btn btn-solid">
+                            <svg
+                                class="icon"
+                                style="
+                                    width: 16px;
+                                    height: 16px;
+                                    stroke: var(--deep-blue);
+                                "
+                            >
+                                <use href="#i-check" />
+                            </svg>
+                            Fale conosco
+                        </a>
+                        <a href="#contato" class="btn btn-outline"
+                            >Solicite atendimento</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sobre">
+            <img
+                class="support-graphic"
+                src="../../references/elements/pin point carioca blue.svg"
+                alt=""
+                aria-hidden="true"
+            />
+            <div class="wrap">
+                <div class="sobre-grid">
+                    <div class="sobre-rail" aria-hidden="true">
+                        <svg class="icon"><use href="#i-map-pin" /></svg>
+                        <div class="rail-line"></div>
+                    </div>
+                    <div>
+                        <div class="head">
+                            <span class="eyebrow">— Sobre</span>
+                            <h2>Olá, muito prazer</h2>
+                        </div>
+                        <p>
+                            Somos a
+                            <span class="chip chip-inline"
+                                >Carioca Viagens</span
+                            >
+                            e atuamos no mercado nacional e internacional,
+                            atendendo viagens corporativas, de lazer e
+                            receptivos. Desde 1999 conquistando a confiança e
+                            recebendo a credibilidade de inúmeros clientes que a
+                            elegeram sua agência de conta corrente. O
+                            atendimento personalizado, ágil e qualificado
+                            facilita a realização de metas a custos mais
+                            viáveis. Na busca pela excelência, estabelecemos
+                            parcerias com grandes operadoras e consolidadoras
+                            que flexibilizam a negociação, sem comprometer a
+                            qualidade dos serviços.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="band">
+            <span class="media-note"
+                >— placeholder de fotografia/vídeo · viagem corporativa</span
+            >
+        </div>
+
+        <section class="diferenciais">
+            <div class="wrap-wide dif-layout">
+                <div>
+                    <span class="eyebrow">— Diferenciais</span>
+                    <h2>O que nossos clientes buscam?</h2>
+                    <div class="dif-list">
+                        <div class="dif-row">
+                            <svg class="icon"><use href="#i-clock" /></svg
+                            ><span>Agilidade no atendimento</span>
+                        </div>
+                        <div class="dif-row">
+                            <svg class="icon"><use href="#i-plane" /></svg
+                            ><span>Eficiência nos processos de viagens</span>
+                        </div>
+                        <div class="dif-row">
+                            <svg class="icon"><use href="#i-cards" /></svg
+                            ><span
+                                >Melhores preços e condições de pagamento</span
+                            >
+                        </div>
+                        <div class="dif-row">
+                            <svg class="icon"><use href="#i-gear" /></svg
+                            ><span>Soluções operacionais</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="dif-media">
+                    <span class="corner tl"></span>
+                    <span class="corner br"></span>
+                    <span class="chip on-dark"
+                        >— Corporativo · Lazer · Receptivo</span
+                    >
+                    <span class="media-note"
+                        >— atendimento em movimento<br />placeholder de
+                        imagem/vídeo</span
+                    >
+                </div>
+            </div>
+        </section>
+
+        <section class="atendimento">
+            <img
+                class="support-graphic"
+                src="../../references/elements/aviao carioca blue.svg"
+                alt=""
+                aria-hidden="true"
+            />
+            <div class="wrap atendimento-center">
+                <div class="head">
+                    <span class="eyebrow">— Atendimento</span>
+                    <h2>O que nós oferecemos?</h2>
+                </div>
+                <p>
+                    Atendimento as solicitações de maneira adequada e eficiente.
+                    Para isso, buscamos entender o perfil e as necessidades de
+                    cada cliente individualmente e dar o retorno esperado. Nos
+                    colocamos a disposição por diversos meios de comunicação
+                    tais como presencial, telefone, WhatsApp, e-mail, para que
+                    possamos atender de forma ágil e segura. A Carioca Viagens
+                    oferece ainda:
+                </p>
+                <div class="oferta-cards">
+                    <div class="oferta-card-frame">
+                        <div class="oferta-card card-blue">
+                            <div class="oferta-head">
+                                <div class="oferta-meta">
+                                    <svg class="icon-blue">
+                                        <use href="#i-headset" />
+                                    </svg>
+                                    <span class="micro">ASSISTÊNCIA · 24H</span>
+                                </div>
+                                <div class="oferta-rule"></div>
+                                <h3 class="oferta-title">
+                                    <span class="title-line">ASSISTÊNCIA</span>
+                                    <span class="oferta-rule title-rule"></span>
+                                    <span class="title-line">EMERGENCIAL</span>
+                                </h3>
+                                <div class="oferta-rule"></div>
+                            </div>
+                            <div class="oferta-row">
+                                <div class="oferta-text">
+                                    <p class="oferta-desc">
+                                        <span class="oferta-index">01</span
+                                        >plantão para resolver imprevistos a
+                                        qualquer hora.
+                                    </p>
+                                </div>
+                                <svg class="icon-blue oferta-arrow">
+                                    <use href="#i-arrow-up-right" />
+                                </svg>
+                            </div>
+                            <div class="oferta-media">
+                                <span class="corner tl"></span>
+                                <span class="corner br"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="oferta-card-frame">
+                        <div class="oferta-card card-green">
+                            <div class="oferta-head">
+                                <div class="oferta-meta">
+                                    <svg class="icon-green">
+                                        <use href="#i-plane-takeoff" />
+                                    </svg>
+                                    <span class="micro">RESERVAS · ONLINE</span>
+                                </div>
+                                <div class="oferta-rule"></div>
+                                <h3 class="oferta-title">
+                                    <span class="title-line">SISTEMA DE</span>
+                                    <span class="oferta-rule title-rule"></span>
+                                    <span class="title-line"
+                                        >RESERVAS ON LINE</span
+                                    >
+                                </h3>
+                                <div class="oferta-rule"></div>
+                            </div>
+                            <div class="oferta-row">
+                                <div class="oferta-text">
+                                    <p class="oferta-desc">
+                                        <span class="oferta-index">02</span
+                                        >Reserve aéreo e hotel em poucos
+                                        cliques.
+                                    </p>
+                                </div>
+                                <svg class="icon-green oferta-arrow">
+                                    <use href="#i-arrow-up-right" />
+                                </svg>
+                            </div>
+                            <div class="oferta-media">
+                                <span class="corner tl"></span>
+                                <span class="corner br"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="oferta-card-frame">
+                        <div class="oferta-card card-dark">
+                            <div class="oferta-head">
+                                <div class="oferta-meta">
+                                    <svg class="icon">
+                                        <use href="#i-handshake" />
+                                    </svg>
+                                    <span class="micro">REDE · GLOBAL</span>
+                                </div>
+                                <div class="oferta-rule"></div>
+                                <h3 class="oferta-title">
+                                    <span class="title-line"
+                                        >MELHORES CANAIS</span
+                                    >
+                                    <span class="oferta-rule title-rule"></span>
+                                    <span class="title-line"
+                                        >DE DISTRIBUIÇÃO</span
+                                    >
+                                </h3>
+                                <div class="oferta-rule"></div>
+                            </div>
+                            <div class="oferta-row">
+                                <div class="oferta-text">
+                                    <p class="oferta-desc">
+                                        <span class="oferta-index">03</span
+                                        >Tarifas das melhores operadoras do
+                                        mundo.
+                                    </p>
+                                </div>
+                                <svg class="icon oferta-arrow">
+                                    <use href="#i-arrow-up-right" />
+                                </svg>
+                            </div>
+                            <div class="oferta-media">
+                                <span class="corner tl"></span>
+                                <span class="corner br"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="operacional">
+            <div class="wrap-wide">
+                <div class="head">
+                    <span class="eyebrow on-dark">— Operacional</span>
+                    <h2>Nosso operacional</h2>
+                </div>
+
+                <div class="op-block">
+                    <div class="op-block-head">
+                        <span class="micro">Corporativo</span>
+                    </div>
+                    <div class="op-cols">
+                        <ul class="op-list">
+                            <li>
+                                <svg class="icon"><use href="#i-check" /></svg
+                                >Reserva de aéreo e hotel on line com self
+                                booking (opcional)
+                            </li>
+                            <li>
+                                <svg class="icon"><use href="#i-check" /></svg
+                                >Locação de carro
+                            </li>
+                            <li>
+                                <svg class="icon"><use href="#i-check" /></svg
+                                >Seguro viagem
+                            </li>
+                            <li>
+                                <svg class="icon"><use href="#i-check" /></svg
+                                >Organização de eventos
+                            </li>
+                            <li>
+                                <svg class="icon"><use href="#i-check" /></svg
+                                >Locação de sala, equipamentos (som, iluminação,
+                                telão, palco, gerador)
+                            </li>
+                        </ul>
+                        <div class="op-col-b">
+                            <ul class="op-list">
+                                <li>
+                                    <svg class="icon">
+                                        <use href="#i-check" /></svg
+                                    >Atendimento emergencial
+                                </li>
+                                <li>
+                                    <svg class="icon">
+                                        <use href="#i-check" /></svg
+                                    >Relatório de vendas em PDF, Excel e
+                                    gráficos
+                                </li>
+                                <li>
+                                    <svg class="icon">
+                                        <use href="#i-check" /></svg
+                                    >Vendas por centro de custo
+                                </li>
+                                <li>
+                                    <svg class="icon">
+                                        <use href="#i-check" /></svg
+                                    >STUR WEB: plataforma de gestão operacional
+                                    e financeira.
+                                </li>
+                            </ul>
+                            <div class="op-chips-slot">
+                                <span class="chip on-dark">Self booking</span>
+                                <span class="chip on-dark">Relatórios</span>
+                                <span class="chip on-dark"
+                                    >Centro de custo</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="op-divider"></div>
+
+                <div class="op-block">
+                    <div class="op-block-head">
+                        <span class="micro">Receptivo</span>
+                    </div>
+                    <div class="op-cols">
+                        <ul class="op-list">
+                            <li>
+                                <svg class="icon"><use href="#i-check" /></svg
+                                >Reserva de aéreo e hotel on line
+                            </li>
+                        </ul>
+                        <ul class="op-list">
+                            <li>
+                                <svg class="icon"><use href="#i-check" /></svg
+                                >Passeios privativos com ou sem guia
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="clientes">
+            <div class="wrap-wide">
+                <div class="head">
+                    <span class="eyebrow">— Clientes</span>
+                    <h2>Nossos clientes</h2>
+                </div>
+                <div class="logo-grid">
+                    <div class="logo-slot">
+                        <img
+                            src="../../references/logo%20clientes/gesel.png"
+                            alt="Gesel"
+                        />
+                    </div>
+                    <div class="logo-slot">
+                        <img
+                            src="../../references/logo%20clientes/leonardo.png"
+                            alt="Leonardo"
+                        />
+                    </div>
+                    <div class="logo-slot">
+                        <img
+                            src="../../references/logo%20clientes/miguel.png"
+                            alt="Miguel Pinto Guimarães Arquitetos Associados"
+                        />
+                    </div>
+                    <div class="logo-slot">
+                        <img
+                            src="../../references/logo%20clientes/somerj.png"
+                            alt="Somerj"
+                        />
+                    </div>
+                    <div class="logo-slot">
+                        <img
+                            src="../../references/logo%20clientes/wp.png"
+                            alt="WP Capital"
+                        />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contato" id="contato">
+            <div class="wrap-wide">
+                <div class="contato-center">
+                    <span class="eyebrow on-dark">— Contato</span>
+                    <h2>Vamos conversar</h2>
+                </div>
+                <div class="contato-columns">
+                    <div class="contato-brand-col">
+                        <img
+                            src="../../references/logo-carioca-viagens-horizontal-lettering-claro-nova.svg"
+                            alt="Carioca Viagens"
+                            class="logo-img logo-footer"
+                        />
+                        <div class="address-label">
+                            <svg class="icon"><use href="#i-map-pin" /></svg
+                            ><span
+                                class="micro"
+                                style="color: var(--light-green)"
+                                >Nossa sede</span
+                            >
+                        </div>
+                        <p class="address">
+                            R. Senador Vergueiro, 116/603<br />Flamengo - Rio de
+                            Janeiro, RJ<br />22230-001
+                        </p>
+                    </div>
+                    <div class="contato-info-col">
+                        <div class="contact-group">
+                            <span class="micro">E-mail</span>
+                            <ul class="contact-list">
+                                <li>
+                                    <svg class="icon">
+                                        <use href="#i-mail" /></svg
+                                    >carioca@cariocaviagens.com.br
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="contact-group">
+                            <span class="micro">WhatsApp · Telefone</span>
+                            <ul class="contact-list">
+                                <li>
+                                    <svg class="icon">
+                                        <use href="#i-whatsapp" /></svg
+                                    >(21) 98816-6588
+                                </li>
+                                <li>
+                                    <svg class="icon">
+                                        <use href="#i-phone" /></svg
+                                    >(21) 2221-1410
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="contact-group">
+                            <span class="micro">Redes sociais</span>
+                            <div class="social-row">
+                                <a
+                                    href="https://www.instagram.com/carioca.viagens/"
+                                    ><svg class="icon">
+                                        <use href="#i-instagram" /></svg
+                                    >@carioca.viagens</a
+                                >
+                                <a href="#"
+                                    ><svg class="icon">
+                                        <use href="#i-facebook" /></svg
+                                    >cariocaviagens</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="foot-note">
+                    <span>Carioca Viagens © 1999–2026</span>
+                    <span
+                        >Mockup 10 — Cards Refinamento — não implementado</span
+                    >
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
