@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — Carioca Viagens
+ * Fonte: design/design.md Seção 2 (paleta), Seção 3 (tipografia), Seção 6 (breakpoints).
+ * Verificados linha a linha contra design/mocks/10-cards-refinamento.html.
+ * Não adicionar HEX novo aqui sem documentar primeiro em design/design.md.
+ */
+@theme {
+  /* cores institucionais */
+  --color-ink: #0c2132;
+  --color-deep-blue: #0f2c42;
+  --color-carioca-blue: #2e83c5;
+  --color-carioca-green: #71b73b;
+  --color-light-blue: #51b6e8;
+  --color-pale-blue: #e0f0ff;
+  --color-light-green: #9dc86c;
+  --color-dark-green: #39681d;
+  --color-graphite: #615e5d;
+  --color-light-graphite: #7b7b79;
+  --color-off-white: #f7f3ec;
+  --color-sand: #efe6d8;
+  --color-near-black: #141414;
+
+  /* linhas finas (hairlines) — rgba fixo, não recolorir */
+  --color-hair: rgba(12, 33, 50, 0.14);
+  --color-hair-light: rgba(247, 243, 236, 0.24);
+
+  /* texto sobre fundo colorido/escuro (design.md Seção 2, "Novos tokens a formalizar") */
+  --color-ink-on-blue: #ffffff;
+  --color-ink-on-dark: #f0efec;
+
+  /*
+   * Infraestrutura semântica do shadcn/ui (background/foreground/border/ring/
+   * primary/secondary/muted/accent) remapeada para os tokens Carioca acima —
+   * nunca a paleta cinza/oklch genérica do preset padrão. Isso garante que
+   * qualquer componente shadcn futuro herde a identidade Carioca por padrão.
+   */
+  --color-background: var(--color-off-white);
+  --color-foreground: var(--color-ink);
+  --color-border: var(--color-hair);
+  --color-input: var(--color-hair);
+  --color-ring: var(--color-light-blue);
+  --color-primary: var(--color-carioca-green);
+  --color-primary-foreground: var(--color-deep-blue);
+  --color-secondary: var(--color-off-white);
+  --color-secondary-foreground: var(--color-ink);
+  --color-muted: var(--color-sand);
+  --color-muted-foreground: var(--color-light-graphite);
+  --color-accent: var(--color-carioca-blue);
+  --color-accent-foreground: #ffffff;
+
+  /* tipografia */
+  --font-display: "Manrope", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-sans: var(--font-body);
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-accent-serif: "Fraunces", serif;
+
+  /* forma */
+  --radius-carioca: 6px;
+
+  /* breakpoints — design.md Seção 6 */
+  --breakpoint-tablet: 641px;
+  --breakpoint-desktop: 1025px;
+  --breakpoint-wide: 1440px;
+}
+
+/*
+ * Cores derivadas via color-mix — nunca redefinir os tokens base acima.
+ * design.md Seção 13: correção de contraste WCAG AA dos cards de Atendimento.
+ * card-blue: fundo escurecido 7% sobre --color-carioca-blue (~#2b7ab7), texto branco puro.
+ * card-green: texto de --color-dark-green escurecido 40% em preto (~#223e11) sobre fundo verde puro.
+ */
+:root {
+  --color-card-blue-bg: color-mix(in srgb, var(--color-carioca-blue) 93%, black 7%);
+  --color-card-green-text: color-mix(in srgb, var(--color-dark-green) 60%, black 40%);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    @apply bg-background text-foreground font-body;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    margin: 0;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+  }
+
+  p {
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  img,
+  svg {
+    display: block;
+  }
+}
