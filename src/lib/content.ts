@@ -104,7 +104,7 @@ export const content = {
         "Atendimento emergencial",
         "Relatório de vendas em PDF, Excel e gráficos",
         "Vendas por centro de custo",
-        "STUR WEB: plataforma desenvolvida para facilitar e automatizar as rotinas operacionais e a gestão financeira da empresa.",
+        "STUR WEB: plataforma de gestão operacional e financeira.",
       ],
       chips: ["Self booking", "Relatórios", "Centro de custo"],
     },

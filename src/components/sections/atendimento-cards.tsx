@@ -158,7 +158,7 @@ function AtendimentoCards() {
         <p className="mx-auto mt-5 max-w-[620px] text-[1.08rem] text-graphite">
           {atendimento.intro}
         </p>
-        <div className="mt-[60px] grid grid-cols-1 items-stretch gap-[26px] tablet:grid-cols-3">
+        <div className="mt-[60px] grid grid-cols-1 items-stretch gap-[26px] desktop:grid-cols-3">
           {atendimento.cards.map((card) => (
             <AtendimentoCard
               key={card.index}

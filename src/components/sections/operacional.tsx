@@ -40,7 +40,7 @@ function Operacional() {
               {operacional.corporativo.label}
             </span>
           </div>
-          <div className="grid grid-cols-1 gap-12 tablet:grid-cols-2">
+          <div className="grid grid-cols-1 gap-12 desktop:grid-cols-2">
             <OpList items={operacional.corporativo.colA} />
             <div className="flex flex-col">
               <OpList items={operacional.corporativo.colB} />
@@ -63,7 +63,7 @@ function Operacional() {
               {operacional.receptivo.label}
             </span>
           </div>
-          <div className="grid grid-cols-1 gap-12 tablet:grid-cols-2">
+          <div className="grid grid-cols-1 gap-12 desktop:grid-cols-2">
             <OpList items={operacional.receptivo.colA} />
             <OpList items={operacional.receptivo.colB} />
           </div>
