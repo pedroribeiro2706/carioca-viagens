@@ -142,6 +142,14 @@ function AtendimentoCards() {
 
   return (
     <section className="relative overflow-hidden bg-sand py-[108px] tablet:py-[116px]">
+      {/*
+        [PROVISÓRIO] Posição original (Seção 9 do design.md), sobrepondo
+        texto/cards em larguras intermediárias — aceito temporariamente a
+        pedido do Pedro: a posição final vem de uma animação GSAP futura (o
+        elemento "recua" pela própria trajetória tracejada conforme a largura
+        reduz, em vez de um reposicionamento estático). Não travar este
+        posicionamento como definitivo.
+      */}
       <img
         src={aviaoIcon}
         alt=""

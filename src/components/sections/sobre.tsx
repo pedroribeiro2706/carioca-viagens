@@ -17,6 +17,14 @@ function Sobre() {
 
   return (
     <section className="relative overflow-hidden bg-off-white py-[72px] tablet:py-[104px]">
+      {/*
+        [PROVISÓRIO] Posição original (Seção 9 do design.md), sobrepondo o
+        texto em larguras intermediárias — aceito temporariamente a pedido do
+        Pedro: a posição final vem de uma animação GSAP futura (o elemento
+        "recua" pela própria trajetória tracejada conforme a largura reduz,
+        em vez de um reposicionamento estático). Não travar este posicionamento
+        como definitivo.
+      */}
       <img
         src={pinIcon}
         alt=""

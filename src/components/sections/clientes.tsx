@@ -19,9 +19,11 @@ const LOGO_SRC: Record<string, string> = {
 }
 
 /**
- * Grid fluido (auto-fit/minmax) em vez da grade fixa de 5 colunas do
- * mockup — design.md Seção 15, decisão técnica já travada para a
- * implementação React (não quebra visualmente se a lista de clientes mudar).
+ * Colunas fixas por breakpoint em vez de auto-fit/minmax puro — design.md
+ * Seção 15 pedia grid fluido, mas o auto-fit reorganiza continuamente
+ * conforme a largura e passa por composições intermediárias desequilibradas
+ * (ex.: 4 logos em cima + 1 embaixo). Com 5 clientes fixos: mobile 1 coluna
+ * (empilhado), tablet e desktop/wide mantêm as 5 logos numa linha só.
  */
 function Clientes() {
   const { clientes } = content
@@ -35,7 +37,7 @@ function Clientes() {
             {clientes.title}
           </h2>
         </div>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] border-t border-l border-hair">
+        <div className="grid grid-cols-1 border-t border-l border-hair tablet:grid-cols-5">
           {clientes.logos.map((logo) => (
             <div
               key={logo.file}

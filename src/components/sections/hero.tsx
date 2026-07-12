@@ -43,7 +43,7 @@ function Hero() {
 
       <div className="relative z-[1] border-b border-hair-light bg-ink/35">
         <WrapWide className="flex flex-wrap items-center justify-between gap-4 py-[9px] font-mono text-[0.7rem] tracking-[0.08em] text-off-white/82 uppercase">
-          <span className="flex items-center gap-2.5">
+          <span className="flex flex-wrap items-center gap-2.5">
             <span>{hero.utilityLeft}</span>
             <Chip size="sm">{hero.utilityLeftTag}</Chip>
           </span>
