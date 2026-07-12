@@ -1,6 +1,6 @@
 # HANDOFF — Carioca Viagens (apresentação digital)
 
-> Atualizado em 2026-07-11. Ver Seção 0 para a mudança mais recente (migração de diretório). Sessão anterior (2026-07-10) revisou criticamente o mockup 08, criou os cards de Atendimento (rodadas 09-10), obteve aprovação final do Pedro para essa seção e produziu `design/design.md`. Objetivo agora: permitir que uma sessão nova ("fresh") inicie a implementação React sem perder contexto.
+> Atualizado em 2026-07-12 — ver Seção 14 para o estado atual da implementação React (já em andamento, 3 commits) e a pendência de GSAP para pin/avião. Seção 0 documenta a migração de diretório (2026-07-11). Sessão anterior a essa (2026-07-10) revisou criticamente o mockup 08, criou os cards de Atendimento (rodadas 09-10), obteve aprovação final do Pedro para essa seção e produziu `design/design.md`.
 
 ## 0. Migração de diretório (2026-07-11)
 
@@ -122,12 +122,12 @@ Não existe um screenshot full-page da página inteira nesta sessão (só a seç
 
 - A Hero será refinada novamente somente quando houver imagem/vídeo real — tamanho de fonte, enquadramento de mídia e posicionamento final dependem disso.
 - Imagens/vídeos serão gerados ou escolhidos em etapa posterior, possivelmente com **Higgsfield** (MCP mencionado pelo Pedro em 2026-07-10 como ferramenta pretendida para essa etapa).
-- Clientes: 5 logos reais já estão aplicadas na seção (`references/logo clientes/`: gesel, leonardo, miguel, somerj, wp), mas essa lista pode não ser a versão final — falta definir uma regra de grid flexível (auto-fit/minmax) para quando a quantidade de clientes mudar.
+- Clientes: 5 logos reais já estão aplicadas na seção (`references/logo clientes/`: gesel, leonardo, miguel, somerj, wp), mas essa lista pode não ser a versão final. ~~Falta definir uma regra de grid flexível~~ — **resolvido em 2026-07-12**: grid de colunas fixas por breakpoint (mobile 1 coluna, tablet/desktop/wide 5 colunas), ver `design.md` Seção 15 e Seção 14 abaixo.
 - Responsividade será otimizada depois, na fase de implementação (React + TS + Vite + Tailwind + shadcn + GSAP) — o design.md deve especificar a regra de breakpoint mobile (Pedro confirmou que vale a pena travar isso agora, mesmo sem implementação visual fina ainda).
 
 ## 11. Próximo passo recomendado
 
-~~Criar `design/design.md`~~ — **feito** (ver Seção 0). Próximo passo real agora: implementar React + TypeScript + Vite + Tailwind + shadcn/ui a partir do `design/design.md`, usando `10-cards-refinamento.html` como referência visual/técnica. GSAP e Higgsfield continuam fora de escopo até o layout React estar estável.
+~~Criar `design/design.md`~~ — **feito** (ver Seção 0). ~~Implementar React + TypeScript + Vite + Tailwind + shadcn/ui~~ — **feito e em produção contínua**, ver Seção 14. Próximo passo real agora: animação GSAP de pin/avião (especificação já travada, implementação ainda não iniciada — ver Seção 14). Higgsfield continua fora de escopo até haver necessidade real de mídia gerada.
 
 ## 12. Observação técnica importante
 
@@ -148,3 +148,17 @@ Não existe um screenshot full-page da página inteira nesta sessão (só a seç
 - **Avião/pin**: sempre referenciar os SVGs originais via `<img src="...">` (`references/elements/pin point carioca blue.svg`, `aviao carioca blue.svg`) — nunca transcrever o `path` manualmente (já causou perda do `stroke-dasharray` e substituição acidental por ícone genérico).
 - **Screenshot full-page pode compor errado em página longa** (bug de composição do Chromium headless, não do HTML/CSS) — mitigação: screenshot por `<section>` isolada. Detalhes em `Brain/10_Knowledge/Screenshots de página inteira em ambiente de dev local — Playwright e as armadilhas do vh.md`.
 - **Fraunces é exclusivo da Hero** — não reintroduzir em outros títulos sem pedido explícito (já revertido uma vez por feedback negativo).
+
+## 14. Estado da implementação React (2026-07-12)
+
+A implementação React (`src/`) está em andamento com 3 commits: scaffold + Tailwind + shadcn + tokens + todos os componentes de seção (`feat: implementa base React da apresentação`), ajustes de responsividade em Atendimento/Operacional (`fix: ajusta responsividade de atendimento e operacional`), e uma rodada de correções de alinhamento (Hero/Atendimento/Contato) + correção tipográfica dos subtítulos do Operacional. Lint e build sempre verificados limpos antes de cada commit.
+
+**Pendência aberta — animação GSAP de pin/avião:**
+
+Pin (Sobre) e avião (Atendimento) estão hoje na posição estática original desta seção (Seção 9: `right:0`/`left:0`), o que gera sobreposição visual com o texto em larguras intermediárias (tablet / desktop estreito). Uma correção puramente estática via CSS foi implementada e revertida a pedido do Pedro em 2026-07-12 — a solução correta não é reposicionar por breakpoint, é uma **animação**: o elemento deve se deslocar sobre a própria trajetória tracejada do SVG, "recuando" pelo path conforme a largura da viewport reduz (ver especificação completa em `design/design.md` Seção 19).
+
+Ponto técnico crítico confirmado pelo Pedro: a posição do elemento no path deve ser calculada a partir da largura atual **já no carregamento da página** (`on mount`), e recalculada em `resize` — **além de** reagir ao evento de resize, não **em vez de**. A maioria dos visitantes (celular, tablet) carrega a página direto numa largura estreita, sem gerar nenhum evento de resize, e precisa ver o elemento já na posição correta desde o primeiro paint.
+
+Esta é a única pendência de motion/GSAP identificada e especificada até agora — nenhuma outra animação (linha de rota, entrada da Hero, hover dos cards, etc., ver `design/design.md` Seção 19) foi discutida ou especificada em detalhe ainda.
+
+**Grid de Clientes — decisão revisada:** o grid fluido (`auto-fit`/`minmax`) documentado como decisão técnica em `design/design.md` Seção 15 foi implementado, testado e **rejeitado** pelo Pedro por gerar composições desequilibradas (ex. 4 logos em cima + 1 embaixo) em larguras intermediárias. Substituído por colunas fixas por breakpoint: mobile 1 coluna, tablet/desktop/wide 5 colunas numa linha só. `design.md` Seção 15 já atualizado para refletir essa decisão.

@@ -291,6 +291,8 @@ Regras de uso:
 - Ocultos completamente no mobile (`display: none` abaixo de 900px) — não reduzidos.
 - Candidatos a animação discreta futura via GSAP (Seção 19).
 
+**[PROVISÓRIO — decisão de 2026-07-12, aguardando implementação GSAP]** Na implementação React atual, pin e avião estão fixos na posição original desta seção (`right:0`/`left:0`), o que causa sobreposição visual com o texto em larguras intermediárias (tablet/desktop estreito). Isso foi identificado, uma correção estática via CSS foi tentada e revertida a pedido do Pedro — a posição correta não é um valor fixo por breakpoint, e sim uma animação: o elemento deve se mover **sobre a própria trajetória tracejada**, recuando ao longo do path conforme a largura reduz, em vez de saltar entre posições. Ver especificação completa na Seção 19.
+
 ---
 
 ## 10. Seção Sobre
@@ -446,11 +448,12 @@ Ver também Seção 22.
 - Fundo `--off-white`, título centralizado com eyebrow "— Clientes" / "Nossos clientes".
 - 5 logos reais aplicadas: gesel, leonardo, miguel (Miguel Pinto Guimarães Arquitetos Associados), somerj, wp (WP Capital).
 - O mockup estático usa `grid-template-columns: repeat(5, 1fr)` (fixo) só porque é uma exploração visual sem necessidade de lidar com uma lista dinâmica — isso **não muda a direção visual nem o mockup HTML**.
-- **Decisão técnica para a implementação em React** (não é mais pendência de design, é especificação técnica):
-  - Usar grid fluido com `auto-fit`/`minmax` (ex.: `grid-template-columns: repeat(auto-fit, minmax(160px, 1fr))`, valor de `minmax` a ajustar durante a implementação) em vez da grade fixa de 5 colunas, para a seção não quebrar visualmente se o número de clientes mudar.
-  - Preferir os arquivos `.svg` (já existentes em `references/logo clientes/`) em vez dos `.png` atualmente usados no mockup, para nitidez em qualquer resolução.
+- **Decisão técnica para a implementação em React (revisada em 2026-07-12, substitui a decisão original abaixo):**
+  - Testado em React com grid fluido `auto-fit`/`minmax` — na prática, o `auto-fit` reorganiza continuamente conforme a largura e passa por composições intermediárias desequilibradas (ex.: 4 logos em cima + 1 embaixo), o que o Pedro rejeitou visualmente.
+  - Substituído por **colunas fixas por breakpoint**, já que a lista de clientes hoje é fixa em 5: **mobile (até 640px) 1 coluna** (empilhado verticalmente, igual ao padrão dos cards de Atendimento), **tablet e desktop/wide (a partir de 641px) 5 colunas** numa linha só — sem estado intermediário de 2 ou 3 colunas.
+  - Preferir os arquivos `.svg` (já existentes em `references/logo clientes/`) em vez dos `.png` — já aplicado, com uma exceção: `wp.svg` está quebrado (referencia um arquivo externo fora do projeto) e usa `wp.png` como fallback até que um SVG válido seja fornecido.
+  - ~~Decisão original (2026-07-11, obsoleta): grid fluido com `auto-fit`/`minmax` (`repeat(auto-fit, minmax(160px, 1fr))`).~~ Mantida aqui só como histórico — não reintroduzir sem novo pedido explícito.
 - Logos devem ser normalizadas em peso óptico (tratamento consistente, preferencialmente monocromático ou com contraste equalizado) — ainda não verificado se os 5 arquivos atuais já têm esse tratamento aplicado.
-- No mobile, o mockup atual usa 2 colunas fixas (`repeat(2, 1fr)`) — na implementação React, isso é substituído pelo mesmo grid fluido acima, que já se adapta sozinho a qualquer largura.
 
 ---
 
@@ -511,7 +514,11 @@ Ver também Seção 22.
   - Hover/press nos cards de Atendimento (`.oferta-card`).
   - Microinterações em CTAs (já há `transition` em `.btn`, mas apenas CSS — GSAP pode refinar).
   - Movimento sutil em blocos de mídia (Seção 11), quando a mídia real entrar.
-  - Animação discreta de pin/avião (Seção 9) — ex. entrada com leve deslocamento.
+  - **Pin/avião "recuando" pela trajetória (Seção 9) — especificação travada em 2026-07-12, ainda não implementada:**
+    - O elemento (pin em Sobre, avião em Atendimento) se desloca **sobre o próprio path tracejado do SVG**, não por um recálculo estático de `left`/`right`. Conforme a largura da viewport reduz, o elemento "recua" pela trajetória — a sensação é de que ele está percorrendo a rota de volta, não pulando de posição.
+    - **Importante — não é só reativo a resize**: a posição de repouso do elemento no path é **função da largura atual**, calculada já no carregamento da página (`on mount`), e recalculada em qualquer `resize` subsequente. Não implementar como "anima só quando o usuário arrasta a borda da janela" — a maioria dos visitantes (celular, tablet) carrega a página direto numa largura estreita, sem nenhum evento de resize acontecer, e precisa ver o elemento já na posição correta desde o primeiro paint. (Confirmado por Pedro em 2026-07-12: "além de" escutar resize, não "em vez de".)
+    - Candidato técnico: GSAP `MotionPath` (ou interpolação manual ao longo do `path` do SVG via `getPointAtLength`), com a fração do path mapeada a partir da largura da viewport.
+    - Até essa animação existir, pin/avião ficam na posição original da Seção 9 (`right:0`/`left:0`), aceitando sobreposição com o texto em larguras intermediárias — decisão consciente do Pedro para não travar um valor estático que seria descartado assim que o GSAP entrar.
 - Evitar animar tudo — nem toda seção precisa de motion.
 - Evitar scroll-reveal genérico aplicado indiscriminadamente a todas as seções.
 - Sempre respeitar `prefers-reduced-motion` (não implementado no mockup HTML/CSS atual — deve ser adicionado junto com o GSAP).
@@ -566,11 +573,12 @@ Manter:
 5. Substituir os placeholders de mídia (Seção 11) por mídia real.
 6. Possivelmente usar Higgsfield para gerar as imagens/vídeos (Seção 20) — não usar antes disso.
 7. Adicionar GSAP somente após o layout estar estável em React (Seção 19).
+   - **Item específico e já especificado, aguardando essa etapa**: animação de pin/avião "recuando" pela trajetória tracejada conforme a largura reduz (Seção 9 e Seção 19) — posição calculada a partir da largura atual já no carregamento (`on mount`) e recalculada em `resize`, não apenas reativa ao evento de resize. Até lá, os dois elementos ficam na posição original (`right:0`/`left:0`), podendo sobrepor texto em larguras intermediárias — aceito conscientemente pelo Pedro em 2026-07-12.
 8. Otimizar responsividade adotando a escala de 4 breakpoints da Seção 6 diretamente na implementação (mobile, tablet, desktop, wide) — decisão confirmada, não é mais necessário testar via HTML estático.
-9. Implementar o grid fluido (`auto-fit`/`minmax`) e as logos em SVG na seção Clientes (Seção 15 — decisão técnica já travada).
+9. ~~Implementar o grid fluido (`auto-fit`/`minmax`)~~ — **feito e revisado em 2026-07-12**: grid fluido testado e substituído por colunas fixas por breakpoint (Seção 15) por gerar composições desequilibradas. Logos em SVG já implementadas (exceto `wp`, que usa PNG por o SVG de origem estar quebrado).
 10. Preparar a versão PDF depois da versão digital estável, em formato editorial 16:9 (Seção 5) — aplicação da logo em PDF ainda não definida (Seção 4).
 
-Todos os pontos `[REVISAR]` da rodada anterior foram fechados nesta sessão — não há pendências abertas de decisão do Pedro no momento.
+Pendência aberta desde 2026-07-12: animação GSAP de pin/avião (item 7 acima) — todo o resto não tem pontos `[REVISAR]` em aberto.
 
 ---
 
