@@ -1,6 +1,6 @@
 # HANDOFF — Carioca Viagens (apresentação digital)
 
-> Atualizado em 2026-07-12 — ver Seção 14 para o estado atual da implementação React (já em andamento, 3 commits) e a pendência de GSAP para pin/avião. Seção 0 documenta a migração de diretório (2026-07-11). Sessão anterior a essa (2026-07-10) revisou criticamente o mockup 08, criou os cards de Atendimento (rodadas 09-10), obteve aprovação final do Pedro para essa seção e produziu `design/design.md`.
+> Atualizado em 2026-07-13 — ver Seção 14 para o estado atual completo da implementação React (6 commits) e Seção 15 para o prompt recomendado de início da próxima sessão. Favicon oficial e metadados sociais (Open Graph/Twitter) foram concluídos e commitados (`f7b9287`) — próxima etapa é preview/deploy (Vercel). Seção 0 documenta a migração de diretório (2026-07-11). Sessão anterior a essa (2026-07-10) revisou criticamente o mockup 08, criou os cards de Atendimento (rodadas 09-10), obteve aprovação final do Pedro para essa seção e produziu `design/design.md`.
 
 ## 0. Migração de diretório (2026-07-11)
 
@@ -149,16 +149,108 @@ Não existe um screenshot full-page da página inteira nesta sessão (só a seç
 - **Screenshot full-page pode compor errado em página longa** (bug de composição do Chromium headless, não do HTML/CSS) — mitigação: screenshot por `<section>` isolada. Detalhes em `Brain/10_Knowledge/Screenshots de página inteira em ambiente de dev local — Playwright e as armadilhas do vh.md`.
 - **Fraunces é exclusivo da Hero** — não reintroduzir em outros títulos sem pedido explícito (já revertido uma vez por feedback negativo).
 
-## 14. Estado da implementação React (2026-07-12)
+## 14. Estado da implementação React (atualizado em 2026-07-12, fim de sessão)
 
-A implementação React (`src/`) está em andamento com 3 commits: scaffold + Tailwind + shadcn + tokens + todos os componentes de seção (`feat: implementa base React da apresentação`), ajustes de responsividade em Atendimento/Operacional (`fix: ajusta responsividade de atendimento e operacional`), e uma rodada de correções de alinhamento (Hero/Atendimento/Contato) + correção tipográfica dos subtítulos do Operacional. Lint e build sempre verificados limpos antes de cada commit.
+### Caminho do projeto
 
-**Pendência aberta — animação GSAP de pin/avião:**
+```
+G:\Pedro\Dev\Clientes\carioca-viagens
+```
 
-Pin (Sobre) e avião (Atendimento) estão hoje na posição estática original desta seção (Seção 9: `right:0`/`left:0`), o que gera sobreposição visual com o texto em larguras intermediárias (tablet / desktop estreito). Uma correção puramente estática via CSS foi implementada e revertida a pedido do Pedro em 2026-07-12 — a solução correta não é reposicionar por breakpoint, é uma **animação**: o elemento deve se deslocar sobre a própria trajetória tracejada do SVG, "recuando" pelo path conforme a largura da viewport reduz (ver especificação completa em `design/design.md` Seção 19).
+### Versionamento
 
-Ponto técnico crítico confirmado pelo Pedro: a posição do elemento no path deve ser calculada a partir da largura atual **já no carregamento da página** (`on mount`), e recalculada em `resize` — **além de** reagir ao evento de resize, não **em vez de**. A maioria dos visitantes (celular, tablet) carrega a página direto numa largura estreita, sem gerar nenhum evento de resize, e precisa ver o elemento já na posição correta desde o primeiro paint.
+Repositório Git próprio neste diretório (não é submódulo do `Dev/`, é o repo do projeto). **Working tree limpo** — confirmado via `git status` (`nothing to commit, working tree clean`) ao final desta sessão.
 
-Esta é a única pendência de motion/GSAP identificada e especificada até agora — nenhuma outra animação (linha de rota, entrada da Hero, hover dos cards, etc., ver `design/design.md` Seção 19) foi discutida ou especificada em detalhe ainda.
+Commits principais, em ordem:
 
-**Grid de Clientes — decisão revisada:** o grid fluido (`auto-fit`/`minmax`) documentado como decisão técnica em `design/design.md` Seção 15 foi implementado, testado e **rejeitado** pelo Pedro por gerar composições desequilibradas (ex. 4 logos em cima + 1 embaixo) em larguras intermediárias. Substituído por colunas fixas por breakpoint: mobile 1 coluna, tablet/desktop/wide 5 colunas numa linha só. `design.md` Seção 15 já atualizado para refletir essa decisão.
+1. `chore: checkpoint design system aprovado` — checkpoint do design system antes da migração/implementação.
+2. `feat: implementa base React da apresentação` — scaffold Vite + TypeScript, Tailwind configurado, shadcn/ui inicializado como infraestrutura técnica (não define estética), tokens Carioca em `src/index.css`, todos os componentes de seção implementados, assets copiados para `src/assets`.
+3. `fix: ajusta responsividade de atendimento e operacional` — primeira rodada de correção de breakpoints nessas duas seções.
+4. `docs: registra decisões responsivas e preparação para GSAP` — atualização de `design/design.md` e deste `HANDOFF.md` com as decisões descritas abaixo.
+5. `fix: ajusta comportamento responsivo de clientes e elementos gráficos` — grid de Clientes revisado; pin/avião revertidos à posição original aprovada.
+6. `chore: adiciona favicon e metadados sociais` — favicon oficial (`public/favicon.svg`, `.ico`, `apple-touch-icon.png`, extraído do ícone já usado no logo `-nova`) e metadados completos em `index.html` (Open Graph, Twitter Card, `theme-color`, `public/og-image.png` 1200×630).
+
+### Estado atual da implementação
+
+- React + TypeScript + Vite implementado e funcional (`npm run dev`, `npm run build`).
+- Tailwind v4 configurado, tokens Carioca mapeados em `src/index.css` (cores, tipografia, radius, hairlines, color-mix dos cards).
+- shadcn/ui configurado **apenas como infraestrutura técnica** — só o componente `Button` foi instalado e reescrito com os tokens Carioca (não usa a estética padrão do shadcn); `Badge` avaliado e não instalado por falta de uso real no design.
+- Componentes principais implementados: Hero, Sobre, MediaBand, Diferenciais, AtendimentoCards, Operacional, Clientes, ContatoFooter, Button, Chip, Eyebrow, CornerGuides.
+- Assets (logos, elementos gráficos pin/avião, logos de clientes) copiados para `src/assets/`.
+- `npm run lint` e `npm run build` verificados limpos antes de cada commit desta sessão (lint só com warnings esperados de fast-refresh do shadcn).
+- Git limpo ao final da sessão.
+
+### Decisões visuais/estruturais consolidadas
+
+- `design/design.md` é o **contrato principal de implementação**.
+- `design/mocks/10-cards-refinamento.html` é a **referência visual/técnica aprovada**.
+- `references/conteudo-apresentacao.md` é a **fonte oficial de conteúdo textual**.
+- Todos os pontos `[REVISAR]` do `design.md` estão fechados — não há pendência de decisão de design em aberto.
+- Cards de Atendimento: contraste corrigido (WCAG AA nos três cards), estrutura em duas zonas preservada, título em caixa alta, numeração, seta diagonal e placeholder de imagem inferior preservados. **Empilham (1 coluna) até 1024px e viram 3 colunas a partir do desktop (1025px+)**.
+- Seção Operacional: **empilha (1 coluna) até 1024px e vira 2 colunas a partir do desktop (1025px+)**, mesmo padrão de breakpoint dos cards.
+- Item STUR WEB usa a **versão curta do mockup** ("STUR WEB: plataforma de gestão operacional e financeira."), não a versão longa do `conteudo-apresentacao.md` — exceção documentada a pedido do Pedro.
+- Grid de Clientes revisado: o grid fluido (`auto-fit`/`minmax`) documentado originalmente em `design.md` Seção 15 foi testado e rejeitado por gerar composições desequilibradas (ex. 4 logos em cima + 1 embaixo). Decisão atual: **mobile 1 coluna (empilhado), tablet/desktop/wide 5 colunas numa linha só** — sem estado intermediário. `design.md` Seção 15 já reflete essa decisão revisada.
+- Elementos gráficos de Sobre (pin) e Atendimento (avião): **não devem ser reposicionados por breakpoint como solução final** — essa abordagem foi tentada e revertida a pedido do Pedro. Estão hoje na posição estática original (`right:0`/`left:0`), aceitando sobreposição temporária com o texto em larguras intermediárias. A solução definitiva é uma **animação GSAP futura**: o elemento se desloca sobre a própria trajetória tracejada do SVG, "recuando" pelo path conforme a largura reduz — com a posição calculada a partir da largura atual **já no `mount`**, e recalculada em `resize` (**além de**, não em vez de, reagir ao resize — a maioria dos visitantes carrega a página direto numa largura estreita, sem gerar evento de resize). Especificação completa em `design/design.md` Seções 9 e 19.
+
+### Estado da revisão responsiva
+
+- Revisão manual feita pelo Pedro no navegador (não apenas inspeção de código).
+- Cards de Atendimento: corrigidos e aprovados.
+- Seção Operacional: corrigida e aprovada.
+- Logos de Clientes: testadas e consideradas ok na versão atual (colunas fixas por breakpoint).
+- Elementos gráficos de Sobre/Atendimento: comportamento atual aceito como temporário — refinamento real fica para a etapa de GSAP/motion.
+- Teste em celular real via rede local foi considerado (`npm run dev -- --host`), mas **não foi confirmado como testado com sucesso** nesta sessão — possível que o Firewall do Windows ou o perfil de rede (pública vs. privada) bloqueie o acesso de outro dispositivo à porta do Vite; se isso ocorrer, é necessário liberar a porta no Firewall ou ajustar o perfil de rede.
+
+### Pendências técnicas conhecidas
+
+- Favicon oficial e metadados básicos: **concluídos** (`f7b9287`) — ver detalhe abaixo.
+- Preview/deploy ainda não feito — em preparação nesta sessão (2026-07-13).
+- GSAP ainda não implementado (só especificado/documentado).
+- Higgsfield / mídia real ainda não usado — todos os blocos de mídia continuam placeholder.
+- Versão PDF ainda não iniciada.
+
+### Favicon e metadados sociais (concluído em 2026-07-13, commit `f7b9287`)
+
+- Favicon oficial extraído do ícone já usado no logo oficial (`src/assets/logo/logo-horizontal-clara-nova.svg`) — recorte programático via parser XML (sem transcrever paths manualmente), sem alterar cores ou geometria.
+- Arquivos gerados em `public/`: `favicon.svg` (vetor), `favicon.ico` (16/32/48px), `apple-touch-icon.png` (180×180, fundo off-white sólido), `og-image.png` (1200×630, cartão Open Graph montado com logo + gradiente institucional + tagline oficial, sem copy nova).
+- `index.html` completo com `theme-color`, favicons, Open Graph e Twitter Card. Único placeholder restante é `og:url` (comentado, aguardando domínio de produção pós-deploy).
+- Nenhuma referência ao favicon padrão do Vite permanece no projeto.
+
+### Próxima etapa recomendada
+
+Ordem sugerida para a próxima sessão:
+
+1. Preparar preview/deploy (ex. Vercel) — em andamento nesta sessão (2026-07-13).
+2. Avançar para GSAP/motion (começando pela animação de pin/avião já especificada acima).
+3. Higgsfield / mídia real.
+4. Versão PDF (por último, depois da versão digital estável).
+
+## 15. Próximo prompt sugerido
+
+Para iniciar a próxima sessão, usar este prompt:
+
+```
+Estamos no projeto Carioca Viagens em:
+
+G:\Pedro\Dev\Clientes\carioca-viagens
+
+Leia primeiro:
+
+- CLAUDE.md
+- HANDOFF.md
+- design/design.md
+- design-brief.md
+- project-card.md
+- references/conteudo-apresentacao.md
+- design/mocks/10-cards-refinamento.html
+
+Use design/design.md como contrato principal.
+Use HANDOFF.md para entender o estado atual da implementação.
+Use references/conteudo-apresentacao.md como fonte oficial de conteúdo textual.
+
+Não implemente nada ainda.
+Depois de ler, responda com:
+- resumo do estado atual;
+- próximos passos recomendados;
+- confirmação de que o working tree está limpo.
+```
