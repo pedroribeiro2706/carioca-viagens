@@ -1,6 +1,6 @@
 # HANDOFF — Carioca Viagens (apresentação digital)
 
-> Atualizado em 2026-07-13 — ver Seção 14 para o estado atual completo da implementação React (6 commits) e Seção 15 para o prompt recomendado de início da próxima sessão. Favicon oficial e metadados sociais (Open Graph/Twitter) foram concluídos e commitados (`f7b9287`) — próxima etapa é preview/deploy (Vercel). Seção 0 documenta a migração de diretório (2026-07-11). Sessão anterior a essa (2026-07-10) revisou criticamente o mockup 08, criou os cards de Atendimento (rodadas 09-10), obteve aprovação final do Pedro para essa seção e produziu `design/design.md`.
+> Atualizado em 2026-07-15 (fim de sessão) — ver Seção 14 para o estado completo (7 commits + deploy Vercel + 2ª iteração de GSAP implementada e agora **aprovada visualmente pelo Pedro**, ainda **não commitada**) e Seção 15 para o prompt de início da próxima sessão. **Estado crítico a entender antes de qualquer coisa**: a 2ª iteração de GSAP (ScrollTrigger + máscara SVG + rotação por tangente) está implementada, validada programaticamente (lint, build, sobreposição, reduced-motion, resize, cleanup) e **revisada visualmente e aprovada pelo Pedro em 2026-07-15**. A última correção desta sessão foi a **origem de rotação do avião** (`svgOrigin` fixado no `restPoint` — antes o avião girava em torno do canto do bbox do ícone e "descolava" do path até ~88px, parecendo girar antes da curva; agora fica sobre a linha com precisão sub-pixel). O commit ainda **não foi feito** — aguardando autorização explícita do Pedro (Seção 14, subseção "Aprovação visual"). Existe **uma melhoria futura já mapeada e ainda não autorizada**: simplificar/encurtar a trajetória do avião para que o percurso termine antes de a seção sair da viewport — **não implementar sem pedido explícito**. Histórico técnico completo dos ciclos de diagnóstico desta sessão em `C:\Users\Pedro\.claude\plans\expressive-hugging-honey.md` (percurso curto, rotação ausente, clipping) e no plano anterior `C:\Users\Pedro\.claude\plans\declarative-leaping-catmull.md` (arquitetura ScrollTrigger + DrawSVG original). Seção 0 documenta a migração de diretório (2026-07-11).
 
 ## 0. Migração de diretório (2026-07-11)
 
@@ -127,7 +127,7 @@ Não existe um screenshot full-page da página inteira nesta sessão (só a seç
 
 ## 11. Próximo passo recomendado
 
-~~Criar `design/design.md`~~ — **feito** (ver Seção 0). ~~Implementar React + TypeScript + Vite + Tailwind + shadcn/ui~~ — **feito e em produção contínua**, ver Seção 14. Próximo passo real agora: animação GSAP de pin/avião (especificação já travada, implementação ainda não iniciada — ver Seção 14). Higgsfield continua fora de escopo até haver necessidade real de mídia gerada.
+~~Criar `design/design.md`~~ — **feito** (ver Seção 0). ~~Implementar React + TypeScript + Vite + Tailwind + shadcn/ui~~ — **feito e em produção contínua**, ver Seção 14. ~~Revisão visual manual da 2ª iteração de GSAP de pin/avião~~ — **feita e aprovada em 2026-07-15** (ver Seção 14, subseção "Aprovação visual"). Próximo passo real agora: **commit da 2ª iteração de GSAP** (aguardando autorização explícita do Pedro — nada commitado ainda) e, depois, novo deploy Vercel (a versão publicada atual não tem GSAP). A simplificação da trajetória do avião é melhoria futura **não autorizada** — não implementar sem pedido. Higgsfield continua fora de escopo até haver necessidade real de mídia gerada.
 
 ## 12. Observação técnica importante
 
@@ -168,7 +168,11 @@ Commits principais, em ordem:
 3. `fix: ajusta responsividade de atendimento e operacional` — primeira rodada de correção de breakpoints nessas duas seções.
 4. `docs: registra decisões responsivas e preparação para GSAP` — atualização de `design/design.md` e deste `HANDOFF.md` com as decisões descritas abaixo.
 5. `fix: ajusta comportamento responsivo de clientes e elementos gráficos` — grid de Clientes revisado; pin/avião revertidos à posição original aprovada.
-6. `chore: adiciona favicon e metadados sociais` — favicon oficial (`public/favicon.svg`, `.ico`, `apple-touch-icon.png`, extraído do ícone já usado no logo `-nova`) e metadados completos em `index.html` (Open Graph, Twitter Card, `theme-color`, `public/og-image.png` 1200×630).
+6. `chore: adiciona favicon e metadados sociais` (`f7b9287`) — favicon oficial (`public/favicon.svg`, `.ico`, `apple-touch-icon.png`, extraído do ícone já usado no logo `-nova`) e metadados completos em `index.html` (Open Graph, Twitter Card, `theme-color`, `public/og-image.png` 1200×630).
+7. `docs: atualiza estado do projeto após metadados` (`ca91972`) — HANDOFF.md corrigido para refletir favicon/metadados concluídos (a versão anterior do handoff estava desatualizada nesse ponto).
+8. `chore: ignora configuração local da vercel` (`c36ecf2`) — adiciona `.vercel/` ao `.gitignore` antes do primeiro deploy.
+
+**Working tree após o commit 8 (`c36ecf2`) não está mais limpo** — ver "Trabalho de GSAP em andamento (não commitado)" abaixo.
 
 ### Estado atual da implementação
 
@@ -204,8 +208,8 @@ Commits principais, em ordem:
 ### Pendências técnicas conhecidas
 
 - Favicon oficial e metadados básicos: **concluídos** (`f7b9287`) — ver detalhe abaixo.
-- Preview/deploy ainda não feito — em preparação nesta sessão (2026-07-13).
-- GSAP ainda não implementado (só especificado/documentado).
+- Preview/deploy: **feito** (Vercel) — ver "Deploy Vercel" abaixo, com uma ressalva conhecida.
+- GSAP: **2ª iteração implementada e validada programaticamente, não commitada, aguardando revisão visual manual do Pedro** — ver seção dedicada abaixo. Este é o item ativo da próxima sessão.
 - Higgsfield / mídia real ainda não usado — todos os blocos de mídia continuam placeholder.
 - Versão PDF ainda não iniciada.
 
@@ -216,14 +220,122 @@ Commits principais, em ordem:
 - `index.html` completo com `theme-color`, favicons, Open Graph e Twitter Card. Único placeholder restante é `og:url` (comentado, aguardando domínio de produção pós-deploy).
 - Nenhuma referência ao favicon padrão do Vite permanece no projeto.
 
+### Deploy Vercel (concluído em 2026-07-13)
+
+- Projeto `carioca-viagens` criado no escopo pessoal do Pedro (`pedroribeiro2706s-projects`), via `vercel` CLI (login manual do Pedro, deploy disparado por mim).
+- URLs: deployment único `carioca-viagens-ep026tnh7-pedroribeiro2706s-projects.vercel.app`, aliasado em `carioca-viagens.vercel.app`.
+- **Ressalva conhecida**: mesmo sem `--prod`, o primeiro deploy de um projeto novo é automaticamente promovido a "Production" pela própria Vercel (não há deploy anterior para comparar) — comportamento documentado da plataforma, não erro de comando. Se o Pedro quiser um preview "de verdade" (não-produção), precisa de um segundo deploy com `--target=preview` ou equivalente.
+- `.vercel/` corretamente ignorado (`c36ecf2`), sem duplicar a entrada que a própria CLI tentou adicionar automaticamente ao `.gitignore` (revertida para manter o arquivo como commitado).
+- Build remoto validado sem erro. Investigação à parte sobre não-determinismo do tamanho do CSS do Tailwind (build local variou 33–145kB entre instalações limpas) foi **encerrada a pedido do Pedro** após validação visual manual dele mostrar consistência entre local e deploy — tratar como hipótese não comprovada, só reabrir se surgir sintoma visual reproduzível (layout quebrado, estilo ausente).
+
+### GSAP — pin/avião: 2ª iteração implementada e validada programaticamente (não commitada, aguardando revisão visual manual)
+
+**Histórico**: a 1ª iteração (`MotionPathPlugin` posicionando por largura, sem scroll, sem revelação de traço) foi diagnosticada como incorreta contra 3 imagens de referência (`aviao-01.png`, `aviao-01b.png`, `aviao-02.png`) e substituída por um plano revisado (`C:\Users\Pedro\.claude\plans\declarative-leaping-catmull.md`). Esse plano foi executado nesta sessão — o que segue é o estado resultante, já revisado por um segundo ciclo de feedback do Pedro (percurso curto, rotação ausente, clipping — diagnosticado e corrigido, plano em `C:\Users\Pedro\.claude\plans\expressive-hugging-honey.md`).
+
+#### Estado da implementação
+
+Animação responsiva e vinculada ao scroll implementada para o avião (seção Atendimento), o pin (seção Sobre) e as respectivas trajetórias tracejadas. Arquitetura (`src/hooks/use-route-motion.ts`):
+- GSAP + `ScrollTrigger` (`scrub: true`, `trigger` = seção inteira, `start: "top bottom"`, `end: "bottom top"`) dirigindo um `effectiveProgress` único por elemento.
+- Posição do ícone via `getPointAtLength` direto sobre o path da trajetória (não `MotionPathPlugin`/`align` — ver "Correções concluídas" no plano anterior desta mesma sessão; o modo `align`/`alignOrigin: "auto"` do `MotionPathPlugin` calculava o alinhamento a partir do primeiro ponto bruto do `d`, ignorando o `start`/`end` fracionário, e não produzia efeito visual num `<g>` wrapper criado em runtime).
+- Rotação do avião (só avião, não pin) via ângulo da tangente do path + offset constante calculado geometricamente a partir do próprio artwork (ponto mais distante do centróide do path do ícone = ponta do bico).
+- Máscara SVG (`<mask>` com cópia sólida do path da trajetória) para revelar o tracejado via `DrawSVGPlugin` sem tocar no `stroke-dasharray` autoral do path visível (aplicar `drawSVG` direto no path original sobrescreveria o dasharray por um par segmento/gap, apagando os tracinhos finos — confirmado num spike isolado).
+- `useGSAP` (cleanup automático) + `gsap.matchMedia` com breakpoint de visibilidade em 641px e condição `prefers-reduced-motion`.
+- SVG inline (`dangerouslySetInnerHTML`) com classes namespaced (`namespaceSvgClasses`) para evitar colisão de `cls-N` entre as duas SVGs na mesma página.
+- Cleanup completo: `ScrollTrigger.kill()` por instância, remoção da máscara/`<defs>` criados em runtime, "unwrap" do `<g>` wrapper do ícone (restaura o DOM original), listener de resize removido no ramo reduced-motion.
+
+#### Comportamentos considerados corretos
+
+- O avião começa no ponto correto.
+- O scroll controla avanço e recuo (reversível).
+- A trajetória é revelada progressivamente; nada aparece à frente do ícone.
+- O progresso é responsivo à largura da viewport (tabela de calibração por breakpoint).
+- Abaixo de 641px, pin, avião e trajetórias ficam ocultos (`display:none` via CSS, `matchMedia` não monta a lógica de scroll).
+- Reduced motion usa posicionamento estático seguro (teto da largura atual, sem `ScrollTrigger`).
+- Resize durante o scroll recalcula o estado instantaneamente, sem tween concorrente.
+- Os SVGs originais (`aviao-carioca-blue.svg`, `pin-carioca-blue.svg`) permanecem intactos — nenhuma alteração de arquivo, só manipulação de DOM em runtime.
+
+#### Correções concluídas na iteração mais recente (2026-07-14, plano `expressive-hugging-honey.md`)
+
+**Percurso**: o teto (`ceiling`) antigo vinha da calibração estática da 1ª iteração (posição de repouso fixa), nunca revalidado para o modelo scroll-linked, e limitava excessivamente o movimento. Recalibrado via varredura geométrica (`getPointAtLength` + bbox do ícone vs. retângulo real do heading/parágrafo, amostrando todo o intervalo `[0, candidato]` em passos de 2%, com margem de segurança subtraída do maior valor sem sobreposição). Avião: até ~90% do path em 1440px (era 35%). Pin: até ~42% (era 10%). Mapeamento do scroll permanece **linear**, sem easing (decisão explícita do Pedro — ritmo fica para uma rodada separada).
+
+**Rotação**: o avião agora acompanha a tangente da trajetória. Offset calculado a partir da geometria do artwork (não da orientação atual em repouso, que nunca foi validada como correta) e da direção visual do bico. Pin permanece sem rotação (convenção de pin aponta para o local, não para a direção de deslocamento). Validada sem saltos relevantes (0 saltos >15° em 300 amostras ao longo de todo o path).
+
+**Clipping**: causa era o `overflow` implícito (`hidden`) do próprio `<svg>` inline — a bbox do ícone excedia o `viewBox` (~81 unidades no ponto de origem), confirmado matematicamente antes de qualquer alteração (não só assumido). Corrigido com `[&>svg]:overflow-visible` isolado no SVG do avião e do pin. A seção mantém `overflow-hidden` (limite externo da composição, reconfirmado que nada vaza para as seções vizinhas).
+
+#### Correção de origem de rotação do avião (2026-07-15)
+
+Última correção antes da aprovação visual. Sintoma relatado pelo Pedro: o avião parecia **começar a girar antes de alcançar a curva**. Diagnóstico medido no navegador (sonda Playwright read-only, não presumido): o `gsap.set(wrapper, { rotation })` girava o wrapper do ícone em torno do **canto do bbox** (default de origem de SVG no GSAP é `"0% 0%"`), enquanto a translação levava o **centro** do bbox (`restPoint`) até o path. Com origem ≠ ponto de translação, a rotação deslocava o ícone por `[R(θ)−I]·(restPoint − origem)` — módulo `≈ 2·R·sin(θ/2)`, medido em **17 a 88px fora do path** conforme o ângulo. A trajetória e a tangente estavam corretas; o que "descolava" era o desenho do avião, criando a ilusão de linha/curva à frente dele.
+
+Correção (1 linha em `src/hooks/use-route-motion.ts`, logo após `wrapIconParts`, **antes** do primeiro `applyProgress`):
+```ts
+if (autoRotate) gsap.set(wrapper, { svgOrigin: `${restPoint.x} ${restPoint.y}` })
+```
+Fixa a origem de rotação no **mesmo `restPoint`** que a translação usa (mesma variável — fonte de verdade única entre posição, reveal e rotação). Aplicada com a matriz ainda em identidade, para o `smoothOrigin` do GSAP não congelar nenhum `xOffset`/`yOffset` de compensação. Gated em `autoRotate`: o **pin não recebe nenhuma mudança de transform** (permanece byte-idêntico). Não altera SVG original, layout, calibração, máscara, breakpoint, reduced motion nem cleanup. `ROTATION_SAMPLE_EPSILON` deliberadamente **não** tocado (decisão do Pedro: só mexer se a antecipação da tangente ainda incomodasse após a origem — não incomodou).
+
+Validação pós-correção (sonda Playwright read-only, 1440/1200/1024px):
+- Distância avião ↔ ponto mais próximo do path: **≤ 0,199px** em todas as larguras/posições (era 17–88px).
+- `xOffset`/`yOffset` do smoothOrigin: **0** em todas as amostras (nenhuma compensação injetada).
+- Varredura de sobreposição refeita (88 combinações): 12 flags de **canto de bounding-box** de avião rotacionado (profundidade máx. 17px horizontal); inspeção visual do pior caso (700px) confirma que o artwork fica na margem esquerda, cauda parando ~16px antes do texto — **sem colisão de pixels**.
+- Screenshots 1440px (8 frames, equivalentes a `aviao-04a..h.png`): avião ocupa a ponta do tracejado revelado em cada posição, sem linha à frente; rotação acompanha a tangente.
+- `npm run lint` limpo; `npm run build` limpo.
+
+#### Aprovação visual (2026-07-15)
+
+Pedro revisou a implementação no navegador e **aprovou o estado funcional atual**. Comportamentos confirmados corretos por ele:
+- Nenhuma trajetória aparece à frente do avião ou do pin; as linhas surgem **apenas atrás** dos elementos.
+- O avião segue corretamente o path.
+- O avião rotaciona conforme a tangente e **só começa a girar ao chegar à curva**.
+- O pin percorre corretamente sua trajetória **sem rotação**.
+- Ao voltar o scroll, todas as animações se **invertem de forma contínua**.
+- Breakpoint, responsividade, reduced motion e cleanup continuam funcionando.
+
+**Melhoria futura mapeada, NÃO autorizada:** simplificar/encurtar a trajetória do avião para que o percurso termine **antes** de a seção sair da viewport. Nenhuma mudança nessa trajetória foi feita nem autorizada nesta sessão — não implementar sem pedido explícito do Pedro.
+
+#### Validações já executadas
+
+- `npm run lint`: limpo. `npm run build`: limpo.
+- 198 combinações largura × progresso (9 larguras × 11 posições de scroll × pin/avião): zero sobreposições com heading/parágrafo.
+- Reduced motion: posição idêntica antes/depois de scroll completo (estático confirmado).
+- Resize durante scroll: recalcula instantaneamente para o novo teto.
+- Cleanup: `ScrollTrigger` morto/revertido ao cruzar o breakpoint de 641px (transform congela, não responde mais a scroll); sem duplicação de `<mask>` sob o double-invoke do React 18 StrictMode (dev).
+- Rotação: validada em 300 amostras ao longo de todo o path, sem saltos.
+
+**Estado exato do working tree (`git status --short`, fim desta sessão, nada commitado):**
+```
+ M HANDOFF.md
+ M package-lock.json
+ M package.json
+ M src/components/sections/atendimento-cards.tsx
+ M src/components/sections/sobre.tsx
+?? gpt.md
+?? references/elements/aviao-01.png
+?? references/elements/aviao-01b.png
+?? references/elements/aviao-02.png
+?? references/elements/aviao-03a.png
+?? references/elements/aviao-03b.png
+?? references/elements/aviao-03c.png
+?? references/elements/aviao-03d.png
+?? references/elements/aviao-03e.png
+?? references/elements/aviao-04a.png
+?? references/elements/aviao-04b.png
+?? references/elements/aviao-04c.png
+?? references/elements/aviao-04d.png
+?? references/elements/aviao-04e.png
+?? references/elements/aviao-04f.png
+?? references/elements/aviao-04g.png
+?? references/elements/aviao-04h.png
+?? src/hooks/
+```
+`gpt.md` continua não relacionado a este trabalho (untracked, origem desconhecida, não tocar). `references/elements/aviao-03a..e.png` (percurso/rotação/clipping) e `aviao-04a..h.png` (revisão da rotação/origem) são as imagens de referência que o Pedro anexou nos ciclos de feedback desta sessão. A subpasta `src/hooks/` (untracked) contém `use-route-motion.ts`, o hook único da animação — inclui a correção de origem de rotação de 2026-07-15.
+
 ### Próxima etapa recomendada
 
-Ordem sugerida para a próxima sessão:
-
-1. Preparar preview/deploy (ex. Vercel) — em andamento nesta sessão (2026-07-13).
-2. Avançar para GSAP/motion (começando pela animação de pin/avião já especificada acima).
-3. Higgsfield / mídia real.
-4. Versão PDF (por último, depois da versão digital estável).
+1. ~~Revisão visual manual do Pedro~~ — **feita e aprovada em 2026-07-15** (ver subseção "Aprovação visual").
+2. **Commit da 2ª iteração de GSAP** — aguardando autorização explícita do Pedro. Nada commitado ainda. Arquivos recomendados para o commit: `src/hooks/use-route-motion.ts` (novo), `src/components/sections/sobre.tsx`, `src/components/sections/atendimento-cards.tsx`, `package.json`, `package-lock.json`, `HANDOFF.md`. **Não** incluir `gpt.md` (alheio) nem as imagens `references/elements/aviao-0*.png` no mesmo commit sem decisão do Pedro sobre versioná-las.
+3. Depois de commitado, novo deploy Vercel (a versão publicada atual não tem nenhum GSAP).
+4. **Melhoria futura NÃO autorizada**: simplificar/encurtar a trajetória do avião para o percurso terminar antes de a seção sair da viewport — só implementar com pedido explícito.
+5. Higgsfield / mídia real.
+6. Versão PDF (por último).
 
 ## 15. Próximo prompt sugerido
 
@@ -234,23 +346,23 @@ Estamos no projeto Carioca Viagens em:
 
 G:\Pedro\Dev\Clientes\carioca-viagens
 
-Leia primeiro:
+Leia primeiro, nesta ordem:
 
-- CLAUDE.md
-- HANDOFF.md
-- design/design.md
-- design-brief.md
-- project-card.md
-- references/conteudo-apresentacao.md
-- design/mocks/10-cards-refinamento.html
+- HANDOFF.md (Seção 14 — subseções "Correção de origem de rotação do avião (2026-07-15)" e "Aprovação visual (2026-07-15)": contexto completo do que já foi feito, por quê, e o que foi aprovado)
+- C:\Users\Pedro\.claude\plans\expressive-hugging-honey.md (diagnóstico e correções: percurso, rotação, clipping)
+- src/hooks/use-route-motion.ts, src/components/sections/sobre.tsx, src/components/sections/atendimento-cards.tsx (estado atual — 2ª iteração, aprovada visualmente, NÃO commitada)
 
-Use design/design.md como contrato principal.
-Use HANDOFF.md para entender o estado atual da implementação.
-Use references/conteudo-apresentacao.md como fonte oficial de conteúdo textual.
+Confirme `git status` contra o estado exato documentado na Seção 14.
 
-Não implemente nada ainda.
-Depois de ler, responda com:
-- resumo do estado atual;
-- próximos passos recomendados;
-- confirmação de que o working tree está limpo.
+Estado desta sessão: a implementação de pin/avião está pronta, validada programaticamente (lint, build, sobreposição, reduced-motion, resize, cleanup, rotação sem saltos) e **aprovada visualmente pelo Pedro em 2026-07-15**. A última correção foi a origem de rotação do avião (`svgOrigin` no `restPoint`). Nada foi commitado.
+
+Objetivo mais provável desta sessão: **commit da 2ª iteração de GSAP**, se o Pedro autorizar. Comece confirmando com ele se pode commitar.
+
+Passos:
+1. Confirme com o Pedro a autorização para commitar (ele pode querer revisar mais uma vez antes).
+2. Arquivos recomendados para o commit: `src/hooks/use-route-motion.ts` (novo), `src/components/sections/sobre.tsx`, `src/components/sections/atendimento-cards.tsx`, `package.json`, `package-lock.json`, `HANDOFF.md`. NÃO incluir `gpt.md` (alheio) nem as imagens `references/elements/aviao-0*.png` sem decisão explícita do Pedro sobre versioná-las.
+3. Após o commit, considerar novo deploy Vercel (a versão publicada atual não tem GSAP).
+4. Melhoria futura mapeada e **NÃO autorizada**: simplificar/encurtar a trajetória do avião para o percurso terminar antes de a seção sair da viewport — só implementar com pedido explícito. Não reabrir percurso, rotação, clipping, calibração ou arquitetura sem motivo concreto novo.
+
+Escopo protegido, não alterar: cards, tipografia, conteúdo, mídia, utility strip, layout geral, Design System, os SVGs originais, ou qualquer animação fora de pin/avião/trajetórias.
 ```
