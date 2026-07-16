@@ -1,0 +1,23 @@
+[
+  {"query": "i've got an svg of a paper plane and a curvy dotted line — as you scroll down the page i want the plane to travel along the dotted line and have the line appear behind it like a trail. and the plane should tip into the curves. react + gsap", "should_trigger": true},
+  {"query": "how do i make a little car icon drive along a winding road path in my hero section, tied to scroll, where the road only shows up behind the car as it goes?", "should_trigger": true},
+  {"query": "reveal a route line behind a moving map pin as the user scrolls, pin travels from bottom-left to top-right along the path, pin shouldn't spin", "should_trigger": true},
+  {"query": "i have a hiking trail SVG (dashed) and a boot icon. scrolling should walk the boot up the trail and draw the dashes in behind it, but the dashes keep turning into a solid line when i use drawsvg. help", "should_trigger": true},
+  {"query": "scroll-driven animation: a satellite follows an orbital arc svg path and rotates to stay tangent to the orbit, and the arc draws in behind it", "should_trigger": true},
+  {"query": "need an element that recedes back along its own svg path when the viewport gets narrower, and also moves along it on scroll — a plane over a flight route. it has to be right on first load at a small width, not only after a resize", "should_trigger": true},
+  {"query": "gsap: make a delivery drone fly along a dotted delivery route on scroll, dots stay dotted, drone noses into the turns, hide it on phones and respect reduced motion", "should_trigger": true},
+  {"query": "when i add rotation to my icon that follows an svg path it drifts off the line near the sharp bends — how do i keep the rotating element exactly on the path?", "should_trigger": true},
+  {"query": "animate a progress marker traveling along a curved svg track as you scroll, only the portion of the track it has passed is visible behind the marker", "should_trigger": true},
+  {"query": "i want a paper airplane to swoop along a hand-drawn dashed arc between my two feature blocks as the reader scrolls, leaving the arc drawn behind it and banking into the curve", "should_trigger": true},
+
+  {"query": "i want a little underline under my nav links that slides over to the active link when you hover — an animated underline that follows the cursor between the menu items", "should_trigger": false},
+  {"query": "draw my company logo's svg strokes on page load like a signature being written, all the strokes animating in at once", "should_trigger": false},
+  {"query": "make my hero headline fade up and the feature cards stagger in as the user scrolls down the page", "should_trigger": false},
+  {"query": "how do i morph one svg icon into another with gsap when the button is clicked", "should_trigger": false},
+  {"query": "pin my pricing section and horizontally scroll a row of plan cards through it while the user scrolls vertically", "should_trigger": false},
+  {"query": "i need a css-only animated dashed border that keeps rotating around a button while you hover it", "should_trigger": false},
+  {"query": "add a parallax effect where the background photo moves slower than the foreground content on scroll", "should_trigger": false},
+  {"query": "draw a route between two addresses on a google map and animate the marker moving along the route", "should_trigger": false},
+  {"query": "i want my dashed svg divider to look like marching ants — cycle the stroke-dashoffset forever so it keeps flowing", "should_trigger": false},
+  {"query": "how do i make my svg line chart draw itself left-to-right when it scrolls into view", "should_trigger": false}
+]

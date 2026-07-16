@@ -1,0 +1,37 @@
+{
+  "skill_name": "svg-path-motion",
+  "evals": [
+    {
+      "id": 0,
+      "name": "rocket-dotted-rotation",
+      "prompt": "I have a single inline SVG that contains a rocket shape (filled) and a curved DOTTED path (the rocket's flight trail) drawn with stroke-dasharray. In a React + GSAP page, I want the rocket to fly along that dotted path as the user scrolls the section: the dotted trail should be revealed only behind the rocket (never ahead), the rocket should rotate to point along the curve, and the dots must stay dots (not become a solid line). It has to be responsive, hide on small screens, respect prefers-reduced-motion, and clean up when the component unmounts without permanently modifying the SVG. Write the implementation (a hook is fine) and explain the key decisions.",
+      "expected_output": "A GSAP + ScrollTrigger implementation where position, reveal, and tangent all derive from one path parameter t via getPointAtLength; rotation origin is set to the same translation reference point (svgOrigin/transformOrigin at the icon center) before the first transform; the dotted trail is revealed via a mask (solid copy) so the authored stroke-dasharray is preserved; reveal never shows ahead of the rocket; matchMedia handles breakpoint + reduced motion; cleanup kills the trigger and restores the SVG.",
+      "files": [],
+      "assertions": [
+        {"text": "Position and reveal are both derived from a single path parameter t (getPointAtLength), not three separate progress computations"},
+        {"text": "Sets the rotation origin to the icon's translation reference / center (svgOrigin or transformOrigin), not left at the SVG default corner"},
+        {"text": "Preserves the dotted stroke-dasharray by revealing through an SVG mask (solid copy) instead of applying DrawSVG directly to the dotted path"},
+        {"text": "Computes rotation from the path tangent (sampling getPointAtLength around t), not a fixed angle"},
+        {"text": "Ensures the trail is revealed only behind the element (reveal endpoint tied to the element's t)"},
+        {"text": "Handles prefers-reduced-motion with a static safe frame (matchMedia or equivalent)"},
+        {"text": "Hides / does not mount the animation below a width breakpoint"},
+        {"text": "Includes cleanup that removes runtime DOM and leaves the original SVG unchanged"}
+      ]
+    },
+    {
+      "id": 1,
+      "name": "pin-solid-no-rotation",
+      "prompt": "On my landing page I have a map pin and a solid curved line in one SVG. As the visitor scrolls the 'about' section, I want the solid line to draw itself in BEHIND the pin as the pin travels along it (so it looks like the pin is leaving a trail). The pin should NOT rotate — it should keep pointing down like a normal map pin. Hide the whole thing on mobile. I'm using GSAP. How do I build this?",
+      "expected_output": "A GSAP + ScrollTrigger implementation where the pin travels along the path via getPointAtLength tied to scroll, the line reveals behind the pin (DrawSVG from start to t; solid line can animate DrawSVG directly), the pin does NOT rotate (autoRotate off), and the element is hidden below a mobile breakpoint. No rotation-origin bug because there is no rotation; cleanup restores the SVG.",
+      "files": [],
+      "assertions": [
+        {"text": "The pin does NOT rotate (no tangent rotation applied to a place-marker)"},
+        {"text": "The line is revealed behind the pin, tied to scroll progress (reveal endpoint at the pin's position, nothing ahead)"},
+        {"text": "Pin position along the path is driven by scroll via getPointAtLength (or MotionPath) tied to a ScrollTrigger"},
+        {"text": "Hides / does not mount the element below a mobile width breakpoint"},
+        {"text": "Includes cleanup that leaves the original SVG intact"},
+        {"text": "Does not needlessly add a mask for a solid line (recognizes solid lines can use DrawSVG directly) OR if it uses a mask, does so correctly"}
+      ]
+    }
+  ]
+}
