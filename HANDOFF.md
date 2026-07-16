@@ -2,6 +2,10 @@
 
 > Atualizado em 2026-07-15 (fim de sessão) — ver Seção 14 para o estado completo (7 commits + deploy Vercel + 2ª iteração de GSAP implementada e agora **aprovada visualmente pelo Pedro**, ainda **não commitada**) e Seção 15 para o prompt de início da próxima sessão. **Estado crítico a entender antes de qualquer coisa**: a 2ª iteração de GSAP (ScrollTrigger + máscara SVG + rotação por tangente) está implementada, validada programaticamente (lint, build, sobreposição, reduced-motion, resize, cleanup) e **revisada visualmente e aprovada pelo Pedro em 2026-07-15**. A última correção desta sessão foi a **origem de rotação do avião** (`svgOrigin` fixado no `restPoint` — antes o avião girava em torno do canto do bbox do ícone e "descolava" do path até ~88px, parecendo girar antes da curva; agora fica sobre a linha com precisão sub-pixel). O commit ainda **não foi feito** — aguardando autorização explícita do Pedro (Seção 14, subseção "Aprovação visual"). Existe **uma melhoria futura já mapeada e ainda não autorizada**: simplificar/encurtar a trajetória do avião para que o percurso termine antes de a seção sair da viewport — **não implementar sem pedido explícito**. Histórico técnico completo dos ciclos de diagnóstico desta sessão em `C:\Users\Pedro\.claude\plans\expressive-hugging-honey.md` (percurso curto, rotação ausente, clipping) e no plano anterior `C:\Users\Pedro\.claude\plans\declarative-leaping-catmull.md` (arquitetura ScrollTrigger + DrawSVG original). Seção 0 documenta a migração de diretório (2026-07-11).
 
+> **Atualização 2026-07-15 (tarde) — supersede o parágrafo acima quanto ao commit:** a 2ª iteração de GSAP (pin/avião) foi **commitada, publicada em produção (Vercel) e aprovada**. O estado atual da sessão está na **Seção 16** (skill `svg-path-motion` aprovado como v1, eval ambíguo concluído sem revelar falha, validações de triggering/sonda ainda pendentes, próxima etapa Higgsfield). Ler a Seção 16 antes de agir.
+
+> **Ambiente técnico:** antes de trabalhar com Higgsfield, mídia ou configuração de ferramentas (CLI, skills, MCP), ler também `PROJECT_ENVIRONMENT.md` (stack real, ferramental e regras de uso).
+
 ## 0. Migração de diretório (2026-07-11)
 
 O projeto foi **movido** de:
@@ -366,3 +370,12 @@ Passos:
 
 Escopo protegido, não alterar: cards, tipografia, conteúdo, mídia, utility strip, layout geral, Design System, os SVGs originais, ou qualquer animação fora de pin/avião/trajetórias.
 ```
+
+## 16. Estado atual (2026-07-15, tarde)
+
+- **Animações de trajetória GSAP (pin/avião): concluídas, publicadas e aprovadas.** Commitadas, em produção na Vercel e aprovadas visualmente pelo Pedro (detalhe técnico completo na Seção 14 — subseções "Correção de origem de rotação do avião" e "Aprovação visual"). Este item está **fechado**.
+- **Skill `svg-path-motion` aprovado como v1.** Skill reutilizável (`.claude/skills/svg-path-motion/`) que codifica o padrão de mover um elemento ao longo de um path SVG vinculado ao scroll, com revelação atrás e rotação opcional por tangente. Passou por três rodadas de revisão crítica (bugs reais corrigidos: vazamento de máscara, preservação de atributo `mask`, `svgOrigin` antes do primeiro transform, lifecycle/getBBox) e garantias escopadas com honestidade.
+- **Eval ambíguo/degenerado concluído sem revelar falha.** Caso adversário (path fechado, repouso no meio, ícone/trajetória ambíguos, artwork sem bico, `<g>` com transform autoral) rodado com skill e baseline. O skill orientou corretamente resolvers explícitos, direção configurada, fonte geométrica única, cleanup/reduced-motion/breakpoint — sem escolher silenciosamente errado. Nenhuma alteração no skill foi necessária.
+- **Validações ainda pendentes** (por limitação de ambiente, não por defeito do skill): triggering automatizado (bloqueado por `WinError 10038` no runner paralelo do skill-creator no Windows) e sonda Playwright contra os componentes de eval (sem browser nos subagentes; a sonda já foi validada contra a produção pin/avião). Detalhes, comandos de retomada e critérios objetivos de conclusão em **`.claude/skills/svg-path-motion/PENDING_VALIDATION.md`**.
+- **Próxima etapa: Higgsfield** — geração/seleção de mídia real para os placeholders (Hero, Diferenciais, zona inferior dos cards de Atendimento).
+- **Depois do Higgsfield**, ainda haverá **mais animações GSAP** em títulos, subtítulos, cards e outros elementos da página — o trabalho de motion não termina no pin/avião.
