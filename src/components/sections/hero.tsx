@@ -1,6 +1,8 @@
 import { Check, MapPin } from "lucide-react"
 import type { CSSProperties } from "react"
 
+import heroPoster from "@/assets/hero/hero-reel-poster.webp"
+import heroReel from "@/assets/hero/hero-reel.mp4"
 import logoClaraNova from "@/assets/logo/logo-horizontal-clara-nova.svg"
 import { WrapWide } from "@/components/layout/container"
 import { Chip } from "@/components/ui/chip"
@@ -9,15 +11,28 @@ import { buttonVariants } from "@/components/ui/button"
 import { content } from "@/lib/content"
 
 /**
- * Fundo institucional [PROVISÓRIO] — design.md Seção 7. Overlay + gradiente
- * diagonal com os tokens reais da marca (nunca gradiente decorativo
- * arbitrário). Substituído por mídia real numa etapa futura.
+ * Base institucional atrás da mídia — o gradiente da marca que era o
+ * placeholder da Hero (design.md Seção 7) permanece como último fallback,
+ * visível se o vídeo e o poster falharem.
  */
 const heroBackground: CSSProperties = {
   backgroundImage: [
     "radial-gradient(1100px 700px at 82% 8%, color-mix(in srgb, var(--color-light-blue) 35%, transparent), transparent 60%)",
-    "linear-gradient(180deg, color-mix(in srgb, var(--color-deep-blue) 35%, transparent) 0%, color-mix(in srgb, var(--color-deep-blue) 90%, transparent) 78%, var(--color-deep-blue) 100%)",
     "linear-gradient(128deg, var(--color-deep-blue) 0%, var(--color-carioca-blue) 52%, var(--color-carioca-green) 100%)",
+  ].join(", "),
+}
+
+/**
+ * Camada de legibilidade sobre o vídeo — design.md Seção 7 é explícito: a
+ * mídia nunca pode reduzir a legibilidade do texto. Escurece o rodapé (onde
+ * ficam título, subtítulo e CTAs) e a base esquerda, mantendo o topo mais
+ * limpo para a imagem respirar. Usa os tokens da marca, não preto neutro,
+ * para o escurecimento não sujar a paleta.
+ */
+const heroOverlay: CSSProperties = {
+  backgroundImage: [
+    "linear-gradient(180deg, color-mix(in srgb, var(--color-deep-blue) 32%, transparent) 0%, color-mix(in srgb, var(--color-deep-blue) 22%, transparent) 34%, color-mix(in srgb, var(--color-deep-blue) 82%, transparent) 62%, color-mix(in srgb, var(--color-deep-blue) 95%, transparent) 100%)",
+    "linear-gradient(90deg, color-mix(in srgb, var(--color-deep-blue) 72%, transparent) 0%, color-mix(in srgb, var(--color-deep-blue) 30%, transparent) 45%, transparent 70%)",
   ].join(", "),
 }
 
@@ -35,6 +50,39 @@ function Hero() {
       className="relative flex min-h-screen flex-col overflow-hidden text-off-white"
       style={heroBackground}
     >
+      {/*
+        Reel institucional: cena do avião + cena do carro, 6s, em loop com
+        fade pelo preto nas duas pontas para o reinício não dar salto.
+        A cena do saguão do aeroporto entra depois.
+
+        Camadas, de baixo para cima: gradiente da marca (fallback final) →
+        poster estático → vídeo → véu de legibilidade → conteúdo (z-[1]).
+        O poster fica sempre montado, então quem tem `prefers-reduced-motion`
+        ou vídeo bloqueado vê a imagem, nunca um buraco.
+      */}
+      <img
+        src={heroPoster}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 size-full object-cover"
+      />
+      <video
+        src={heroReel}
+        poster={heroPoster}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        aria-hidden
+        className="absolute inset-0 size-full object-cover motion-reduce:hidden"
+      />
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={heroOverlay}
+      />
+
       <div
         aria-hidden
         className="absolute inset-x-0 bottom-0 z-[2] h-[3px] opacity-90"
@@ -77,12 +125,6 @@ function Hero() {
           <MapPin className="size-3.5 text-light-green" />
           {hero.locus}
         </span>
-        <span className="absolute right-10 bottom-6 z-[1] max-w-[260px] text-right font-mono text-[0.68rem] tracking-[0.1em] text-off-white/55 uppercase">
-          {hero.placeholderNote[0]}
-          <br />
-          {hero.placeholderNote[1]}
-        </span>
-
         <WrapWide className="relative z-[1] w-fit pb-[72px]">
           <Eyebrow tone="on-dark" className="mb-5">
             {hero.eyebrow}
