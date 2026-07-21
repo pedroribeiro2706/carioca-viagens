@@ -8,9 +8,11 @@ import {
 } from "lucide-react"
 import { useRef } from "react"
 
+import cardAssistencia from "@/assets/cards/card-assistencia.webp"
+import cardAviao from "@/assets/cards/card-aviao.webp"
+import cardReservas from "@/assets/cards/card-reservas.webp"
 import aviaoSvgRaw from "@/assets/elements/aviao-carioca-blue.svg?raw"
 import { Wrap } from "@/components/layout/container"
-import { CornerGuides } from "@/components/ui/corner-guides"
 import { Eyebrow } from "@/components/ui/eyebrow"
 import { namespaceSvgClasses, useRouteMotion } from "@/hooks/use-route-motion"
 import { content } from "@/lib/content"
@@ -47,6 +49,29 @@ const ICONS: Record<string, LucideIcon> = {
   headset: Headset,
   planeTakeoff: PlaneTakeoff,
   handshake: Handshake,
+}
+
+/**
+ * Mídia real da zona inferior de cada card (design.md Seção 11 — a zona era
+ * placeholder com cantos-guia até esta etapa). Os cantos-guia são a linguagem
+ * de placeholder do sistema, então saem quando entra imagem real.
+ *
+ * Assets em 1050×420 (2,5:1 — a proporção exata da zona: `40fr` de 100 num
+ * card quadrado), WebP. Proveniência em design/assets/MANIFEST.md.
+ */
+const IMAGES: Record<string, { src: string; alt: string }> = {
+  assistencia: {
+    src: cardAssistencia,
+    alt: "Consultora de viagens com headset atendendo em um escritório claro",
+  },
+  reservas: {
+    src: cardReservas,
+    alt: "Vista de cima de uma mala aberta com um notebook aberto sobre as roupas dobradas, mapa e câmera ao lado",
+  },
+  aviao: {
+    src: cardAviao,
+    alt: "Passageira sorrindo de perfil enquanto olha as nuvens pela janela do avião",
+  },
 }
 
 /**
@@ -100,6 +125,7 @@ function AtendimentoCard({
   titleLines,
   desc,
   icon,
+  image,
 }: {
   variant: CardVariant
   index: string
@@ -107,8 +133,10 @@ function AtendimentoCard({
   titleLines: readonly [string, string]
   desc: string
   icon: string
+  image: string
 }) {
   const Icon = ICONS[icon]
+  const media = IMAGES[image]
 
   return (
     <div className="rounded-[30px] shadow-[9px_12px_16px_-9px_rgba(12,33,50,0.5)]">
@@ -148,17 +176,16 @@ function AtendimentoCard({
           className={cn(
             "relative row-start-5 border-t",
             variant === "green"
-              ? "border-[color-mix(in_srgb,var(--color-deep-blue)_14%,transparent)] bg-[color-mix(in_srgb,var(--color-deep-blue)_8%,transparent)]"
-              : "border-off-white/16 bg-off-white/10"
+              ? "border-[color-mix(in_srgb,var(--color-deep-blue)_14%,transparent)]"
+              : "border-off-white/16"
           )}
         >
-          <CornerGuides
-            size="sm"
-            borderClassName={
-              variant === "green"
-                ? "border-[color-mix(in_srgb,var(--color-deep-blue)_30%,transparent)]"
-                : "border-off-white/40"
-            }
+          <img
+            src={media.src}
+            alt={media.alt}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 size-full object-cover"
           />
         </div>
       </div>
@@ -212,6 +239,7 @@ function AtendimentoCards() {
               titleLines={card.titleLines}
               desc={card.desc}
               icon={card.icon}
+              image={card.image}
             />
           ))}
         </div>

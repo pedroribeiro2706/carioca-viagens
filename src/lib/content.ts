@@ -69,6 +69,7 @@ export const content = {
         titleLines: ["ASSISTÊNCIA", "EMERGENCIAL"],
         desc: "plantão para resolver imprevistos a qualquer hora.",
         icon: "headset",
+        image: "assistencia",
       },
       {
         variant: "green",
@@ -77,6 +78,7 @@ export const content = {
         titleLines: ["SISTEMA DE", "RESERVAS ON LINE"],
         desc: "Reserve aéreo e hotel em poucos cliques.",
         icon: "planeTakeoff",
+        image: "reservas",
       },
       {
         variant: "dark",
@@ -85,6 +87,7 @@ export const content = {
         titleLines: ["MELHORES CANAIS", "DE DISTRIBUIÇÃO"],
         desc: "Tarifas das melhores operadoras do mundo.",
         icon: "handshake",
+        image: "aviao",
       },
     ],
   },
