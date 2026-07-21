@@ -139,7 +139,7 @@ function AtendimentoCard({
   const media = IMAGES[image]
 
   return (
-    <div className="rounded-[30px] shadow-[9px_12px_16px_-9px_rgba(12,33,50,0.5)]">
+    <div className="group rounded-[30px] shadow-[9px_12px_16px_-9px_rgba(12,33,50,0.5)]">
       <div className={cardVariants({ variant })}>
         <div className="row-start-1 flex min-h-0 flex-col justify-center gap-1.5 px-5 pt-[30px]">
           <div className="flex shrink-0 items-center gap-2.5">
@@ -180,12 +180,28 @@ function AtendimentoCard({
               : "border-off-white/16"
           )}
         >
+          {/*
+            Zoom e clareamento no hover do card inteiro (`group`), em CSS puro.
+            A 1ª versão prendia a escala ao scroll via GSAP e o Pedro não
+            percebia o movimento — 12% diluídos por centenas de pixels de
+            scroll ficam abaixo do limiar. No hover o mesmo 6% é imediato e
+            legível. `motion-safe` deixa tudo estático para quem pede
+            movimento reduzido.
+          */}
           <img
             src={media.src}
             alt={media.alt}
             loading="lazy"
             decoding="async"
-            className="absolute inset-0 size-full object-cover"
+            className="absolute inset-0 size-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-out motion-safe:group-hover:scale-[1.06]"
+          />
+          {/*
+            Lâmina que assenta a foto na cor chapada do card e clareia no
+            hover, revelando a imagem.
+          */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-black/[0.18] transition-colors duration-400 ease-out group-hover:bg-black/[0.06]"
           />
         </div>
       </div>

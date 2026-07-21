@@ -138,8 +138,7 @@ export const content = {
       "22230-001",
     ],
     email: "carioca@cariocaviagens.com.br",
-    whatsapp: "(21) 98816-6588",
-    phone: "(21) 2221-1410",
+    whatsapp: "+55 21 99928-6244",
     instagram: {
       handle: "@carioca.viagens",
       url: "https://www.instagram.com/carioca.viagens/",
