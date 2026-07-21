@@ -1,0 +1,19 @@
+# A Vercel só precisa do que entra no build. Sem isto, a CLI tenta subir
+# design/assets (1,8 GB de masters do Higgsfield) e o upload aborta.
+
+design/
+references/
+docs/
+.claude/
+.planning/
+dist/
+node_modules/
+
+# documentação de trabalho, não faz parte do site
+HANDOFF.md
+CLAUDE.md
+CLAUDE.local.md
+project-card.md
+design-brief.md
+gpt.md
+*.psd
