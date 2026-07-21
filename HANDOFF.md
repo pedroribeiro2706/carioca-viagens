@@ -379,3 +379,214 @@ Escopo protegido, não alterar: cards, tipografia, conteúdo, mídia, utility st
 - **Validações ainda pendentes** (por limitação de ambiente, não por defeito do skill): triggering automatizado (bloqueado por `WinError 10038` no runner paralelo do skill-creator no Windows) e sonda Playwright contra os componentes de eval (sem browser nos subagentes; a sonda já foi validada contra a produção pin/avião). Detalhes, comandos de retomada e critérios objetivos de conclusão em **`.claude/skills/svg-path-motion/PENDING_VALIDATION.md`**.
 - **Próxima etapa: Higgsfield** — geração/seleção de mídia real para os placeholders (Hero, Diferenciais, zona inferior dos cards de Atendimento).
 - **Depois do Higgsfield**, ainda haverá **mais animações GSAP** em títulos, subtítulos, cards e outros elementos da página — o trabalho de motion não termina no pin/avião.
+
+## 17. Fase de mídia Higgsfield — Hero (2026-07-17/18)
+
+> **Antes de tudo, ler `PROJECT_ENVIRONMENT.md` (ambiente/ferramental) e `design/assets/MANIFEST.md`** (proveniência de TODOS os assets gerados: modelo, params, custo, URL, base). O MANIFEST é a fonte de verdade de custos/arquivos desta fase.
+
+### Ambiente Higgsfield (verificado)
+- **Plano: Starter** (~**147,5 créditos** ao pausar; **reserva mínima 30** intocável). `seedance_2_0` **exige Pro/Ultimate → bloqueado no Starter**; **`seedance_2_0_mini` roda no Starter** (480p 1cr/s, 720p 2,5cr/s, dur. 4–15s, start+end image, `--generate_audio false`).
+- Caminho de execução: **skill `higgsfield-generate` → CLI `higgsfield`** (a skill é wrapper da CLI). O **MCP** também está exposto agora, mas é o **mesmo backend** — não adiciona capacidade; e **não há ferramenta de substituição de fundo em vídeo com máscara controlada** (verificado via `models_explore`). `remove_background` (vídeo) é auto (encaixe incerto).
+- Editores de imagem preservativos: **`flux_kontext`** (edição por instrução, **1,5 cr**), `bytedance_image_upscale` (**2 cr**). `topaz_image` falhou 3× sem cobrança (instável em 2026-07-16).
+
+### Hero stills — CONCLUÍDOS E APROVADOS
+- Desktop master: **`design/assets/hero/hero-desktop-master-01-4k.png`** (4096×2323).
+- Mobile master: **`design/assets/hero/hero-mobile-master-02-4k.png`** (2323×4096).
+- Direção "Rota Clara": executivo de costas num terminal de aeroporto ao entardecer/dia, Rio sutil pelo vidro, interior legível, base-esquerda limpa para texto. Masters via upscale `bytedance` de composições `gpt_image_2` (medium/2k).
+
+### Cena 1 — VÍDEO (em andamento, o foco ao pausar)
+- **Baseline aprovado (criativo + movimento): `hero-video-scene1-test2-480p.mp4`** (seedance_2_0_mini, start+end, 480p). Seu 1º frame (entardecer Rio) = **`hero-video-scene1-frame1-rio-tarde.png`**; frame final (Londres) foi `...-endend.png`.
+- **Melhor iteração de transição: `hero-video-scene1-test6-480p.mp4`** (v6, 6s) — usa os frames do test2 como start/end + reforços: começa no dusk, dusk mais longo, **troca de cidade DURANTE a noite** (Londres acesa ~1s antes do amanhecer), amanhecer só revela. **test3 foi descartado** como referência. Todos os testes em 480p.
+- **APRENDIZADO-CHAVE (decisão do Pedro):** **parar a edição generativa de quadro completo** — `flux_kontext` sobre o quadro inteiro **re-renderiza tudo e causa deriva** em enquadramento, executivo, figurantes, **avião/finger**, exposição e geometria. Confirmado nos Quadros 3/4 (o avião/finger sumiram; Londres veio no nível do pátio, não distante).
+
+### NOVA estratégia aprovada: composição por camadas no After Effects
+Travar o **vídeo test2** como base e **substituir SÓ a paisagem distante além do pátio**, preservando 100%: interior, executivo, figurantes+movimentos, avião, finger, pista, caixilhos e reflexos.
+- **Ferramentas verificadas:** **After Effects 2026 instalado**; **plugin CEP Higgsfield instalado** (`ai.higgsfield.cep` 1.0.36, mira **AE + Premiere**, painel Janela→Extensões→Higgsfield — é painel de **geração**, não de roto/matte); UXP do Photoshop **não confirmado** ativo. Python+numpy+PIL+**ffmpeg bundled** (imageio-ffmpeg) OK; **cv2 ausente** (instalável). ffmpeg só via `imageio_ffmpeg.get_ffmpeg_exe()`.
+- **Limite honesto:** o agente **não opera a GUI do AE**. Divisão: **agente prepara** placas de teste + **script `.jsx`** de setup + receita escrita; **Pedro roda o AE** (roto da faixa de céu, composição, render `aerender`). **O ponto crítico é o matte** (separar fundo distante de avião/finger/caixilhos/reflexos) — trabalho manual no AE.
+- **Placas:** os frames **Q2/Q3/Q4** (`hero-video-scene1-frame2-rio-noite.png` / `frame3-londres-noite.png` / `frame4-londres-dia.png`) são **só material de teste** (Q3/Q4 provavelmente NÃO encaixam: Londres saiu em escala/altura de pátio, não distante). Se não servirem → **gerar 3 placas dedicadas** (Rio noite / Londres noite sutil / Londres amanhecer), coerentes entre si; **custo ~9 cr** (3× `gpt_image_2` medium/2k @3) — **confirmar custo e parar antes de gerar**. Londres deve ser reconhecível **sutil/distante** (Big Ben/Palace/London Eye), **não hiper-postal**.
+
+### TODO próxima sessão (retomar por aqui)
+1. Extrair as faixas distantes de Q2/Q3/Q4 como placas de teste e **avaliar encaixe** (perspectiva/escala/horizonte vs. test2).
+2. Escrever a **receita AE** + **script `.jsx`** de setup (import test2, placas, pilha, máscara-semente, keyframes de transição sincronizados à luz interna do test2; re-screen dos reflexos).
+3. Se as placas de teste não servirem: **propor custo e gerar 3 placas dedicadas** (parar antes de gerar).
+4. Pedro roda a **prova de conceito no AE**.
+
+**Escopo protegido (mantido):** sem alterar código do site, sem integrar assets, sem commit/push/deploy. Nada da fase de vídeo foi commitado. Verificar localização dos `.mp4` no início da próxima sessão (URLs no MANIFEST como backup).
+
+---
+
+## 18. Cena 1 — Parte 1 CONCLUÍDA · virada de estratégia (2026-07-19/20)
+
+> **LER PRIMEIRO:** `docs/higgsfield-playbook.md` (já referenciado no `CLAUDE.md` do projeto, carrega sozinho). Ele contém as lições caras desta fase — qual modelo para qual situação, custos medidos e protocolos obrigatórios. Depois, `design/assets/MANIFEST.md` para proveniência.
+
+### Duas estratégias ABANDONADAS (não retomar sem motivo novo)
+1. **Morph Rio→Londres dentro do mesmo plano** — o seedance interpola entre os frames; com frame final de outra cidade, ele **inventa um skyline transitório**. Foi a origem do bug "a cidade virou outra".
+2. **Composição por camadas no After Effects** — substituir fundo atrás de sujeito **em movimento**, através de 5+ vãos de vidro, é tarefa real de VFX (garbage matte + Roto Brush). Descartada por custo/benefício. Resíduos (`ae/`, `plates/`) movidos para `old/`.
+
+### Estratégia VIGENTE: frames-âncora
+**Controlar a narrativa pelos frames inicial e final; deixar o seedance apenas interpolar.** Se ambos os âncoras são a mesma cidade, o modelo não tem para onde inventar. Validado em 5 gerações consecutivas — o skyline do Rio nunca mais derivou.
+
+### Entregável da Parte 1 (Rio entardecer → Rio noite)
+- **Âncora inicial:** `design/assets/hero/hero-video-scene1-frame1-rio-tarde-master.png` (5504×3072)
+- **Âncora final:** `design/assets/hero/hero-video-scene1-frame2-rio-noite-master.png` (5504×3072, com correção manual da mão/relógio feita pelo Pedro no Photoshop)
+- **VÍDEO FINAL:** `design/assets/hero/mp4/hero-video-scene1-parte1-FINAL-1080p.mp4` (1882×1080 · 5,04s · 24fps · sem áudio)
+- **Status:** ⏳ **aguardando aprovação final do Pedro** — única questão aberta: se a suavização do upscale incomoda.
+
+### Divisão de trabalho que funcionou
+**IA para relight/síntese · Photoshop para correção determinística.** O Pedro corrigiu no Photoshop (a) um figurante duplicado pela IA e (b) a mão/relógio — ambos comprovados por diff como cirúrgicos (0,099% e 1,18% dos pixels, blocos únicos, zero alteração em skyline/avião). **Inpainting com máscara é do Photoshop; o Higgsfield no Starter não oferece isso.**
+
+### Armadilhas caras descobertas (detalhes no playbook)
+- **Duplicação de personagem é sistemática no 720p nativo** (2/2 tiragens) e ausente no 480p (2/2), com os mesmos âncoras. Gatilho: deslocamento excessivo de um personagem entre os frames. **Prompt não segura** (trava anti-duplicação testada e falhou). Custou 25 cr em tiragens descartadas.
+- **Solução:** `bytedance_video_upscale` (preset `aigc`) custa **0,1 cr** e preserva o movimento aprovado. ~100× mais barato que insistir no render nativo.
+- **PROTOCOLO OBRIGATÓRIO:** em todo render final, **comparar o quadro 0 contra o start-image** antes de aprovar.
+- `end_image` é **alvo, não restrição** — o modelo pode ultrapassar a pose final.
+- Render em resolução maior é **geração nova, não upscale** — o movimento varia.
+
+### Créditos
+Parte 1 custou **47,1 cr**. Saldo: **100,4 cr** (reserva 30 intocada). Plano Starter: `seedance_2_0` e `nano_banana_pro` seguem **bloqueados**.
+
+### ⚠️ PARTE 1 NÃO FECHOU — 3 pistas NÃO TESTADAS (retomar por aqui)
+
+**Veredito do Pedro (2026-07-20):** o `FINAL-1080p` foi **reprovado** — a suavização do upscale ficou excessiva. Estamos perto, mas empacados. **Não concluir que "o modelo é limitado" antes de esgotar estas três pistas** — nenhuma delas foi testada:
+
+1. **Corrigir o GATILHO e re-render nativo.** A duplicação é reprodutível (720p 2/2 sim · 480p 2/2 não, mesmos âncoras) e o gatilho identificado é o **deslocamento excessivo do figurante mais próximo** entre frame1 e frame2. **Nunca tentamos reduzir esse deslocamento.** Caminho: remover/recuar aquele figurante no frame2 (Photoshop — ele passaria a sair de quadro, conceito que o Pedro já aceitou), depois render **nativo em 720p**. Resolveria os dois problemas de uma vez: sem duplicata **e** sem maciez de upscale.
+
+2. **Testar OUTRO modelo de vídeo.** A sessão inteira usou **só `seedance_2_0_mini`**. Candidato mais promissor: **`kling3_0`** — aceita **start-image E end-image** (mesma abordagem de âncoras) e a documentação o descreve para *"cena de plano único sem dinâmica forte"*, que é **exatamente** o nosso plano (câmera travada, movimento sutil). Também não testados: `kling2_6`, `veo3_1`, `grok_video_v15` (só start-image), `seedance_1_5_pro`. **Verificar disponibilidade no Starter e custo antes** (bloqueio de plano falha sem cobrar).
+
+3. **Upscale com `model_version: pro`.** O upscale reprovado usou `standard` (default). O schema oferece `pro` — pode amaciar menos. Custa ~0,1 cr testar.
+
+**Ordem sugerida:** (2) primeiro — é barato descobrir se outro modelo simplesmente não tem o defeito, e resolveria sem retrabalho do Pedro. Se nenhum servir, (1), que é a correção estrutural.
+
+### ATUALIZAÇÃO 2026-07-20 — Kling substituiu o seedance; Parte 1 FECHADA
+
+> A "PARTE 1 NÃO FECHOU" acima está **resolvida**. A pista 2 (testar outro modelo) foi a certa.
+
+- **Upgrade de plano:** Starter → **Plus**. Destravou `kling3_0 --mode pro` (1080p nativo) e demais modelos que estavam gated. Saldo pós-upgrade: ~1000 cr.
+- **PARTE 1 — APROVADA (final oficial):** `design/assets/hero/mp4/hero-video-scene1-parte1-kling3-PRO-5s.mp4` (1928×1076, 5s). Substitui o `FINAL-1080p` (upscale) que o Pedro reprovou por maciez. Ressalva aceita: um cruzamento estranho de mãos no gesto do relógio — Pedro deu por satisfeito.
+- **Frames-âncora da Parte 1 (com MULHER):** `hero-video-scene1-frame1-rio-tarde-novo.png` (início) e `hero-video-scene1-frame1-rio-noite-novo.png` (fim — apesar do nome, é o frame2/noite). O 2º figurante virou **mulher executiva** (Photoshop, mesma camada nos dois frames = identidade garantida; diff comprovou edição cirúrgica). *Renomear o "-noite-novo" para frame2 algum dia, evita confusão.*
+- **`kling3_0` é o modelo de vídeo padrão agora.** Detalhes/custos/limites no `docs/higgsfield-playbook.md` §7 (atualizado hoje).
+
+### PARTE 2 (escurecimento: Rio noite → morro some) — TRAVADA no movimento
+- **Objetivo técnico atingido:** `hero-video-scene1-parte2-escurecimento-3s-v2.mp4` (kling pro, 3s) faz a **montanha desaparecer** ficando só as luzes; sem duplicata. Frame final `hero-video-scene1-parte2-frame-final-rio-noite.png` (Pedro escureceu no Photoshop) foi o que garantiu o sumiço.
+- **REPROVADO pelo Pedro:** os pedestres **"patinam no mesmo lugar"** (pernas mexem, corpo não translada) porque os dois âncoras têm os personagens na MESMA posição. Lição confirmada e registrada no playbook §7.
+- **DECISÃO EM ABERTO (Pedro vai pensar e volta amanhã):** como resolver os pedestres na Parte 2 — reposicioná-los no frame final (Photoshop), OU tirá-los de quadro, OU deixá-los realmente parados de forma crível. **O start-image da Parte 2 é o último quadro EXTRAÍDO do vídeo da Parte 1** (`hero-video-scene1-parte2-frame-inicial-rio-noite.png`), não o frame estático — manter assim para continuidade.
+
+### DECUPAGEM combinada da Cena 1 (4 trechos)
+1. Rio entardecer → Rio noite ✅ (Parte 1, aprovada)
+2. Escurece até o morro sumir ⚠️ (Parte 2, travada no movimento dos pedestres)
+3. Luzes de Londres começam a aparecer (ainda no escuro) — **a troca de cidade acontece aqui**, no escuro, sem contorno de morro que denuncie
+4. Dia clareia e revela Londres (avião/pista/água iguais; muda só da água/luzes para cima)
+
+### PRÓXIMO PASSO — Parte 2 (continuação) e depois Parte 3
+"**Levamos você ao mundo**" (intenção confirmada pelo Pedro: alcance internacional, **o destino específico não importa**), partindo do frame Rio-noite. **Decisão em aberto, merece brainstorming:** plano novo limpo (gerar um clipe de destino separado e unir por corte/dissolve) × transição editada × outra abordagem. A Parte 1 **funciona sozinha** como asset, então não estamos reféns da Parte 2.
+
+**Escopo protegido:** nada commitado; sem alterar código do site; sem integrar assets em `src/`.
+
+---
+
+## 19. Sessão 2026-07-21 — mídia real na Hero, Band e cards · PUBLICADO
+
+> **LER ANTES DE QUALQUER COISA:** `docs/higgsfield-playbook.md` **§8** (aprendizados desta
+> sessão — negação em prompt, estado × relação, ffmpeg de graça) e `design/assets/MANIFEST.md`
+> (proveniência e a reorganização de pastas).
+
+### 🚀 O site está NO AR: https://carioca-viagens.vercel.app
+
+Publicado em produção com Hero, Band, cards e rodapé novos. Verificado no site publicado: os dois
+vídeos tocando em loop. **PR #1 aberto** — https://github.com/pedroribeiro2706/carioca-viagens/pull/1
+(5 commits, branch `feat/midia-hero-band-cards`).
+
+**Atenção à ordem:** a produção foi publicada **direto do branch**, antes do merge, porque o
+cliente estava esperando. Mesclar o PR **não muda nada no ar** — só alinha o histórico da `main`,
+que ainda está no estado de 13/07.
+
+### DECUPAGEM DO VÍDEO DA HERO — três cenas de momento
+
+**Não existia em documento nenhum antes desta sessão.** A informação estava só na conversa, e o
+Pedro teve que reexplicar. Agora está aqui e no MANIFEST.
+
+1. **Cena 1 — saguão do aeroporto.** ⏸️ **EM STAND-BY por decisão do Pedro.** Subdividida em 4
+   partes; ver §18. A Parte 2 (`hero-video-scene1-parte2-v4-escuro.mp4`) está tecnicamente
+   aprovada (escurecimento no alvo, pedestres transladando) mas **sem veredito visual**.
+2. **Cena 2 — avião.** ✅ Executiva branca na poltrona da janela, trabalhando no celular.
+   **Entregue:** `reel/mp4/hero-video-scene2-aviao-v2-reverso.mp4` — a v2 cortada em 2,54s e
+   **invertida** (ideia do Pedro). A inversão resolveu de graça a queda de expressão, fazendo a
+   cena *terminar* no sorriso. Aceita como provisória; o Pedro quer refazer melhor depois.
+3. **Cena 3 — carro.** ✅ Executiva negra saindo do carro alugado.
+   **Escolhida:** `reel/mp4/hero-video-scene3-carro-4s-camera-acompanha.mp4` — câmera acompanha,
+   corpo inteiro em quadro do começo ao fim. A variante com o funcionário da locadora
+   (`...-recebe-chave.mp4`) foi **rejeitada**: o funcionário domina o primeiro plano e a
+   protagonista vira coadjuvante.
+
+**Reel montado:** `reel/mp4/hero-reel-cena2-cena3-FINAL.mp4` — 6,08s, dissolvência de 0,5s entre
+as cenas e fade pelo preto nas duas pontas. É o que está na Hero.
+
+### REORGANIZAÇÃO DE PASTAS
+
+| Pasta | Conteúdo |
+|---|---|
+| `design/assets/reel/` | **as três cenas do vídeo da Hero** (movidas de `hero/` nesta sessão) |
+| `design/assets/hero/` | só os stills da Hero (`stills/`, `mobile/`) + `old/`, `references/`, `photoshop/` |
+| `design/assets/cards/` | zonas de mídia dos cards |
+| `design/assets/band/` | painel de voos |
+
+**Não movido de propósito:** `hero/photoshop/` guarda PSDs de trabalho do Pedro da Cena 1 —
+arquivo do Photoshop pode ter camadas vinculadas por caminho. Decisão dele pendente.
+
+### DECISÃO DE TRATAMENTO: duotone REPROVADO nas imagens dos cards
+
+O duotone foi aprovado como direção em 2026-07-16 e reconfirmado no início desta sessão, mas
+**testado contra as imagens finais foi reprovado** — elas vivem de luz e cor quente, e o duotone
+destrói exatamente isso (o dourado da janela do avião vira cinza, a madeira da mala vira oliva).
+As imagens entraram **cruas**, com overlay preto de 18% que clareia para 6% no hover.
+
+Detalhe técnico em `docs/higgsfield-playbook.md` §8.10.
+
+### PENDÊNCIAS ABERTAS
+
+1. **Conectar a Vercel ao GitHub.** Hoje o projeto é linkado só por CLI: merge no PR **não
+   publica**, e cada deploy exige `vercel --prod` manual. Conectar resolve e ainda dá URL de
+   preview por PR. É clique no painel da Vercel — só o Pedro pode fazer.
+2. **Refazer a medição de contraste da Hero quando a Cena 1 entrar** — a luminância atrás do
+   texto muda. Método correto: **mediana** do fundo, não média (ver playbook §8.11).
+3. **Band no mobile:** em 390px a faixa fica com 86px de altura. Nada cortado, mas fina. Resolver
+   com recorte dedicado, cortado numa **junção entre colunas**.
+4. **Cards viram flip-cards** no futuro (decisão do Pedro). Por isso o hover atual é só
+   zoom + clareamento — construir mais agora seria retrabalho.
+5. **Cena 1 do saguão** entra no reel depois; a Parte 2 aguarda veredito visual.
+6. **Arquivos fora do git** que deveriam entrar: `docs/higgsfield-playbook.md` (referenciado pelo
+   `CLAUDE.md` do projeto como leitura obrigatória!), `design/higgsfield.md`, e o `CLAUDE.md` e
+   `HANDOFF.md` modificados.
+
+### PREFERÊNCIAS DE TRABALHO QUE O PEDRO CORRIGIU NESTA SESSÃO
+
+Registrar porque eu errei nelas repetidamente:
+
+- **Asset gerado vai DIRETO para a pasta do projeto**, nunca para o scratchpad. Ele não tem o
+  caminho do scratchpad e não consegue abrir. Errei três vezes.
+- **Uma imagem por rodada**, não três. Variantes quase idênticas são desperdício de crédito.
+  Três só quando estivermos genuinamente explorando direção.
+- **Nunca afirmar sem verificar.** Errei duas vezes hoje de forma grave: disse que a mulher tinha
+  passado para a porta do motorista (não tinha, eu deduzi pela posição do farol), e escrevi três
+  URLs inventadas no MANIFEST em vez de lê-las dos arquivos.
+
+### PRÓXIMO PROMPT SUGERIDO
+
+```
+Projeto Carioca Viagens em G:\Pedro\Dev\Clientes\carioca-viagens
+
+Leia nesta ordem:
+- HANDOFF.md Seção 19 (esta sessão: o que foi publicado e o que ficou pendente)
+- docs/higgsfield-playbook.md Seção 8 (aprendizados de prompt — evita queimar crédito)
+- design/assets/MANIFEST.md (proveniência e organização de pastas)
+
+O site está no ar em https://carioca-viagens.vercel.app com Hero, Band e cards
+já com mídia real. PR #1 aberto e não mesclado.
+
+Carregue a skill higgsfield-generate ANTES de gerar qualquer mídia — na sessão
+anterior eu não carreguei e isso custou ~10 créditos em renders queimados.
+
+Pergunte ao Pedro por onde ele quer seguir. Os candidatos são: conectar a
+Vercel ao GitHub, retomar a Cena 1 do saguão, refazer a Cena 2 com mais
+qualidade, o recorte mobile da Band, ou os flip-cards.
+```
