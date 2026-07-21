@@ -1,3 +1,4 @@
+import bandPainelVideo from "@/assets/band/band-painel-voos.mp4"
 import bandPainel from "@/assets/band/band-painel-voos.webp"
 
 /**
@@ -18,13 +19,32 @@ import bandPainel from "@/assets/band/band-painel-voos.webp"
 function MediaBand() {
   return (
     <div className="relative aspect-[2800/623] w-full overflow-hidden">
-      <img
-        src={bandPainel}
-        alt="Painel de voos de aeroporto com destinos internacionais e horários de embarque"
-        loading="lazy"
-        decoding="async"
+      {/*
+        Vídeo em loop com fallback estático, como exige design.md Seção 11
+        ("sempre prever fallback estático quando a mídia final for vídeo").
+        O `poster` cobre o intervalo até o vídeo carregar, e o `<img>` dentro
+        do `<video>` atende quem tem o vídeo bloqueado.
+
+        O loop é costurado na origem: o clipe foi gerado com o mesmo quadro
+        como âncora inicial e final, então o reinício não tem salto.
+      */}
+      <video
+        src={bandPainelVideo}
+        poster={bandPainel}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        aria-label="Painel de voos de aeroporto com destinos internacionais e horários de embarque"
         className="absolute inset-0 size-full object-cover"
-      />
+      >
+        <img
+          src={bandPainel}
+          alt="Painel de voos de aeroporto com destinos internacionais e horários de embarque"
+          className="absolute inset-0 size-full object-cover"
+        />
+      </video>
     </div>
   )
 }

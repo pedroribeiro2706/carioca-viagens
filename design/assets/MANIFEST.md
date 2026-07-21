@@ -189,3 +189,38 @@ _Todos 6336×2688. Custo: **12 cr**._
 2560×1440 → **4,23:1** · 1440×900 → 3,81:1 · ultrawide 3440×1440 → **5,69:1** · janela baixa
 1920×720 → **6,35:1** · celular 390×844 → **1,10:1 (quase quadrado)**. Nenhum asset serve os dois
 extremos; painel frontal chapado é auto-similar nos dois eixos e por isso tolera qualquer corte.
+
+---
+
+## ⚠️ REORGANIZAÇÃO DE PASTAS (2026-07-21)
+
+As três cenas do vídeo da Hero saíram de `hero/` para **`reel/`**, a pedido do Pedro. As
+referências a `hero/...` nas seções acima que apontam para arquivos `hero-video-scene*`
+devem ser lidas como **`reel/...`**. Os nomes dos arquivos não mudaram.
+
+| Pasta | Conteúdo |
+|---|---|
+| `reel/` | as três cenas do vídeo da Hero — `hero-video-scene1-*` (saguão), `hero-video-scene2-*` (avião), `hero-video-scene3-*` (carro). Vídeos em `reel/mp4/`. |
+| `hero/` | apenas os stills da Hero: `stills/hero-desktop-master-01-4k.png`, `mobile/hero-mobile-master-02-4k.png`, mais `old/`, `references/` e `photoshop/`. |
+| `cards/` | zonas de mídia dos cards de Atendimento. |
+| `band/` | painel de voos da faixa de transição, vídeo em `band/mp4/`. |
+
+**Deliberadamente NÃO movido:** `hero/photoshop/` guarda os PSDs de trabalho do Pedro para a
+Cena 1. São da Cena 1, mas arquivo do Photoshop pode ter camadas vinculadas por caminho e mover
+quebraria os vínculos. Decisão do Pedro pendente.
+
+### Decupagem do vídeo da Hero — três cenas de momento
+
+Confirmada pelo Pedro em 2026-07-21. **Não existia em documento nenhum antes desta entrada** —
+a informação estava só na conversa, e a sessão perdeu tempo redescobrindo.
+
+1. **Cena 1 — saguão do aeroporto.** Em stand-by por decisão do Pedro. Subdividida em 4 partes
+   (Rio entardecer→noite ✅ aprovada · escurecimento ✅ v4 tecnicamente ok, sem veredito visual ·
+   luzes de Londres · amanhecer). Detalhe em `HANDOFF.md` §18.
+2. **Cena 2 — avião.** Executiva branca na poltrona da janela, trabalhando no celular, vista
+   bonita pela janela, enquadramento de quem senta ao lado. 3s.
+   **Entregue:** `reel/mp4/hero-video-scene2-aviao-v2-reverso.mp4` — a v2 cortada em 2,54s e
+   **invertida** (ideia do Pedro), o que resolve a queda de expressão fazendo a cena terminar no
+   sorriso em vez de começar nele. Aceita como provisória.
+3. **Cena 3 — carro.** Executiva negra recebendo a chave e entrando no carro alugado, para falar
+   do serviço de locação e translado. 3s. Em produção.
