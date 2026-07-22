@@ -47,5 +47,6 @@ Texto:
 - carioca@cariocaviagens.com.br 
 - R. Senador Vergueiro, 116/603 Flamengo - Rio de Janeiro, RJ 
   - +55 21 99928-6244 (WhatsApp)
+  - +55 21 98816-6588 (WhatsApp)
   - {ícone instagram} @carioca.viagens 
   - {ícone facebook} cariocaviagens

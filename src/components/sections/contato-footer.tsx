@@ -72,10 +72,15 @@ function ContatoFooter() {
                 WhatsApp
               </span>
               <ul className="m-0 flex flex-col gap-4 p-0">
-                <li className="flex items-start gap-3.5 text-[1.05rem]">
-                  <WhatsappIcon className="mt-0.5 size-5 shrink-0 text-light-blue" />
-                  {contato.whatsapp}
-                </li>
+                {contato.whatsapp.map((numero) => (
+                  <li
+                    key={numero}
+                    className="flex items-start gap-3.5 text-[1.05rem]"
+                  >
+                    <WhatsappIcon className="mt-0.5 size-5 shrink-0 text-light-blue" />
+                    {numero}
+                  </li>
+                ))}
               </ul>
             </div>
 
