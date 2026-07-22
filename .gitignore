@@ -26,6 +26,10 @@ temp/
 *.sln
 *.sw?
 
+# referências históricas de desenvolvimento (ex-elements + ex-seções) —
+# ficam só no disco como memória do processo, fora do git.
+references/historico/
+
 # mídia gerada (Higgsfield) — 1,8 GB de masters, fora do git.
 # O MANIFEST.md fica versionado: é a proveniência (modelo, params, custo, URL de origem),
 # e as URLs permitem rebaixar qualquer asset. Os assets otimizados que o site usa

@@ -39,8 +39,8 @@ Use the following files as project references:
 
 - `design-brief.md` — brand, design system and creative direction.
 - `references/conteudo-apresentacao.md` — official source for all visible client-facing copy.
-- `references/apresentação-carioca-viagens-aparesentação-antiga.pdf` — main visual and conceptual reference.
-- `references/apresentação-carioca-viagens-apresentação-nova.pdf` — updated content and secondary visual reference.
+- `docs/apresentação-carioca-viagens-aparesentação-antiga.pdf` — main visual and conceptual reference.
+- `docs/apresentação-carioca-viagens-apresentação-nova.pdf` — updated content and secondary visual reference.
 - `docs/higgsfield-playbook.md` — **read this at the start of any session involving media generation (Higgsfield).** Which model fits which situation, verified costs, measured limits and process principles. It exists to prevent re-learning by trial and error.
 
 Rules:
