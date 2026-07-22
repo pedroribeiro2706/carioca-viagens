@@ -69,6 +69,7 @@ export const content = {
         titleLines: ["ASSISTÊNCIA", "EMERGENCIAL"],
         desc: "plantão para resolver imprevistos a qualquer hora.",
         icon: "headset",
+        image: "assistencia",
       },
       {
         variant: "green",
@@ -77,6 +78,7 @@ export const content = {
         titleLines: ["SISTEMA DE", "RESERVAS ON LINE"],
         desc: "Reserve aéreo e hotel em poucos cliques.",
         icon: "planeTakeoff",
+        image: "reservas",
       },
       {
         variant: "dark",
@@ -85,6 +87,7 @@ export const content = {
         titleLines: ["MELHORES CANAIS", "DE DISTRIBUIÇÃO"],
         desc: "Tarifas das melhores operadoras do mundo.",
         icon: "handshake",
+        image: "aviao",
       },
     ],
   },
@@ -135,8 +138,7 @@ export const content = {
       "22230-001",
     ],
     email: "carioca@cariocaviagens.com.br",
-    whatsapp: "(21) 98816-6588",
-    phone: "(21) 2221-1410",
+    whatsapp: ["+55 21 99928-6244", "+55 21 98816-6588"],
     instagram: {
       handle: "@carioca.viagens",
       url: "https://www.instagram.com/carioca.viagens/",

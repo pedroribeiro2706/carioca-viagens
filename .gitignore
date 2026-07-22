@@ -25,3 +25,10 @@ temp/
 *.njsproj
 *.sln
 *.sw?
+
+# mídia gerada (Higgsfield) — 1,8 GB de masters, fora do git.
+# O MANIFEST.md fica versionado: é a proveniência (modelo, params, custo, URL de origem),
+# e as URLs permitem rebaixar qualquer asset. Os assets otimizados que o site usa
+# vivem em src/assets/ e esses sim são versionados.
+design/assets/*
+!design/assets/MANIFEST.md

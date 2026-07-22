@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone } from "lucide-react"
+import { Mail, MapPin } from "lucide-react"
 import type { CSSProperties } from "react"
 
 import logoClaraNova from "@/assets/logo/logo-horizontal-clara-nova.svg"
@@ -69,17 +69,18 @@ function ContatoFooter() {
 
             <div className="mb-6">
               <span className="mb-3.5 block font-mono text-[0.7rem] tracking-[0.1em] text-light-green uppercase">
-                WhatsApp · Telefone
+                WhatsApp
               </span>
               <ul className="m-0 flex flex-col gap-4 p-0">
-                <li className="flex items-start gap-3.5 text-[1.05rem]">
-                  <WhatsappIcon className="mt-0.5 size-5 shrink-0 text-light-blue" />
-                  {contato.whatsapp}
-                </li>
-                <li className="flex items-start gap-3.5 text-[1.05rem]">
-                  <Phone className="mt-0.5 size-5 shrink-0 text-light-blue" />
-                  {contato.phone}
-                </li>
+                {contato.whatsapp.map((numero) => (
+                  <li
+                    key={numero}
+                    className="flex items-start gap-3.5 text-[1.05rem]"
+                  >
+                    <WhatsappIcon className="mt-0.5 size-5 shrink-0 text-light-blue" />
+                    {numero}
+                  </li>
+                ))}
               </ul>
             </div>
 
