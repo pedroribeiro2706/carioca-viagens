@@ -74,10 +74,14 @@ As versões abaixo são as **efetivamente instaladas** (resolvidas no lockfile).
 
 ### Hospedagem / deploy
 
-- **Vercel** — plataforma de hosting e deploy. O deploy é feito pela **Vercel CLI**
-  (ferramenta global, **não** versionada no `package.json` deste projeto).
+- **Vercel** — plataforma de hosting e deploy. Desde 2026-07-22 o deploy é **contínuo,
+  via integração GitHub** (Vercel GitHub App): push em `main` → produção; push em qualquer
+  outra branch → preview com URL própria e comentário automático no PR. O deploy manual
+  (`vercel --prod`) deixou de ser o fluxo padrão. A **Vercel CLI** (ferramenta global,
+  **não** versionada no `package.json`) permanece útil para inspeção (`vercel ls`, logs).
 - Projeto `carioca-viagens` no escopo pessoal do Pedro. Configuração local da Vercel
-  (`.vercel/`) está no `.gitignore`. Detalhes do primeiro deploy em `HANDOFF.md`, Seção 14.
+  (`.vercel/`) está no `.gitignore`. Primeiro deploy em `HANDOFF.md`, Seção 14; integração
+  contínua Vercel↔GitHub documentada na Seção 21.
 
 ---
 
@@ -249,7 +253,9 @@ Ao usar Higgsfield (ou qualquer geração de mídia) neste projeto:
 - **Preservar performance.**
 - Quando houver **vídeo**, usar sempre **poster e fallback** (imagem estática) — o vídeo
   nunca pode reduzir a legibilidade do texto.
-- **Não fazer commit, push ou deploy sem autorização explícita do Pedro.**
+- **Não fazer commit ou push sem autorização explícita do Pedro.** Atenção: com a
+  integração contínua, **push em `main` é deploy de produção** — autorizar push é
+  autorizar deploy.
 - **Novas animações GSAP** (títulos, subtítulos, cards e demais elementos) só depois da
   integração e revisão das mídias — não antes.
 
