@@ -590,3 +590,112 @@ Pergunte ao Pedro por onde ele quer seguir. Os candidatos são: conectar a
 Vercel ao GitHub, retomar a Cena 1 do saguão, refazer a Cena 2 com mais
 qualidade, o recorte mobile da Band, ou os flip-cards.
 ```
+
+---
+
+## 20. Sessão 2026-07-22 (manhã) — segundo WhatsApp no rodapé · PUBLICADO · + notas de React no Brain
+
+Sessão curta e de escopo estreito: uma correção de conteúdo pedida pelo Pedro **antes** de começar
+a integração Vercel↔GitHub, que continua **não feita** e segue como próximo passo.
+
+### ✅ O que entrou no ar
+
+**Segundo número de WhatsApp no rodapé**, logo abaixo do existente:
+
+| | |
+|---|---|
+| Número adicionado | `+55 21 98816-6588` |
+| Commit | `7311762 feat: adiciona segundo WhatsApp ao rodape` |
+| Branch | `feat/midia-hero-band-cards` (já no GitHub; PR #1 recebeu o commit) |
+| Deploy | `vercel --prod` → aliased para https://carioca-viagens.vercel.app |
+
+**Como foi implementado** (importa para quem for mexer em contato de novo):
+
+- `src/lib/content.ts` — o campo `whatsapp` **deixou de ser string e virou array**:
+  `whatsapp: ["+55 21 99928-6244", "+55 21 98816-6588"]`. Um terceiro número agora custa
+  uma linha aqui e **zero** alteração de componente.
+- `src/components/sections/contato-footer.tsx` — a `<ul>` do WhatsApp passou a mapear a lista
+  (`.map()` com `key={numero}`). Não houve decisão visual nova: o markup já era `<ul>/<li>` com
+  um item só, e o `gap-4` do contêiner já definia o espaçamento.
+- `references/conteudo-apresentacao.md` — fonte-de-verdade do conteúdo atualizada junto, como
+  manda o `CLAUDE.md` do projeto.
+
+**Verificação:** `npm run lint` (só os 3 warnings pré-existentes de fast-refresh em `button.tsx`,
+`chip.tsx`, `eyebrow.tsx` — nenhum novo) e `npm run build` passaram. Em produção, baixei o
+`index.html` publicado, li qual bundle ele carrega (`/assets/index-Ciniz6i4.js`) e confirmei as
+duas strings de telefone dentro dele. Técnica barata e objetiva de verificar deploy sem screenshot
+— vale reusar.
+
+### 📚 O Pedro pediu para entender o código, não só receber o resultado
+
+Depois da correção ele pediu o **passo a passo manual** — como faria essa edição sem agente — e
+perguntou especificamente sobre: `npm run dev` ser ou não obrigatório, a diferença entre `.ts` e
+`.tsx`, e o que é o bundle publicado. Isso virou conhecimento permanente no vault.
+
+**Criado em `G:\Pedro\Brain\10_Knowledge\engineering\react\`** (4 notas atômicas + README, todas
+com frontmatter conforme `Templates/Template - Conhecimento.md`):
+
+1. `Conteúdo separado da apresentação em React — o padrão content.ts.md`
+2. `JSX e as extensões .tsx e .jsx — por que a extensão importa.md`
+3. `Renderizar listas em React com .map() e a função da key.md`
+4. `Dev server, build e bundle — os três estados de um projeto Vite.md`
+
+A nota-âncora `10_Knowledge/engineering/Web Apps - Stack e Convenções Kriya.md` ganhou uma seção
+"Notas de React" linkando as quatro (o ponto de conexão estava vazio: ela citava React na stack
+sem nenhuma nota abaixo), e `engineering/README.md` passou a declarar a subpasta.
+
+> **Preferência registrada:** ao escrever no vault, o Pedro exige título descritivo, frontmatter
+> completo e **roteamento pensado** (pasta certa, wikilinks nos dois sentidos) — não aceita nota
+> solta. Ele mesmo cobrou isso nesta sessão.
+
+**Divergência encontrada no vault e registrada** em `Brain/context/backlog.md`, seção PKM, como
+`[Sprint]`: o campo de maturidade do frontmatter é `status:` na rule path-scoped e no template,
+mas `stage:` no `10_Knowledge/INDEX.md` e no `engineering/README.md`. A prática real usa `status:`
+— foi o que segui. **Não corrigi** os arquivos divergentes: é manutenção do vault, escopo de uma
+sessão do Brain.
+
+### PENDÊNCIAS ABERTAS
+
+Todas as 6 pendências da §19 continuam válidas. A #6 mudou de estado:
+
+1. **Conectar a Vercel ao GitHub** — **segue como o próximo passo recomendado.** Continua sendo
+   clique no painel da Vercel, só o Pedro pode fazer. Enquanto não for feito, todo deploy exige
+   `vercel --prod` manual e merge do PR não publica nada. Esta sessão publicou pela CLI de novo.
+2. Refazer a medição de contraste da Hero quando a Cena 1 entrar (mediana, não média — playbook §8.11).
+3. Band no mobile: 86px de altura em 390px, resolver com recorte dedicado cortado numa junção entre colunas.
+4. Cards viram flip-cards no futuro — por isso o hover atual é só zoom + clareamento.
+5. Cena 1 do saguão entra no reel depois; Parte 2 aguarda veredito visual.
+6. **Arquivos fora do git — estado atualizado em 2026-07-22:** `docs/higgsfield-playbook.md`,
+   `design/higgsfield.md` e o `HANDOFF.md` **já foram commitados** em `060a62f`. Continuam de fora:
+   `CLAUDE.md` (modificado, não commitado), `gpt.md` e `TASK_PROJECT_ENVIRONMENT_AND_GIT_SYNC.md.md`
+   (untracked, nunca lidos por mim — o Pedro não pediu), e 18 PNGs em `references/elements/`
+   (`aviao-*.png`, untracked). **Esta §20 também está por commitar.**
+
+### Estado do repositório no fim da sessão
+
+`feat/midia-hero-band-cards` está 7 commits à frente de `main`. `main` continua no estado de 13/07.
+A produção veio do branch, não da `main` — mesclar o PR **não muda nada no ar**, só alinha o histórico.
+
+### PRÓXIMO PROMPT SUGERIDO
+
+```
+Projeto Carioca Viagens em G:\Pedro\Dev\Clientes\carioca-viagens
+
+Leia nesta ordem:
+- HANDOFF.md Seção 20 (última sessão) e Seção 19 (o grosso do estado atual)
+- docs/higgsfield-playbook.md Seção 8 — SÓ se for gerar mídia
+- design/assets/MANIFEST.md — SÓ se for mexer em assets
+
+O site está no ar em https://carioca-viagens.vercel.app, com o segundo WhatsApp
+já publicado. PR #1 aberto e não mesclado; produção sai do branch pela CLI.
+
+Comece pela integração Vercel↔GitHub — é o próximo passo acordado e destrava
+preview por PR e deploy automático no merge. Parte é clique no painel da Vercel
+(só o Pedro faz); me diga o que preparar do lado do repositório.
+
+Se for gerar mídia, carregue a skill higgsfield-generate ANTES — pular isso já
+custou ~10 créditos em renders queimados.
+
+Outros candidatos, se o Pedro preferir: retomar a Cena 1 do saguão, refazer a
+Cena 2 com mais qualidade, o recorte mobile da Band, ou os flip-cards.
+```
