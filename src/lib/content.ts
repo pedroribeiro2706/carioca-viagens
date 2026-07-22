@@ -122,10 +122,9 @@ export const content = {
     title: "Nossos clientes",
     logos: [
       { name: "Gesel", file: "gesel" },
-      { name: "Leonardo", file: "leonardo" },
+      { name: "Inpo", file: "inpo" },
       { name: "Miguel Pinto Guimarães Arquitetos Associados", file: "miguel" },
       { name: "Somerj", file: "somerj" },
-      { name: "WP Capital", file: "wp" },
     ],
   },
   contato: {
