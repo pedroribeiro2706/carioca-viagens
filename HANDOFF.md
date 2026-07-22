@@ -818,3 +818,41 @@ Regra do harness global: invocar /frontend-design antes de escrever código de U
 Se for gerar mídia, carregue a skill higgsfield-generate ANTES — pular isso já
 custou ~10 créditos em renders queimados.
 ```
+
+---
+
+## 22. Sessão 2026-07-22 (noite) — faxina de arquivos · Clientes atualizada · plano do carrossel Diferenciais
+
+### O que foi feito nesta sessão
+
+| Commit | Conteúdo |
+|---|---|
+| `f8d5240` | HANDOFF §21 commitado (fechamento da sessão da tarde) |
+| `1f41ddb` | Reorganização de `references/`: `historico/` (fora do git, ex-elements + ex-seções), `layouts/` (screenshots), `logo carioca viagens/`, `psd/`; PDFs das apresentações → `docs/`; paths atualizados no CLAUDE.md |
+| `3df7332` | Raiz limpa: `gpt.md` e `handoff-sessao.md` removidos (conteúdo integralmente coberto por este HANDOFF), PROJECT_ENVIRONMENT.md atualizado para o deploy contínuo |
+| `050c293` | `PASSO-A-PASSO-DESIGN-SYSTEM.md` → `docs/` (instrução consumida, preservada como artefato do processo) |
+| `8511e8b` | **Seção Clientes**: saem WP Capital e Leonardo; Gesel substituída por vetor puro (a anterior embutia raster com caminho quebrado e renderizava incompleta); **entra INPO**; grid 5→4 colunas. Verificado no preview local com Playwright antes do push |
+
+Raiz do projeto agora só tem documentos vivos: `CLAUDE.md`, `HANDOFF.md`, `design-brief.md`, `PROJECT_ENVIRONMENT.md`, `project-card.md`. O `TASK_PROJECT_ENVIRONMENT_AND_GIT_SYNC.md` e o `Vercel.png` foram para `references/historico/` / excluídos, respectivamente.
+
+Pendência pequena: o alt text da INPO ficou `"Inpo"` (padrão de "Gesel"/"Somerj"). Confirmar com o Pedro se prefere `"INPO"` em maiúsculas.
+
+### PRÓXIMA TAREFA — carrossel na seção Diferenciais (decidido, NADA executado ainda)
+
+Alvo: o painel de mídia da seção **"O que nossos clientes buscam?"** (Diferenciais) — hoje um placeholder de gradiente com label "ATENDIMENTO EM MOVIMENTO / PLACEHOLDER DE IMAGEM/VÍDEO" e chip "CORPORATIVO · LAZER · RECEPTIVO".
+
+Decisões já tomadas com o Pedro:
+
+- **Formato: carrossel de imagens estilo Instagram** — setas laterais, bolinhas de posição, autoavanço a cada 5s. **Não usar vídeo**: Hero (vídeo) + band (animação) + vetores pin/avião já dão o movimento da página; outro vídeo seria excessivo.
+- **Até 5 imagens.** Uma delas é a **foto real da Flavinha Salles, gestora da agência**: `design/assets/diferenciais/flavinha.jpeg` (existe, verificado — atenção: a pasta é `diferenciais`, com "i", não "diferencias").
+- **Conteúdo a comunicar**: os 4 diferenciais (Agilidade no atendimento · Eficiência nos processos de viagens · Melhores preços e condições de pagamento · Soluções operacionais) + a amplitude Corporativo · Lazer · Receptivo, mantendo o foco corporativo da apresentação.
+- **Requisitos do componente**: pausar autoplay em hover/interação, swipe no mobile, autoplay desligado sob `prefers-reduced-motion`, setas/bolinhas na microtipografia wayfinding (IBM Plex Mono), imagens com a linguagem visual do site (não stock genérico).
+
+Processo obrigatório, nesta ordem — não pular etapas:
+
+1. `/superpowers:brainstorming` — conceito editorial slide a slide (o que cada imagem comunica e como as 5 se distribuem entre os temas) → documento curto de direção por slide.
+2. **Aprovação do Pedro** do documento de direção. Não gerar nada antes disso.
+3. Ler `docs/higgsfield-playbook.md` **antes** de gerar qualquer imagem (regra do CLAUDE.md; pular isso já custou ~10 créditos em sessões passadas).
+4. Gerar as imagens (Higgsfield) conforme a direção aprovada — a foto da Flavinha é real, não gerada.
+5. `/frontend-design` antes do código do componente carousel (React).
+6. GSAP fica **depois** — as animações de títulos/imagens dos cards são a etapa seguinte ao carrossel, não parte dela.
