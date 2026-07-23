@@ -224,3 +224,21 @@ a informação estava só na conversa, e a sessão perdeu tempo redescobrindo.
    sorriso em vez de começar nele. Aceita como provisória.
 3. **Cena 3 — carro.** Executiva negra recebendo a chave e entrando no carro alugado, para falar
    do serviço de locação e translado. 3s. Em produção.
+
+---
+
+## diferenciais/ — carrossel da seção Diferenciais (2026-07-23)
+
+5 slides: foto real da Flavinha (preparada pelo Pedro, nada gerado) + 4 imagens geradas, uma por
+diferencial. Spec: `docs/superpowers/specs/2026-07-23-carrossel-diferenciais-design.md`. Geradas
+em **4:3 · medium · 2k** (`gpt_image_2`, mesmo modelo dos masters da Hero — mesma família visual).
+Prompts reformulados em fraseado positivo (regra do playbook §8.2 — nunca nomear o indesejado).
+
+| Arquivo | Estágio | Modelo | Params | Custo | Data | Origem (URL Higgsfield) |
+|---|---|---|---|---|---|---|
+| agilidade-master.png | intermediário (gerado) | gpt_image_2 | 4:3 · medium · 2k · 2336×1744 | 3 cr | 2026-07-23 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260723_153808_764b21ac-43bb-4d71-89a3-f05f5b0f38cb.png |
+| **agilidade-master-pt.png** | **MASTER aprovado** | gpt_image_2 + Photoshop (Pedro) | 2336×1744 · nome do passageiro trocado por nome brasileiro | 0 cr (edição manual) | 2026-07-23 | derivado de agilidade-master.png |
+
+Decisão do Pedro (2026-07-23): a UI em inglês na tela **fica** — o público-alvo viaja muito e usa
+inglês; só o nome do passageiro ("John Smith") destoava e foi trocado no Photoshop. A conversão
+WebP da Task 6 usa o `-pt` como fonte.
