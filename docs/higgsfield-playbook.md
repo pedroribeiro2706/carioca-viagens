@@ -18,7 +18,8 @@ Plano da conta no momento do registro: **Starter**.
 | Relight / mudar hora do dia mantendo a cena | `nano_banana_flash` | 3 cr ✅ | **Melhor da casa** para edição preservativa. |
 | Edição cirúrgica (mover/alterar 1 elemento) | `nano_banana_flash` | 3 cr ✅ | Funciona, mas **não confie em contagem de pessoas**. |
 | Realçar fidelidade/nitidez de imagem fraca | `nano_banana_flash` | 3 cr ✅ | Sintetiza detalhe que o upscaler não consegue. |
-| Composição original (still do zero, com texto) | `gpt_image_2` | 3 cr 📋 | medium/2k. Usado nos masters do Hero. |
+| Composição original (still do zero, com texto) | `gpt_image_2` | 3 cr ✅ | medium/2k. Usado nos masters do Hero e no carrossel de Diferenciais. |
+| Cena fotorrealista SEM texto em destaque | `nano_banana_pro` | 2 cr ✅ | **Desbloqueado no Plus** (2026-07-23). Cotação bateu exata (sem ÷1,43). Devolve dimensões próprias (4:3 → 2400×1792) e JPEG. **NÃO corrigiu grip mão-objeto** em edição cirúrgica: mudou a região preservando o resto, mas a anatomia continuou errada (2026-07-23). Anatomia fina = Photoshop humano (§4.2). |
 | Vídeo image-to-video (start+end) | `seedance_2_0_mini` | 1 cr/s @480p · 2,5 cr/s @720p 📋 | 4–15s. Único de vídeo liberado no Starter. |
 | Correção determinística de detalhe fino | **Photoshop (humano)** | — ✅ | Ver §4. IA não serve para isso. |
 

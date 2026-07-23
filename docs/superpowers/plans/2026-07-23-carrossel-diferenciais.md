@@ -77,13 +77,18 @@ grading, photorealistic, no visible faces, no readable UI text close-up
 - Consumes: modelo/params da Task 1.
 - Produces: master aprovado que a Task 6 otimiza.
 
-- [ ] **Step 1: Gerar em ~4:3 (mín. 1400 px)** com rascunho:
+- [ ] **Step 1: Gerar em ~4:3 (mín. 1400 px)** com rascunho **(v2, 2026-07-23 — cena do e-gate;
+  a cena original do corredor foi reprovada, ver spec)**, modelo `nano_banana_pro`:
 
 ```text
-Corporate traveler walking through a bright glass airport corridor, cabin
-suitcase rolling and boarding pass in hand, subtle sense of motion, natural
-light with blue glass tones, cinematic documentary photography, calm and
-professional mood, photorealistic, face not prominent
+Side close-up at an airport e-gate: a traveler's hand rests a smartphone
+horizontally on the glass scanner of the boarding gate, phone screen facing
+down toward the reader, a green validation light glowing softly around the
+scanner surface, automatic gate doors and corridor softly blurred in the
+background, natural daylight with subtle blue and green color grading, candid
+documentary photography, shallow depth of field, calm professional corporate
+travel mood, photorealistic, composition tightly framed on hand, phone and
+scanner
 ```
 
 - [ ] **Step 2: Salvar** em `design/assets/diferenciais/eficiencia-master.png`.
@@ -231,7 +236,7 @@ Expected: cria `src/components/ui/carousel.tsx` e adiciona `embla-carousel-react
       {
         file: "eficiencia",
         legend: "— 02 · EFICIÊNCIA NOS PROCESSOS DE VIAGENS",
-        alt: "Viajante corporativo com mala de cabine e cartão de embarque em corredor de aeroporto",
+        alt: "Mão aproximando o celular do leitor do portão de embarque com a luz verde de validação acesa",
       },
       {
         file: "precos",
