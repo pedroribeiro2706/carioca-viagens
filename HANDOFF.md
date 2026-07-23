@@ -866,8 +866,22 @@ original acima: o Pedro preparou `design/assets/diferenciais/flavinha.png` (crop
 horizontal já na proporção do painel — usar essa, não a `flavinha.jpeg` vertical);
 o slide de Soluções operacionais será gerado **sem tela visível** (gestão de
 telas anti-AI-slop, ver spec); alt text da INPO confirmado como `"Inpo"`.
-Próximo passo: plano de implementação (skill `superpowers:writing-plans`) →
-gerar as 4 imagens (aprovação do Pedro imagem a imagem) → componente → publicar.
+O plano de implementação também está pronto e commitado:
+`docs/superpowers/plans/2026-07-23-carrossel-diferenciais.md` — 10 tasks com
+código completo, prompts rascunhados, comandos exatos e paradas de aprovação
+marcadas. Spec e plano juntos carregam TODO o contexto; nada ficou só na conversa.
+
+**COMEÇAR AQUI na próxima sessão** (decisão do Pedro: execução inline em sessão nova):
+
+1. Ler o spec e o plano (paths acima).
+2. Executar com a skill `superpowers:executing-plans`, task a task, começando na
+   **Task 1**: carregar a skill `higgsfield-generate` + ler
+   `docs/higgsfield-playbook.md` + reportar modelo e custo estimado ao Pedro
+   **antes** de gastar qualquer crédito.
+3. Tasks 2–5 têm parada de aprovação do Pedro por imagem (mostrar via
+   SendUserFile). Push = deploy de produção — só na Task 10, com autorização.
+
+Sessão encerrada em 2026-07-23 (manhã) com working tree limpo e tudo no GitHub.
 
 ### Backlog do projeto
 
