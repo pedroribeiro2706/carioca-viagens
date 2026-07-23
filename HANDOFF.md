@@ -856,3 +856,22 @@ Processo obrigatório, nesta ordem — não pular etapas:
 4. Gerar as imagens (Higgsfield) conforme a direção aprovada — a foto da Flavinha é real, não gerada.
 5. `/frontend-design` antes do código do componente carousel (React).
 6. GSAP fica **depois** — as animações de títulos/imagens dos cards são a etapa seguinte ao carrossel, não parte dela.
+
+### Atualização 2026-07-23 (manhã) — brainstorming do carrossel CONCLUÍDO
+
+Design aprovado pelo Pedro e consolidado em
+`docs/superpowers/specs/2026-07-23-carrossel-diferenciais-design.md` — **ler esse
+spec antes de qualquer execução do carrossel**. Pontos que mudaram desde o plano
+original acima: o Pedro preparou `design/assets/diferenciais/flavinha.png` (crop
+horizontal já na proporção do painel — usar essa, não a `flavinha.jpeg` vertical);
+o slide de Soluções operacionais será gerado **sem tela visível** (gestão de
+telas anti-AI-slop, ver spec); alt text da INPO confirmado como `"Inpo"`.
+Próximo passo: plano de implementação (skill `superpowers:writing-plans`) →
+gerar as 4 imagens (aprovação do Pedro imagem a imagem) → componente → publicar.
+
+### Backlog do projeto
+
+- **Sincronizar slide ativo do carrossel ↔ item da lista de Diferenciais** (o
+  item da lista acende quando o slide correspondente está ativo) — ideia do
+  brainstorming de 2026-07-23, candidata à etapa GSAP. Não implementar junto com
+  o carrossel.
