@@ -881,6 +881,10 @@ marcadas. Spec e plano juntos carregam TODO o contexto; nada ficou só na conver
 3. Tasks 2–5 têm parada de aprovação do Pedro por imagem (mostrar via
    SendUserFile). Push = deploy de produção — só na Task 10, com autorização.
 
+Fechamento adicional: a logo do Miguel também foi substituída por vetor puro
+(`a48bc78` — mesma falha de raster embutido que a Gesel tinha; o símbolo da
+marca agora renderiza). As 4 logos de Clientes estão íntegras em produção.
+
 Sessão encerrada em 2026-07-23 (manhã) com working tree limpo e tudo no GitHub.
 
 ### Backlog do projeto
