@@ -241,7 +241,11 @@ Prompts reformulados em fraseado positivo (regra do playbook §8.2 — nunca nom
 | eficiencia-master.png | intermediário (mão atravessava o bilhete — defeito apontado pelo Pedro, crop em `references/diferenciais/detalhe-mao-01.png`) | gpt_image_2 | 4:3 · medium · 2k · 2336×1744 | 3 cr | 2026-07-23 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260723_155429_63f746e5-91c3-4501-b041-a94407abcd25.png |
 | eficiencia-master-v2.jpeg | **REPROVADO** — tentativa de correção cirúrgica da mão | nano_banana_pro | 4:3 · 2k · 2400×1792 · ref=eficiencia-master.png · padrão "Change ONLY" | 2 cr | 2026-07-23 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260723_161617_b2da3c1d-8853-48a2-b9e9-d090ffed2a6b.jpeg |
 
-Pós-morte da v2: o diff mostrou mudança concentrada na região mão/bilhete e cena/rosto
+| eficiencia-egate-master.png | superado — e-gate v2, close lateral (Pedro: realismo excelente, mas camiseta casual e contexto ilegível — "poderia ser qualquer coisa") | nano_banana_pro | 4:3 · 2k · 2400×1792 | 2 cr | 2026-07-23 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260723_235420_db6e0cba-6fae-4ab0-933b-cffff79fa4f4.png |
+| eficiencia-egate-master-v3.png | intermediário (gerado) — e-gate v3: POV sobre o ombro, terno, tela do boarding pass visível, aeromoça desfocada ao fundo | nano_banana_pro | 4:3 · 2k · 2400×1792 | 2 cr | 2026-07-24 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260724_103303_c364549f-2211-40a5-bc43-b63ea95790e0.png |
+| **eficiencia-egate-master-v3b.png** | **MASTER aprovado** | nano_banana_pro + Photoshop (Pedro) | 2400×1792 · pequena edição do Pedro sobre a v3 | 0 cr (edição manual) | 2026-07-24 | derivado de eficiencia-egate-master-v3.png |
+
+Pós-morte da v2 (corredor): o diff mostrou mudança concentrada na região mão/bilhete e cena/rosto
 preservados, mas **o grip continuou anatomicamente errado** (dedos atravessando o cartão) —
 veredito do Pedro em zoom nativo. Lição (já prevista no playbook §4.2 e reconfirmada): correção
 determinística de anatomia fina é trabalho de **Photoshop humano**, não de modelo. Pedro assumiu

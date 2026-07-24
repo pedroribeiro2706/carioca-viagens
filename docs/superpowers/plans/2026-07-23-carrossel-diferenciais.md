@@ -236,7 +236,7 @@ Expected: cria `src/components/ui/carousel.tsx` e adiciona `embla-carousel-react
       {
         file: "eficiencia",
         legend: "— 02 · EFICIÊNCIA NOS PROCESSOS DE VIAGENS",
-        alt: "Mão aproximando o celular do leitor do portão de embarque com a luz verde de validação acesa",
+        alt: "Viajante de terno aproximando o celular com o cartão de embarque digital do leitor do portão, com aeromoça ao fundo",
       },
       {
         file: "precos",

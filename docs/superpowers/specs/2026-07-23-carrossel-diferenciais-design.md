@@ -22,10 +22,12 @@ movimento da página — outro vídeo seria excessivo (decisão do Pedro).
   dos cards de Atendimento: luz natural, grading sutil nos azuis/verdes da marca.
 - **Gestão de telas nas cenas** (variedade + anti-AI-slop): telas legíveis geradas
   por IA são o maior risco de "cara de IA". Agilidade (01) tem tela protagonista
-  (celular, ângulo oblíquo); Eficiência (02) tem celular de face para o leitor do
-  e-gate — **tela oculta**, o gesto é o protagonista (revisão 2026-07-23: a cena
-  original do corredor de vidro foi reprovada pelo Pedro — grip mão-bilhete falhou
-  em 2 modelos — e o conceito colidia com o slide 01: mesmo objeto, POV e ambiente);
+  (celular, ângulo oblíquo); Eficiência (02) também mostra tela de celular (boarding
+  pass com QR), mas em história, pose, ângulo e ambiente claramente distintos do 01 —
+  gesto de validação no e-gate, contexto ancorado pela aeromoça ao fundo (decisão do
+  Pedro: repetir o objeto celular é aceitável desde que o contexto mude com clareza;
+  revisão 2026-07-23/24 — a cena original do corredor de vidro foi reprovada: grip
+  mão-bilhete falhou em 2 modelos e o conceito colidia com o slide 01);
   Preços e condições (03) tem tela coadjuvante
   (tablet, fora de foco); Soluções operacionais (04) fica **sem tela visível**.
   Se após gerar o conjunto parecer repetitivo em telas, regenerar o que precisar
@@ -37,7 +39,7 @@ movimento da página — outro vídeo seria excessivo (decisão do Pedro).
 |---|---|---|---|
 | 1 | Flavinha (capa) | `flavinha.png` preparada pelo Pedro no Photoshop (crop horizontal ~4:3 com fundo estendido, já na proporção do painel). Foto real, nada é gerado | `— FLAVINHA SALLES · GESTORA` |
 | 2 | Agilidade no atendimento | Close-up: mão de viajante segurando smartphone com conversa de confirmação da viagem, saguão de aeroporto desfocado ao fundo, luz natural. Resposta chegando na hora, em movimento. Sem rosto — quem dá rosto ao atendimento é a Flavinha. Tela em ângulo oblíquo, sem close frontal de UI | `— 01 · AGILIDADE NO ATENDIMENTO` |
-| 3 | Eficiência nos processos | **(v2, 2026-07-23)** O momento em que o processo funciona: close lateral na altura do leitor do e-gate, mão pousando o celular na horizontal com a tela voltada para o vidro, luz verde de validação acendendo, portas do e-gate e corredor desfocados ao fundo, tons azuis, sem rosto. A UI não aparece — o protagonista é o gesto e a luz verde | `— 02 · EFICIÊNCIA NOS PROCESSOS DE VIAGENS` |
+| 3 | Eficiência nos processos | **(v3 aprovada, 2026-07-24)** O momento em que o processo funciona: POV sobre o ombro do viajante de terno no e-gate, celular vertical com o cartão de embarque digital (QR) visível a caminho do leitor de luz verde no primeiro plano; aeromoça uniformizada desfocada ao fundo ancora o contexto de embarque sem roubar a cena | `— 02 · EFICIÊNCIA NOS PROCESSOS DE VIAGENS` |
 | 4 | Melhores preços e condições | Close elegante sobre a mesa da agência: mãos de agente apresentando opções de tarifas num tablet ao cliente, corte fechado sem rostos, papel e cartão corporativo na cena. Negociação sem clichê (proibido: moedas, calculadora, aperto de mão). Tela do tablet em ângulo e fora de foco | `— 03 · MELHORES PREÇOS E CONDIÇÕES DE PAGAMENTO` |
 | 5 | Soluções operacionais | O bastidor da operação, **sem tela visível**: laptop de perfil/de costas, headset em primeiro plano, mãos e contexto de trabalho, agente desfocado ao fundo. Ecoa os chips reais da seção Operacional (self booking, relatórios, centro de custo) | `— 04 · SOLUÇÕES OPERACIONAIS` |
 
