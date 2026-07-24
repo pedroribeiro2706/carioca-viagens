@@ -244,7 +244,8 @@ Prompts reformulados em fraseado positivo (regra do playbook §8.2 — nunca nom
 | Arquivo | Estágio | Modelo | Params | Custo | Data | Origem (URL Higgsfield) |
 |---|---|---|---|---|---|---|
 | agilidade-master.png | intermediário (gerado) | gpt_image_2 | 4:3 · medium · 2k · 2336×1744 | 3 cr | 2026-07-23 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260723_153808_764b21ac-43bb-4d71-89a3-f05f5b0f38cb.png |
-| **agilidade-master-pt.png** | **MASTER aprovado** | gpt_image_2 + Photoshop (Pedro) | 2336×1744 · nome do passageiro trocado por nome brasileiro | 0 cr (edição manual) | 2026-07-23 | derivado de agilidade-master.png |
+| agilidade-master-pt.png | intermediário (superado pela -02) | gpt_image_2 + Photoshop (Pedro) | 2336×1744 · nome do passageiro trocado por nome brasileiro | 0 cr (edição manual) | 2026-07-23 | derivado de agilidade-master.png |
+| **agilidade-master-pt-02.png** | **MASTER aprovado** | gpt_image_2 + Photoshop (Pedro) | 2336×1744 · ajuste adicional do Pedro no teste do preview | 0 cr (edição manual) | 2026-07-24 | derivado de agilidade-master-pt.png |
 | eficiencia-master.png | intermediário (mão atravessava o bilhete — defeito apontado pelo Pedro, crop em `references/diferenciais/detalhe-mao-01.png`) | gpt_image_2 | 4:3 · medium · 2k · 2336×1744 | 3 cr | 2026-07-23 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260723_155429_63f746e5-91c3-4501-b041-a94407abcd25.png |
 | eficiencia-master-v2.jpeg | **REPROVADO** — tentativa de correção cirúrgica da mão | nano_banana_pro | 4:3 · 2k · 2400×1792 · ref=eficiencia-master.png · padrão "Change ONLY" | 2 cr | 2026-07-23 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260723_161617_b2da3c1d-8853-48a2-b9e9-d090ffed2a6b.jpeg |
 

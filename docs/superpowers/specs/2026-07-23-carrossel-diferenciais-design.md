@@ -56,9 +56,11 @@ swipe decente + thresholds + loop é trabalho não trivial propenso a bug.
 
 **Comportamento:**
 
-- Deslizamento horizontal, loop infinito, autoavanço a cada 5 s (timer próprio).
+- Deslizamento horizontal, loop infinito, autoavanço a cada 3 s (timer próprio;
+  era 5 s no design original — reduzido a pedido do Pedro em 2026-07-24, no teste
+  manual do preview).
 - Hover pausa o autoplay enquanto durar. Interação manual (seta, bolinha, swipe)
-  reinicia o contador de 5 s do zero — o autoplay continua depois; nenhuma
+  reinicia o contador de 3 s do zero — o autoplay continua depois; nenhuma
   interação o desliga em definitivo.
 - `prefers-reduced-motion`: autoplay desligado, troca instantânea sem animação.
 - Teclado: ← / → com foco no painel. Acessibilidade de carrossel:

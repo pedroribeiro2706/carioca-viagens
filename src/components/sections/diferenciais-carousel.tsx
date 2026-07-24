@@ -22,10 +22,10 @@ const SLIDE_SRC: Record<string, string> = {
   operacional: operacionalImg,
 }
 
-const AUTOPLAY_MS = 5000
+const AUTOPLAY_MS = 3000
 
 /**
- * Autoplay de 5s com pausa em hover e reinício do contador em interação
+ * Autoplay de 3s com pausa em hover e reinício do contador em interação
  * manual. Sob prefers-reduced-motion não há autoplay e a troca é instantânea
  * (duration 0 no Embla).
  */
