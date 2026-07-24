@@ -134,7 +134,9 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       ref={carouselRef}
-      className="overflow-hidden"
+      // h-full local: o viewport do Embla precisa herdar a altura do painel
+      // para slides em object-cover (default do shadcn não tem altura própria)
+      className="h-full overflow-hidden"
       data-slot="carousel-content"
     >
       <div
