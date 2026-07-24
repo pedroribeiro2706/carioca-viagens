@@ -926,14 +926,34 @@ RECEPTIVO" existe também na Band — âncora confiável é
 `[aria-roledescription="carrossel"]` (único) + `[data-slot="carousel-legend"]`
 (adicionado ao componente para isso).
 
-**Pendência pequena:** `references/diferenciais/` está untracked (previews de
-banco de imagem com marca d'água usados como referência de composição) —
-recomendação: adicionar ao `.gitignore`, não commitar material de terceiros.
-Decisão do Pedro pendente.
+~~Pendência: `references/diferenciais/` untracked~~ — **resolvida**: adicionada ao
+`.gitignore` (decisão do Pedro, 2026-07-24 — previews de stock são material de
+terceiros, referência de composição apenas).
 
-### Backlog do projeto
+### Sessão encerrada em 2026-07-24 — COMEÇAR AQUI na próxima sessão
 
-- **Sincronizar slide ativo do carrossel ↔ item da lista de Diferenciais** (o
-  item da lista acende quando o slide correspondente está ativo) — ideia do
-  brainstorming de 2026-07-23, candidata à etapa GSAP. Não implementar junto com
-  o carrossel.
+Working tree limpo, tudo em produção. **Prioridade 1 do backlog abaixo
+(responsividade) começa com CONVERSA, não com código**: o Pedro notou no celular
+dele elementos mal posicionados e quer discutir caso a caso antes de ajustar.
+Abrir a sessão pedindo a ele os pontos que anotou (quais elementos, em qual
+tela), reproduzir cada um em viewport mobile (Playwright/preview) e só então
+propor correções. Regras do projeto: `/frontend-design` antes de mexer em UI;
+`superpowers:brainstorming` antes de features novas (itens 2, 4 e 5).
+
+### Backlog do projeto — priorizado pelo Pedro (2026-07-24)
+
+1. **Responsividade** — elementos mal posicionados no celular do Pedro;
+   conversar antes de ajustar (ver ponto de retomada acima).
+2. **Sofisticações GSAP** — micro animações e interações elegantes em títulos,
+   textos e cards (skill `gsap` + regras de motion do CLAUDE.md: sutil, com
+   propósito, `prefers-reduced-motion`).
+3. **Sincronizar slide ativo do carrossel ↔ item da lista de Diferenciais** (o
+   item da lista acende quando o slide correspondente está ativo) — ideia do
+   brainstorming de 2026-07-23.
+4. **Flip-card nos cards** (Atendimento) — verso com conteúdo A DECIDIR com o
+   Pedro antes de implementar.
+5. **Finalizar o vídeo da Hero** — falta a Cena 1 da sequência (em stand-by
+   desde a primeira entrega; estado detalhado no §18 e no MANIFEST) e avaliar
+   trilha musical de fundo.
+6. **Ajustar a animação da Band.**
+7. **Simplificar a trajetória do avião e do pin point vetoriais.**

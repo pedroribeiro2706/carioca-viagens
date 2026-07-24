@@ -30,6 +30,10 @@ temp/
 # ficam só no disco como memória do processo, fora do git.
 references/historico/
 
+# previews de banco de imagem com marca d'água (material de terceiros) usados
+# só como referência de composição — não commitar.
+references/diferenciais/
+
 # mídia gerada (Higgsfield) — 1,8 GB de masters, fora do git.
 # O MANIFEST.md fica versionado: é a proveniência (modelo, params, custo, URL de origem),
 # e as URLs permitem rebaixar qualquer asset. Os assets otimizados que o site usa
