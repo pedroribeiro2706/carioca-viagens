@@ -1,7 +1,7 @@
 import { Clock, CreditCard, type LucideIcon, Plane, Settings } from "lucide-react"
-import type { CSSProperties } from "react"
 
 import { WrapWide } from "@/components/layout/container"
+import { DiferenciaisCarousel } from "@/components/sections/diferenciais-carousel"
 import { Chip } from "@/components/ui/chip"
 import { CornerGuides } from "@/components/ui/corner-guides"
 import { Eyebrow } from "@/components/ui/eyebrow"
@@ -12,14 +12,6 @@ const ICONS: Record<string, LucideIcon> = {
   plane: Plane,
   creditCard: CreditCard,
   settings: Settings,
-}
-
-const mediaBackground: CSSProperties = {
-  backgroundImage: [
-    "linear-gradient(160deg, color-mix(in srgb, var(--color-carioca-blue) 85%, transparent), color-mix(in srgb, var(--color-carioca-green) 70%, transparent))",
-    "repeating-linear-gradient(0deg, color-mix(in srgb, var(--color-off-white) 8%, transparent) 0 1px, transparent 1px 64px)",
-    "repeating-linear-gradient(90deg, color-mix(in srgb, var(--color-off-white) 8%, transparent) 0 1px, transparent 1px 64px)",
-  ].join(", "),
 }
 
 function Diferenciais() {
@@ -50,22 +42,15 @@ function Diferenciais() {
             })}
           </div>
         </div>
-        <div
-          className="relative h-[260px] overflow-hidden rounded-[3px] tablet:h-full tablet:min-h-[340px]"
-          style={mediaBackground}
-        >
+        <div className="relative h-[260px] overflow-hidden rounded-[3px] tablet:h-full tablet:min-h-[340px]">
+          <DiferenciaisCarousel />
           <CornerGuides />
           <Chip
             variant="on-dark"
-            className="absolute top-5 right-5 border-off-white/55 bg-ink/32 text-off-white"
+            className="pointer-events-none absolute top-5 right-5 border-off-white/55 bg-ink/32 text-off-white"
           >
             {diferenciais.mediaChip}
           </Chip>
-          <span className="absolute right-5 bottom-5 left-5 font-mono text-[0.66rem] tracking-[0.08em] text-off-white/85 uppercase">
-            {diferenciais.mediaNote[0]}
-            <br />
-            {diferenciais.mediaNote[1]}
-          </span>
         </div>
       </WrapWide>
     </section>

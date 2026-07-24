@@ -54,7 +54,33 @@ export const content = {
       { icon: "settings", label: "Soluções operacionais" },
     ],
     mediaChip: "— Corporativo · Lazer · Receptivo",
-    mediaNote: ["— atendimento em movimento", "placeholder de imagem/vídeo"],
+    slides: [
+      {
+        file: "flavinha",
+        legend: "— FLAVINHA SALLES · GESTORA",
+        alt: "Flavinha Salles, gestora da Carioca Viagens",
+      },
+      {
+        file: "agilidade",
+        legend: "— 01 · AGILIDADE NO ATENDIMENTO",
+        alt: "Mão de viajante segurando smartphone com confirmação de viagem em saguão de aeroporto",
+      },
+      {
+        file: "eficiencia",
+        legend: "— 02 · EFICIÊNCIA NOS PROCESSOS DE VIAGENS",
+        alt: "Viajante de terno aproximando o celular com o cartão de embarque digital do leitor do portão, com aeromoça ao fundo",
+      },
+      {
+        file: "precos",
+        legend: "— 03 · MELHORES PREÇOS E CONDIÇÕES DE PAGAMENTO",
+        alt: "Mãos de agente apresentando opções de tarifas num tablet sobre a mesa da agência",
+      },
+      {
+        file: "operacional",
+        legend: "— 04 · SOLUÇÕES OPERACIONAIS",
+        alt: "Bastidor da operação da agência com headset em primeiro plano e equipe ao fundo",
+      },
+    ],
   },
   atendimento: {
     eyebrow: "— Atendimento",
