@@ -244,6 +244,15 @@ Prompts reformulados em fraseado positivo (regra do playbook §8.2 — nunca nom
 | eficiencia-egate-master.png | superado — e-gate v2, close lateral (Pedro: realismo excelente, mas camiseta casual e contexto ilegível — "poderia ser qualquer coisa") | nano_banana_pro | 4:3 · 2k · 2400×1792 | 2 cr | 2026-07-23 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260723_235420_db6e0cba-6fae-4ab0-933b-cffff79fa4f4.png |
 | eficiencia-egate-master-v3.png | intermediário (gerado) — e-gate v3: POV sobre o ombro, terno, tela do boarding pass visível, aeromoça desfocada ao fundo | nano_banana_pro | 4:3 · 2k · 2400×1792 | 2 cr | 2026-07-24 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260724_103303_c364549f-2211-40a5-bc43-b63ea95790e0.png |
 | **eficiencia-egate-master-v3b.png** | **MASTER aprovado** | nano_banana_pro + Photoshop (Pedro) | 2400×1792 · pequena edição do Pedro sobre a v3 | 0 cr (edição manual) | 2026-07-24 | derivado de eficiencia-egate-master-v3.png |
+| precos-master.png | intermediário (Pedro: cartão de crédito datado, borrão da tela = AI slop com DOF inconsistente, mesa/janela residenciais) | nano_banana_pro | 4:3 · 2k · 2400×1792 | 2 cr | 2026-07-24 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260724_130427_cf724814-46b4-458b-b799-de1e0f79b597.png |
+| precos-master-v2.png | intermediário — mesa corporativa, escritório de vidro, tela em foco, passaporte brasileiro, "DESTINO: PARIS" (Pedro: tablet "colado" na mão, sem pistas de contato) | nano_banana_pro | 4:3 · 2k · 2400×1792 · ref=precos-master.png | 2 cr | 2026-07-24 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260724_134618_0e2e2219-9677-446f-8625-901299de942a.png |
+| precos-master-v3.png | intermediário — grounding do tablet (reflexo dos dedos no vidro + sombras de contato); efeito colateral: pseudo-texto da tela re-rolado | nano_banana_pro | 4:3 · 2k · 2400×1792 · ref=precos-master-v2.png · padrão "Change ONLY" | 2 cr | 2026-07-24 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260724_183707_116f18ee-7948-4923-8a1b-35ce76e2880d.png |
+| **precos-master-v3b.png** | **MASTER aprovado** | nano_banana_pro + Photoshop (Pedro) | 2400×1792 · pequeno ajuste do Pedro sobre a v3 | 0 cr (edição manual) | 2026-07-24 | derivado de precos-master-v3.png |
+
+Aprendizado (grounding): pedir só sombras/reflexos de contato via "Change ONLY" **funcionou** para o
+grounding em si (reflexo dos dedos no vidro + sombra no bezel), mas o modelo re-rolou o pseudo-texto
+da tela mesmo instruído a preservá-lo — texto de UI nunca sobrevive intacto a um re-render do
+nano_banana_pro. Elemento de tela que importa = travar via Photoshop depois.
 
 Pós-morte da v2 (corredor): o diff mostrou mudança concentrada na região mão/bilhete e cena/rosto
 preservados, mas **o grip continuou anatomicamente errado** (dedos atravessando o cartão) —
