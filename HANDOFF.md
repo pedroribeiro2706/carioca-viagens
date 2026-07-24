@@ -887,6 +887,50 @@ marca agora renderiza). As 4 logos de Clientes estão íntegras em produção.
 
 Sessão encerrada em 2026-07-23 (manhã) com working tree limpo e tudo no GitHub.
 
+## 23. Sessão 2026-07-23/24 — carrossel de Diferenciais EXECUTADO e PUBLICADO
+
+O plano de 10 tasks foi executado por inteiro e o carrossel está em produção
+(push `8097e05`, deploy Vercel ● Ready em 14s, sonda de autoplay confirmada
+contra https://carioca-viagens.vercel.app).
+
+**Assets (24 cr gastos · saldo ~793,75):** os 5 masters aprovados vivem em
+`design/assets/diferenciais/` (raiz = só versões escolhidas; superadas em `old/`;
+PSDs do Pedro em `psd/`); WebPs otimizadas (15–76 KB) em `src/assets/diferenciais/`.
+Toda proveniência e os pós-mortes de cada reprovação estão no `MANIFEST.md`.
+Todos os masters gerados receberam edição manual do Pedro no Photoshop (nome
+brasileiro no chat, branding Carioca no boarding pass e no app de tarifas, logo
+tom-sobre-tom no laptop, ajustes finos) — o fluxo IA-gera + humano-lapida foi o
+padrão da sessão.
+
+**Decisões de design tomadas na execução (spec atualizado):** o slide de
+Eficiência foi **redesenhado** — a cena do corredor de vidro foi reprovada (grip
+mão-bilhete falhou em gpt_image_2 e na correção cirúrgica do nano_banana_pro;
+conceito colidia com o slide de Agilidade) e virou o "momento do bip" no e-gate,
+POV sobre o ombro com aeromoça ao fundo. Autoplay reduzido de 5s para **3s**
+(pedido do Pedro no teste manual). Estratégia de modelos dividida documentada no
+playbook: `gpt_image_2` para tela/texto em destaque · `nano_banana_pro` (2 cr,
+desbloqueado no Plus) para cena fotorrealista sem texto protagonista.
+
+**Código:** `diferenciais-carousel.tsx` (autoplay com timer próprio, pausa em
+hover, reinício em interação, reduced-motion sem autoplay), slides em
+`content.ts`, painel de `diferenciais.tsx` sem mudança de tamanho (chip com
+`pointer-events-none` + CornerGuides por cima). O `carousel.tsx` do shadcn levou
+2 edições locais deliberadas: remoção dos `CarouselPrevious/Next` default (usavam
+prop `size` inexistente no Button do projeto) e `h-full` no div viewport do Embla
+(sem isso a imagem em `object-cover` não preenche o painel de 260px no mobile).
+
+**Verificação (5 sondas Playwright, todas passando):** autoplay avança · hover
+pausa · seta avança · bolinha navega · reduced-motion desliga autoplay.
+**Armadilha de seletor descoberta:** o texto do chip "CORPORATIVO · LAZER ·
+RECEPTIVO" existe também na Band — âncora confiável é
+`[aria-roledescription="carrossel"]` (único) + `[data-slot="carousel-legend"]`
+(adicionado ao componente para isso).
+
+**Pendência pequena:** `references/diferenciais/` está untracked (previews de
+banco de imagem com marca d'água usados como referência de composição) —
+recomendação: adicionar ao `.gitignore`, não commitar material de terceiros.
+Decisão do Pedro pendente.
+
 ### Backlog do projeto
 
 - **Sincronizar slide ativo do carrossel ↔ item da lista de Diferenciais** (o
