@@ -229,6 +229,13 @@ a informação estava só na conversa, e a sessão perdeu tempo redescobrindo.
 
 ## diferenciais/ — carrossel da seção Diferenciais (2026-07-23)
 
+**Reorganização (2026-07-24, pedido do Pedro):** versões superadas movidas para `diferenciais/old/`
+(nomes inalterados — as entradas das tabelas abaixo que citam esses arquivos leem-se como `old/...`).
+Na raiz da pasta ficam só os masters escolhidos (`agilidade-master-pt.png`,
+`eficiencia-egate-master-v3b.png`, `precos-master-v3b.png`, `operacional-master-v2.png`),
+`flavinha.png`, o logo ativo (`logo-carioca-viagens-laptop-02.png`) e os PSDs de trabalho do Pedro
+(PSDs nunca são movidos — camadas vinculadas por caminho, precedente do hero/photoshop/).
+
 5 slides: foto real da Flavinha (preparada pelo Pedro, nada gerado) + 4 imagens geradas, uma por
 diferencial. Spec: `docs/superpowers/specs/2026-07-23-carrossel-diferenciais-design.md`. Geradas
 em **4:3 · medium · 2k** (`gpt_image_2`, mesmo modelo dos masters da Hero — mesma família visual).
@@ -248,6 +255,16 @@ Prompts reformulados em fraseado positivo (regra do playbook §8.2 — nunca nom
 | precos-master-v2.png | intermediário — mesa corporativa, escritório de vidro, tela em foco, passaporte brasileiro, "DESTINO: PARIS" (Pedro: tablet "colado" na mão, sem pistas de contato) | nano_banana_pro | 4:3 · 2k · 2400×1792 · ref=precos-master.png | 2 cr | 2026-07-24 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260724_134618_0e2e2219-9677-446f-8625-901299de942a.png |
 | precos-master-v3.png | intermediário — grounding do tablet (reflexo dos dedos no vidro + sombras de contato); efeito colateral: pseudo-texto da tela re-rolado | nano_banana_pro | 4:3 · 2k · 2400×1792 · ref=precos-master-v2.png · padrão "Change ONLY" | 2 cr | 2026-07-24 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260724_183707_116f18ee-7948-4923-8a1b-35ce76e2880d.png |
 | **precos-master-v3b.png** | **MASTER aprovado** | nano_banana_pro + Photoshop (Pedro) | 2400×1792 · pequeno ajuste do Pedro sobre a v3 | 0 cr (edição manual) | 2026-07-24 | derivado de precos-master-v3.png |
+
+| operacional-master.png | intermediário (logo Apple no laptop — vetado) | nano_banana_pro | 4:3 · 2k · 2400×1792 | 2 cr | 2026-07-24 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260724_191329_488bba05-d17d-4747-8af9-32bcf7980a7f.png |
+| operacional-master-v2.png | intermediário — logo Carioca aplicado pela IA (Pedro: "extremamente artificial", adesivo colorido) + olhar da agente corrigido para a tela | nano_banana_pro | 4:3 · 2k · ref=v1 + logo-carioca-viagens-laptop-02.png | 2 cr | 2026-07-24 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260724_192505_12ffcdbe-04ce-4e34-b643-7d9c57163ab5.png |
+| operacional-master-v3.png | intermediário — logo refeito à mão em tom-sobre-tom gravado no alumínio | Photoshop (Pedro) | 2400×1792 | 0 cr | 2026-07-24 | derivado de v2 |
+| **operacional-master-v4.png** | **MASTER aprovado** — sorriso suave na agente; logo do PS preservado (diff da região: 0,66%) | nano_banana_pro + Photoshop (Pedro) | 4:3 · 2k · ref=v3 · padrão "Change ONLY" | 2 cr | 2026-07-24 | https://d8j0ntlcm91z4.cloudfront.net/user_3CJwBgmLLR9Df0plFps5F9WC5t9/hf_20260724_210507_79bb9183-3313-4524-9c4a-648899d864e9.png |
+
+_Total do grupo diferenciais: **24 cr** (817,75 → ~793,75). Lição do logo: aplicação de logomarca
+em objeto de cena é trabalho de Photoshop humano (tom-sobre-tom, material correto) — a IA aplica
+como adesivo colorido artificial. Edição de expressão em rosto desfocado de fundo: funcionou bem
+(1 tentativa)._
 
 Aprendizado (grounding): pedir só sombras/reflexos de contato via "Change ONLY" **funcionou** para o
 grounding em si (reflexo dos dedos no vidro + sombra no bezel), mas o modelo re-rolou o pseudo-texto
