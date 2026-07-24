@@ -130,7 +130,10 @@ function DiferenciaisCarousel() {
       </button>
 
       {/* Microlegenda do slide ativo — canto inferior esquerdo */}
-      <span className="absolute bottom-5 left-5 font-mono text-[0.66rem] tracking-[0.08em] text-off-white/85 uppercase [text-shadow:0_1px_8px_rgb(12_33_50/0.55)]">
+      <span
+        data-slot="carousel-legend"
+        className="absolute bottom-5 left-5 font-mono text-[0.66rem] tracking-[0.08em] text-off-white/85 uppercase [text-shadow:0_1px_8px_rgb(12_33_50/0.55)]"
+      >
         {slides[current].legend}
       </span>
 
