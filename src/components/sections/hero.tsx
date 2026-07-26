@@ -133,7 +133,9 @@ function Hero() {
       </header>
 
       <div className="relative z-[1] flex flex-1 items-end">
-        <span className="absolute top-9 right-10 z-[1] flex items-center gap-2 rounded-full border border-hair-light bg-ink/40 py-2.5 pr-4 pl-3 font-mono text-[0.68rem] tracking-[0.08em] text-off-white/88 uppercase">
+        {/* Wayfinding de canto: no mobile cai sobre o rosto do vídeo e
+            disputa espaço com o eyebrow — só existe a partir de sm. */}
+        <span className="absolute top-9 right-10 z-[1] flex items-center gap-2 rounded-full border border-hair-light bg-ink/40 py-2.5 pr-4 pl-3 font-mono text-[0.68rem] tracking-[0.08em] text-off-white/88 uppercase max-sm:hidden">
           <MapPin className="size-3.5 text-light-green" />
           {hero.locus}
         </span>
