@@ -161,7 +161,12 @@ function Hero() {
           <p className="mt-6 max-w-[480px] text-[1.15rem] text-off-white/86 max-sm:text-pretty">
             {hero.subtitle}
           </p>
-          <div className="mt-9 flex flex-wrap gap-3.5">
+          {/*
+            No mobile os CTAs empilham; o grid de coluna única (w-fit) faz o
+            track medir o botão mais largo ("Solicite atendimento") e estica
+            o "Fale conosco" à mesma largura — sem largura mágica.
+          */}
+          <div className="mt-9 flex flex-wrap gap-3.5 max-sm:grid max-sm:w-fit">
             <a
               href="#contato"
               className={buttonVariants({ variant: "solid" })}
