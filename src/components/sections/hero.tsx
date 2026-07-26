@@ -91,16 +91,22 @@ function Hero() {
       />
 
       <div className="relative z-[1] border-b border-hair-light bg-ink/35">
+        {/*
+          No mobile a faixa condensa em uma linha: "OPERACIONAL DESDE 1999"
+          à esquerda e o chip RIO · GIG à direita. O nome da agência é
+          redundante com a logo logo abaixo, e os segmentos reaparecem nas
+          seções da página.
+        */}
         <WrapWide className="flex flex-wrap items-center justify-between gap-4 py-[9px] font-mono text-[0.7rem] tracking-[0.08em] text-off-white/82 uppercase">
-          <span className="flex flex-wrap items-center gap-2.5">
-            <span>{hero.utilityLeft}</span>
+          <span className="flex flex-wrap items-center gap-2.5 max-sm:order-last">
+            <span className="max-sm:hidden">{hero.utilityLeft}</span>
             <Chip size="sm">{hero.utilityLeftTag}</Chip>
           </span>
           <span>
             <strong className="font-medium text-light-blue">
               {hero.utilityRightStrong}
-            </strong>{" "}
-            · {hero.utilityRightRest}
+            </strong>
+            <span className="max-sm:hidden"> · {hero.utilityRightRest}</span>
           </span>
         </WrapWide>
       </div>
