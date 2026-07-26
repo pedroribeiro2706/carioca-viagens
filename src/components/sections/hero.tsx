@@ -9,6 +9,7 @@ import { Chip } from "@/components/ui/chip"
 import { Eyebrow } from "@/components/ui/eyebrow"
 import { buttonVariants } from "@/components/ui/button"
 import { content } from "@/lib/content"
+import { cn } from "@/lib/utils"
 
 /**
  * Base institucional atrás da mídia — o gradiente da marca que era o
@@ -111,9 +112,14 @@ function Hero() {
             alt="Carioca Viagens"
             className="w-[200px]"
           />
+          {/*
+            No mobile o header não é fixo e o CTA verde da Hero está na mesma
+            dobra — este botão vira redundância e estoura a largura (era ele o
+            corte na borda direita). Só existe a partir de sm.
+          */}
           <a
             href="#contato"
-            className={buttonVariants({ variant: "outline" })}
+            className={cn(buttonVariants({ variant: "outline" }), "max-sm:hidden")}
           >
             {hero.ctaPrimary}
           </a>
