@@ -23,10 +23,12 @@ const LOGO_SRC: Record<string, string> = {
 function Clientes() {
   const { clientes } = content
 
+  // Cabeçalho centralizado é composição do desktop; no mobile alinha à
+  // esquerda como as demais seções (mesmo ajuste de Atendimento).
   return (
-    <section className="bg-off-white py-[100px] text-center">
+    <section className="bg-off-white py-[100px] text-center max-sm:text-left">
       <WrapWide>
-        <div className="mx-auto mb-12 w-fit max-w-[640px] text-left">
+        <div className="mx-auto mb-12 w-fit max-w-[640px] text-left max-sm:mx-0">
           <Eyebrow>{clientes.eyebrow}</Eyebrow>
           <h2 className="text-left text-[clamp(1.9rem,3.2vw,2.5rem)] font-extrabold">
             {clientes.title}
