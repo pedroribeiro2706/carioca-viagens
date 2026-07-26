@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 function Wrap({ className, ...props }: ComponentPropsWithoutRef<"div">) {
   return (
     <div
-      className={cn("mx-auto w-full max-w-[1180px] px-10", className)}
+      className={cn("mx-auto w-full max-w-[1180px] px-6 md:px-10", className)}
       {...props}
     />
   )
@@ -16,7 +16,7 @@ function Wrap({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 function WrapWide({ className, ...props }: ComponentPropsWithoutRef<"div">) {
   return (
     <div
-      className={cn("mx-auto w-full max-w-[1440px] px-10", className)}
+      className={cn("mx-auto w-full max-w-[1440px] px-6 md:px-10", className)}
       {...props}
     />
   )
