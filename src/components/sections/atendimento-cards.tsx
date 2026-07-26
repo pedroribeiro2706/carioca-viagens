@@ -235,14 +235,18 @@ function AtendimentoCards() {
         className="absolute top-[50px] left-0 hidden h-[265px] w-auto opacity-0 tablet:block [&>svg]:block [&>svg]:h-full [&>svg]:w-auto [&>svg]:overflow-visible"
         dangerouslySetInnerHTML={{ __html: aviaoMarkup }}
       />
-      <Wrap className="relative z-[1] text-center">
-        <div className="mx-auto w-fit text-left">
+      {/*
+        A composição centralizada do cabeçalho é do desktop; no mobile as
+        demais seções alinham à esquerda e esta acompanha (max-sm).
+      */}
+      <Wrap className="relative z-[1] text-center max-sm:text-left">
+        <div className="mx-auto w-fit text-left max-sm:mx-0">
           <Eyebrow>{atendimento.eyebrow}</Eyebrow>
           <h2 className="text-left text-[clamp(1.9rem,3.2vw,2.5rem)] font-extrabold">
             {atendimento.title}
           </h2>
         </div>
-        <p className="mx-auto mt-5 max-w-[620px] text-[1.08rem] text-graphite">
+        <p className="mx-auto mt-5 max-w-[620px] text-[1.08rem] text-graphite max-sm:mx-0">
           {atendimento.intro}
         </p>
         <div className="mt-[60px] grid grid-cols-1 items-stretch gap-[26px] desktop:grid-cols-3">
