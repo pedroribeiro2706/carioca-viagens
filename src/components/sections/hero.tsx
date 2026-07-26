@@ -156,7 +156,9 @@ function Hero() {
               {hero.titleAccent}
             </span>
           </h1>
-          <p className="mt-6 max-w-[480px] text-[1.15rem] text-off-white/86">
+          {/* text-pretty: rebalanceia as quebras para não deixar viúva
+              ("eficiente." sozinha na última linha em ~360px). */}
+          <p className="mt-6 max-w-[480px] text-[1.15rem] text-off-white/86 max-sm:text-pretty">
             {hero.subtitle}
           </p>
           <div className="mt-9 flex flex-wrap gap-3.5">
