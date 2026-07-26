@@ -48,7 +48,7 @@ function Hero() {
 
   return (
     <section
-      className="relative flex min-h-screen flex-col overflow-hidden text-off-white"
+      className="relative flex min-h-svh flex-col overflow-hidden text-off-white"
       style={heroBackground}
     >
       {/*
