@@ -143,7 +143,13 @@ function Hero() {
           <Eyebrow tone="on-dark" className="mb-5">
             {hero.eyebrow}
           </Eyebrow>
-          <h1 className="max-w-[920px] text-[clamp(2.8rem,6.2vw,5.2rem)] leading-[1.03] font-extrabold tracking-[-0.03em] text-off-white">
+          {/*
+            Abaixo de sm o clamp original travava no piso de 2.8rem e
+            "Nossa agência." quebrava em duas linhas (~360px de viewport).
+            A faixa mobile escala por 10.5vw até encostar em 2.8rem no
+            breakpoint — de sm em diante vale a curva original, sem salto.
+          */}
+          <h1 className="max-w-[920px] text-[clamp(2.2rem,10.5vw,2.8rem)] leading-[1.03] font-extrabold tracking-[-0.03em] text-off-white sm:text-[clamp(2.8rem,6.2vw,5.2rem)]">
             {hero.titleLine1}
             <br />
             <span className="font-accent-serif text-light-blue italic">
