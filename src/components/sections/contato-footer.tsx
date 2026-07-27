@@ -23,8 +23,10 @@ function ContatoFooter() {
       className="relative flex min-h-[64vh] items-center text-off-white"
       style={contatoBackground}
     >
-      <WrapWide className="relative z-[1] w-fit py-[100px] pb-12">
-        <div className="mx-auto mb-[60px] w-fit text-left">
+      {/* w-fit centraliza o bloco no desktop; no mobile ocupa a largura
+          toda e o cabeçalho alinha à esquerda como as demais seções. */}
+      <WrapWide className="relative z-[1] w-fit py-[100px] pb-12 max-sm:w-full">
+        <div className="mx-auto mb-[60px] w-fit text-left max-sm:mx-0">
           <Eyebrow tone="on-dark">{contato.eyebrow}</Eyebrow>
           <h2 className="text-left text-[clamp(1.9rem,3.2vw,2.5rem)] font-extrabold text-off-white">
             {contato.title}
