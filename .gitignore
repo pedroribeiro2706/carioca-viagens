@@ -34,6 +34,13 @@ references/historico/
 # só como referência de composição — não commitar.
 references/diferenciais/
 
+# screenshots do aparelho do Pedro (Galaxy A53) usados na sessão de
+# responsividade — evidência de teste, não fonte do projeto.
+references/mobile/
+
+# companion visual do brainstorming (superpowers) — mockups efêmeros de sessão.
+.superpowers/
+
 # mídia gerada (Higgsfield) — 1,8 GB de masters, fora do git.
 # O MANIFEST.md fica versionado: é a proveniência (modelo, params, custo, URL de origem),
 # e as URLs permitem rebaixar qualquer asset. Os assets otimizados que o site usa

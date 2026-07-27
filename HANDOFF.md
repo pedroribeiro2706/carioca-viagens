@@ -1036,3 +1036,104 @@ entrada de títulos/eyebrows, reveal dos cards de Atendimento e dos itens de
 Diferenciais, microinterações de hover — mas a pauta é do brainstorming, não
 desta nota. Itens 3 (sync carrossel↔lista) e 6 (Band, incluindo as duas
 pendências acima) seguem na fila.
+
+## 25. Sessão 2026-07-27 — backlog item 2 (GSAP): brainstorming EM ANDAMENTO
+
+**Estado: brainstorming não concluído.** Nenhuma linha de código de animação foi
+escrita. Working tree contém apenas `.gitignore` (duas entradas novas) e este
+§25 — o código do site está intocado em `46fca6d`.
+
+Handoff escrito de forma preventiva a pedido do Pedro (saída no meio da sessão),
+para que uma próxima sessão retome sem perder contexto.
+
+### Processo em curso (skill `superpowers:brainstorming`)
+
+Checklist da skill, posição atual: passos 1–2 concluídos, **passo 3 (perguntas
+de esclarecimento) em andamento**. Faltam: 4 (abordagens), 5 (apresentar design),
+6 (escrever spec em `docs/superpowers/specs/`), 7 (auto-revisão), 8 (revisão do
+Pedro), 9 (transição para `writing-plans`).
+
+**Hard-gate ativo:** nenhuma skill de implementação pode ser invocada até o
+design ser aprovado. A skill `gsap` entra **só na implementação** — o Pedro
+lembrou disso explicitamente nesta sessão, e o `CLAUDE.md` do projeto confirma
+("only after the layout and content structure are approved"). A única skill que
+o brainstorming pode invocar ao terminar é `writing-plans`.
+
+### Decisões TRAVADAS (todas com o Pedro, nesta ordem)
+
+1. **Objetivo** — motion nas duas frentes: acabamento/percepção de produto caro
+   (entrada de títulos, cards com peso, cadência na descida) **e** resposta ao
+   cursor (hover/press dos cards, CTAs). Não é uma coisa ou outra.
+2. **Cobertura** — base rítmica repetida em todos os cabeçalhos de seção **+ 3
+   acentos** com motion desenhado. Resolve a tensão com a regra anti-slop do
+   `CLAUDE.md` ("evitar scroll-reveal genérico em todas as seções"): a repetição
+   vira linguagem, e só os acentos custam trabalho autoral.
+3. **Os 3 acentos** — Hero (a abertura), Atendimento (os cards),
+   Diferenciais (sync carrossel ↔ lista). **A escolha de Diferenciais absorve o
+   backlog item 3 para dentro desta rodada.**
+4. **Personalidade do movimento — "C / Amplo"**, escolhida em demonstração
+   comparativa no navegador:
+   - distância **44px** · duração **1,0s** · intervalo (stagger) **140ms**
+   - escala **0,965 → 1** · curva **`power4.out`** (`cubic-bezier(.22,1,.36,1)`)
+   - **aplicada de forma UNIFORME em todas as seções.** Testado contra a
+     alternativa "base calibrada + acentos em C cheio" numa simulação de scroll
+     com as 6 seções reais; o Pedro rolou as duas e preferiu o uniforme
+     ("não senti uma diferença drástica, não me incomoda"). Decisão dele, com
+     evidência — não reabrir sem motivo novo.
+5. **Trigger** — **uma vez só**. Cada seção revela na primeira entrada na
+   viewport e fica. Não re-anima ao subir e descer de novo.
+6. **Implementação** — valores de motion como **tokens centralizados** (um único
+   arquivo), para calibrar depois mudando 3 números em vez de caçar animação por
+   componente. Decisão tomada porque a simulação usou moldura de 540px, mais
+   curta que a página real: o efeito acumulado só se prova no site.
+7. **Commits atômicos, um por animação** — mesma disciplina da sessão §24, para
+   permitir `git revert` individual sem derrubar as outras.
+
+### PENDENTE — retomar exatamente aqui
+
+**Acento 1 (Hero) — 3 opções apresentadas, AGUARDANDO a escolha do Pedro.**
+Estrutura real da Hero já mapeada: faixa utilitária → logo + CTA outline → chip
+de sede → eyebrow → `<h1>` em duas partes ("Nossa agência." em Manrope 800 +
+"Sua agência." em Fraunces itálico `light-blue`) → subtítulo → 2 CTAs, tudo
+ancorado embaixo sobre o vídeo. Opções na mesa:
+
+| Opção | Conceito | Custo |
+|---|---|---|
+| **A · Cascata direta** | intervalo constante de cima para baixo; a base aplicada literalmente | ~2,1s; não diz nada específico da marca |
+| **B · A virada** | "Nossa agência." entra, **o movimento para por 0,6s**, e só então "Sua agência." chega — a pausa faz a 2ª linha virar resposta, carregando o argumento da marca | ~2,8s com o CTA invisível — custo real de conversão, ressalva já feita ao Pedro |
+| **C · Chegada / wayfinding** | faixa utilitária entra lateral como painel de aeroporto, a **linha colorida de 3px do rodapé corre da esquerda para a direita** como rota sendo traçada, bloco chega logo atrás; conversa com o avião/pin existentes | ~1,9s, a mais rápida |
+
+Combinação é possível e foi oferecida (o beat do B dentro do ritmo do C).
+
+**Ainda não iniciados:**
+- Acento 2 — cards de Atendimento: reveal com peso + hover/press. Precisa
+  conversar com a trajetória do avião que já cruza a seção, não competir.
+- Acento 3 — Diferenciais: item da lista acende quando o slide correspondente
+  fica ativo (backlog item 3).
+- Microinterações de CTAs/botões (o Pedro pediu explicitamente "algo sutil e
+  elegante" nos CTAs).
+- `prefers-reduced-motion` e comportamento no mobile — **não decididos**.
+- **`design/design.md` §19 (Motion principles) está desatualizado**: marcado
+  `[PROVISÓRIO — nada implementado ainda]`, mas o pin/avião está em produção
+  desde 2026-07-15. Atualizar ao fim desta rodada.
+
+### Companion visual do brainstorming (como retomar)
+
+O Pedro aprovou usar o companion do `superpowers` (navegador) para as perguntas
+visuais, com a condição de reavaliarmos se ficar caro em tokens — **perguntar a
+ele antes de continuar gastando** se a sessão esticar.
+
+- Servidor: `C:\Users\Pedro\.claude\plugins\cache\claude-plugins-official\superpowers\6.2.0\skills\brainstorming\scripts\start-server.sh --project-dir "G:/Pedro/Dev/Clientes/carioca-viagens" --open`
+  (no Windows o script vai para foreground — rodar com `run_in_background: true`).
+- Reiniciar com o **mesmo `--project-dir`** reaproveita a porta e a aba do Pedro
+  reconecta sozinha. Conexão em `.superpowers/brainstorm/<sessão>/state/server-info`.
+- Telas já produzidas (em `.superpowers/brainstorm/45279-1785194673/content/`):
+  `personalidade-motion.html`, `scroll-cadencia.html`, `hero-entrada.html`.
+  **`.superpowers/` está no `.gitignore`** — os arquivos ficam no disco, fora do
+  git. Sobrevivem a desligamento, mas não a um clone novo.
+
+### Estado do repositório
+
+`HEAD` = `origin/main` = `46fca6d`, tudo pushado, deploy Vercel `READY`.
+Modificações desta sessão: `.gitignore` (+ `references/mobile/` — screenshots do
+Galaxy A53 da sessão §24; + `.superpowers/` — mockups do companion) e este §25.
