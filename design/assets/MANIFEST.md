@@ -190,6 +190,32 @@ _Todos 6336×2688. Custo: **12 cr**._
 1920×720 → **6,35:1** · celular 390×844 → **1,10:1 (quase quadrado)**. Nenhum asset serve os dois
 extremos; painel frontal chapado é auto-similar nos dois eixos e por isso tolera qualquer corte.
 
+### band/ — corte mobile de 9 linhas (2026-07-26)
+
+Pedido do Pedro na rodada de responsividade: no celular a faixa de 6 linhas
+(1920×428, ~80px de altura em 360px de viewport) ficava baixinha. O master
+`band/mp4/band-painel-loop-3s.mp4` (1920×1080) contém o painel completo com
+12 linhas — o corte de produção usa só TOKYO→SYDNEY.
+
+Novo corte **`src/assets/band/band-painel-voos-mobile.mp4`** (+ poster
+`.webp` do primeiro quadro): **1920×618, y=268**, 9 linhas
+(TOKYO→MEXICO CITY), junção a junção. Processo reproduzível sem retrabalho
+de mídia:
+
+1. Offset do corte de produção localizado no master por template matching
+   (erro médio 2,7 — mesmo material, timeline alinhada): y=268.
+2. Primeira tentativa +3 linhas por aritmética (428/6×9 = 642px) vazou o
+   topo de CAIRO: o passo das linhas encurta na base do painel (lente).
+3. Junção real abaixo de MEXICO CITY medida por perfil de brilho: y=885 →
+   altura 617 → 618 (par, exigência do yuv420).
+4. ffmpeg (via pip `imageio-ffmpeg`): `crop=1920:618:0:268`, libx264
+   crf 18, sem áudio, faststart. Loop costurado preservado (corte espacial
+   não toca a timeline).
+
+`media-band.tsx` escolhe a versão por `matchMedia` (< 640px), com
+renderização condicional para cada aparelho baixar só a mídia que exibe.
+Desktop segue com o corte de 6 linhas, inalterado.
+
 ---
 
 ## ⚠️ REORGANIZAÇÃO DE PASTAS (2026-07-21)
