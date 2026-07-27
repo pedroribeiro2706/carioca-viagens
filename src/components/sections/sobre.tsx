@@ -65,9 +65,12 @@ function Sobre() {
       />
       <Wrap className="relative z-[1] max-w-[980px]">
         <div className="grid grid-cols-1 gap-7 tablet:grid-cols-[64px_1fr]">
+          {/* Coluna-guia (MapPin + linha tracejada): no empilhado do mobile
+              sobrava só o ícone solto sobre o eyebrow — some abaixo de
+              tablet, como o avião e o pin da trajetória. */}
           <div
             aria-hidden
-            className="mb-4 flex flex-row items-center gap-2 tablet:mb-0 tablet:flex-col tablet:gap-0 tablet:pt-1.5"
+            className="hidden items-center tablet:flex tablet:flex-col tablet:pt-1.5"
           >
             <MapPin className="size-[22px] shrink-0 text-carioca-blue" />
             <div
