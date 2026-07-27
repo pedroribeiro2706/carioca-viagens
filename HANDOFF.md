@@ -662,7 +662,7 @@ Todas as 6 pendências da §19 continuam válidas. A #6 mudou de estado:
    clique no painel da Vercel, só o Pedro pode fazer. Enquanto não for feito, todo deploy exige
    `vercel --prod` manual e merge do PR não publica nada. Esta sessão publicou pela CLI de novo.
 2. Refazer a medição de contraste da Hero quando a Cena 1 entrar (mediana, não média — playbook §8.11).
-3. Band no mobile: 86px de altura em 390px, resolver com recorte dedicado cortado numa junção entre colunas.
+3. ~~Band no mobile: 86px de altura em 390px, resolver com recorte dedicado cortado numa junção entre colunas.~~ — **resolvida em 2026-07-26** (§24): recorte dedicado de 9 linhas cortado junção a junção. Restam dois refinamentos, registrados no backlog (item 6).
 4. Cards viram flip-cards no futuro — por isso o hover atual é só zoom + clareamento.
 5. Cena 1 do saguão entra no reel depois; Parte 2 aguarda veredito visual.
 6. **Arquivos fora do git — estado atualizado em 2026-07-22:** `docs/higgsfield-playbook.md`,
@@ -930,7 +930,7 @@ RECEPTIVO" existe também na Band — âncora confiável é
 `.gitignore` (decisão do Pedro, 2026-07-24 — previews de stock são material de
 terceiros, referência de composição apenas).
 
-### Sessão encerrada em 2026-07-24 — COMEÇAR AQUI na próxima sessão
+### Sessão encerrada em 2026-07-24 (ponto de retomada superado — ver §24)
 
 Working tree limpo, tudo em produção. **Prioridade 1 do backlog abaixo
 (responsividade) começa com CONVERSA, não com código**: o Pedro notou no celular
@@ -957,3 +957,82 @@ propor correções. Regras do projeto: `/frontend-design` antes de mexer em UI;
    trilha musical de fundo.
 6. **Ajustar a animação da Band.**
 7. **Simplificar a trajetória do avião e do pin point vetoriais.**
+
+## 24. Sessão 2026-07-26 — responsividade mobile EXECUTADA e PUBLICADA
+
+Backlog item 1 (responsividade) **concluído e validado pelo Pedro no aparelho**
+(Galaxy A53, Chrome e Edge). 12 commits atômicos — um por ajuste, para rollback
+individual (`git revert <hash>` + push = deploy do estado revertido) — todos
+verificados via Playwright em 360px e 412px antes de cada push. Fluxo acordado
+com o Pedro: commit → push → deploy Vercel → teste no aparelho (LAN/túnel
+descartados por fragilidade; o teste acontece no ambiente real, com HTTPS).
+
+**Descoberta de calibragem:** o viewport CSS real do A53 é ~360px (não os 412px
+nominais) — testar mobile sempre nos dois valores.
+
+### Os 12 commits
+
+| Commit | Ajuste (todos restritos a mobile; desktop intocado) |
+|---|---|
+| `993aaca` | Hero: CTA "Fale conosco" do header oculto (< sm) — era o corte na borda direita; redundante com o CTA verde da mesma dobra |
+| `9ce4768` | Hero: `min-h-screen` → `min-h-svh` — barra inferior do Edge cobria o "Solicite atendimento"; svh mede a área garantidamente visível |
+| `9037fc4` | Hero: faixa utilitária em 1 linha ("OPERACIONAL DESDE 1999" + chip RIO·GIG; nome da agência e segmentos ocultos — redundantes) |
+| `44e879d` | Hero: chip "SEDE — FLAMENGO, RJ" oculto |
+| `97a6de6` | Containers: padding lateral 40px → 24px (< md, todas as seções) |
+| `057b77b` | Hero: título com escala fluida (`clamp(2.2rem,10.5vw,2.8rem)` < sm) — "Nossa agência." em 1 linha em 360px; curva encosta na original no breakpoint |
+| `579548d` | Hero: subtítulo sem viúva (`max-sm:text-pretty` — "operação eficiente." juntas na última linha) |
+| `2ce32a2` | Atendimento: cabeçalho à esquerda (< sm; composição centralizada é do desktop) |
+| `85ace32` | Clientes: cabeçalho à esquerda (< sm) |
+| `5c04cef` | Hero: CTAs com mesma largura (grid de coluna única `w-fit` — o track mede o botão mais largo; sem largura mágica) |
+| `3c59b5b` | Operacional: cabeçalho à esquerda + espaço fantasma (gap-12 das colunas desktop empilhadas → gap-4) + chips do corporativo encolhem para 1 linha |
+| `292b425` + `b382bf4` | Contato: cabeçalho à esquerda · Sobre: coluna-guia (MapPin) oculta < tablet |
+| `a917fe6` | **Band: corte mobile de 9 linhas** (ver abaixo) |
+
+### Band mobile — o que foi feito e o que ficou
+
+O master `design/assets/band/mp4/band-painel-loop-3s.mp4` (1920×1080) tem o
+painel completo com 12 linhas; a produção usava 6 (TOKYO→SYDNEY, 1920×428).
+Novo corte `src/assets/band/band-painel-voos-mobile.mp4` (1920×618, y=268,
+TOKYO→MEXICO CITY) + poster webp; `media-band.tsx` escolhe por `matchMedia`
+(< 640px) com renderização condicional (cada aparelho baixa só a sua mídia).
+Processo completo (template matching do offset, junção medida por perfil de
+brilho, ffmpeg via pip `imageio-ffmpeg` — não há ffmpeg no sistema) documentado
+no `MANIFEST.md` (seção "corte mobile de 9 linhas").
+
+**Pendências novas da Band (palavras do Pedro, backlog item 6):**
+1. A última linha (MEXICO CITY) está muito encostada na borda de baixo — a
+   altura do clip deve ser um pouco (bem pouco) maior.
+2. Só as 6 primeiras linhas são animadas; as 3 novas (MUMBAI, TORONTO, MEXICO
+   CITY) ficam estáticas enquanto as de cima animam. Hipótese a investigar: a
+   animação split-flap do master só existe na região das linhas originais —
+   pode exigir regeneração de mídia (Higgsfield) ou aceitar como está.
+
+### Aprendizados técnicos da sessão (reutilizáveis)
+
+- **`svh` vs `vh`**: hero full-screen com conteúdo ancorado embaixo usa
+  `min-h-svh`, senão a barra inferior de navegadores mobile cobre os CTAs.
+  Não é verificável no Playwright (sem barras, svh == vh) — prova só no aparelho.
+- **`text-wrap: pretty`** (`text-pretty`): mata viúvas tipográficas sem largura
+  fixa; Chromium/Firefox aplicam, Safari antigo ignora (degradação graciosa).
+- **Botões empilhados com mesma largura**: container `max-sm:grid max-sm:w-fit`
+  — o track único mede o mais largo e estica os demais.
+- **Espaço fantasma em grids empilhados**: gap dimensionado para colunas
+  desktop vira buraco vertical no mobile — usar gap responsivo.
+- **Sondas Playwright**: âncoras de texto colidem (ex.: "Nossos clientes" ⊂
+  "O que nossos clientes buscam?"; "CORPORATIVO·LAZER·RECEPTIVO" existe na Band)
+  — usar `get_by_role("heading", name=..., exact=True)` primeiro. Texto
+  acentuado corrompe via argv do shell — preferir âncoras ASCII.
+- Scripts da sessão (screenshot mobile/seção, extração de quadro de mp4 via
+  media document) ficaram no scratchpad — recriáveis rapidamente se necessário.
+
+### COMEÇAR AQUI na próxima sessão
+
+Working tree limpo, tudo em produção (deploy `READY` do commit `a917fe6` +
+docs). **Próximo: backlog item 2 — Sofisticações GSAP.** Regras: abrir com
+`/superpowers:brainstorming` (obrigatório para feature nova) e `/frontend-design`
+antes de código de UI; motion sutil e com propósito, `prefers-reduced-motion`
+sempre (CLAUDE.md + design.md §motion). Candidatos naturais ao brainstorming:
+entrada de títulos/eyebrows, reveal dos cards de Atendimento e dos itens de
+Diferenciais, microinterações de hover — mas a pauta é do brainstorming, não
+desta nota. Itens 3 (sync carrossel↔lista) e 6 (Band, incluindo as duas
+pendências acima) seguem na fila.
