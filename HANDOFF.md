@@ -1112,9 +1112,29 @@ ancorado embaixo sobre o vídeo. Opções na mesa:
 
 Combinação é possível e foi oferecida (o beat do B dentro do ritmo do C).
 
-**Acento 2 (cards de Atendimento) — 3 opções de reveal apresentadas, AGUARDANDO
-resposta.** O Pedro avisou que ia sair; a tela ficou no ar sem resposta. Grade
-real do card já mapeada (`aspect-square`, `grid-rows-[27fr_10fr_20fr_3fr_40fr]`:
+**Acento 2 (cards de Atendimento) — QUASE FECHADO. O Pedro está entre B e C e
+declarou que "tende para C". Falta só responder a última tela.**
+
+O que ele disse: gostou dos dois gestos, e **rebateu com razão a ressalva que eu
+tinha feito** sobre C competir com o avião. Argumento dele, correto e que fica
+valendo como princípio: **o avião é scroll-linked** (avança e recua conforme o
+scroll, sem ritmo próprio) e **a foto preenchendo é entrada** (acontece uma vez,
+~0,9s) — são camadas temporais diferentes, não competem. A ressalva original
+era conservadora demais.
+
+Diante disso, foi proposta uma **combinação** e ela é a pergunta em aberto —
+tela `cards-reveal-v2.html`, servida e AGUARDANDO resposta:
+
+| Opção | O que faz |
+|---|---|
+| **C sozinho** | card sobe, foto preenche de baixo para cima. Um gesto forte por card, leitura limpa |
+| **C + B** | as réguas correm **logo antes** da foto subir (0,46s vs 0,5s), engrossadas durante o traço. Os dois gestos operam em escalas diferentes — régua é detalhe fino, foto é massa — e amarram os cards à linha de rota da Hero. Risco: dois movimentos por card × três cards pode ler como ocupado demais |
+
+Nas duas, o card sobe igual e a foto preenche igual; a **única** diferença é a
+régua correr ou não. Se o Pedro não responder, o default seguro é **C sozinho**
+(foi a tendência declarada dele) — mas confirmar antes de escrever a spec.
+
+Grade real do card já mapeada (`aspect-square`, `grid-rows-[27fr_10fr_20fr_3fr_40fr]`:
 ícone+micro / título em 2 linhas com réguas / index + desc + seta `ArrowUpRight`
 / zona de foto 2,5:1). Opções:
 
@@ -1137,12 +1157,29 @@ sob `motion-safe:` e `group-hover:`. Candidatos ainda não tratados: a seta
 `ArrowUpRight` (52px, deslocamento diagonal), lift/sombra do card inteiro.
 
 **Ainda não iniciados:**
-- Acento 3 — Diferenciais: item da lista acende quando o slide correspondente
-  fica ativo (backlog item 3). **Levantamento técnico já feito** (ver abaixo) —
-  falta só a decisão de design.
-- Microinterações de CTAs/botões (o Pedro pediu explicitamente "algo sutil e
-  elegante" nos CTAs).
-- `prefers-reduced-motion` e comportamento no mobile — **não decididos**.
+- Acento 3 — Diferenciais: **DECIDIDO e pronto para a spec.** O item da lista
+  acende quando o slide correspondente fica ativo; **no slide da Flavinha
+  (índice 0) nenhum item fica aceso** — palavras do Pedro: "só ativa quando
+  estiver realmente no slide correto". Levantamento técnico completo abaixo.
+- Microinterações de CTAs/botões — o Pedro pediu "algo sutil e elegante" e
+  confirmou que quer **ver opções**: "assim que você as tiver, pode me mostrar".
+  **Nada foi produzido ainda** — é o próximo material a preparar. Base atual:
+  `src/components/ui/button.tsx` (42 linhas) já tem 4 ocorrências de
+  `transition`/`hover` em CSS puro; partir dele, não do zero.
+- **Mobile — DECIDIDO: implementar rodando igual ao desktop**, testar no
+  aparelho e só então avaliar. Palavras do Pedro: "a princípio gostaria de ver
+  como é que ele funciona rodando igual. Se não ficar bom, a gente pode discutir
+  sobre reduzir ou ainda não rodar, mas acho que é necessário testar". Testar em
+  **360px e 412px** (a calibragem do Galaxy A53 descoberta na §24).
+- **`prefers-reduced-motion` — PENDENTE, mas o Pedro já foi orientado.** Ele não
+  sabia o que era e pediu explicação; foi explicado que é configuração do SO
+  (Windows: Efeitos de animação · Android: Remover animações · iOS: Reduzir
+  movimento), usada sobretudo por pessoas com **sensibilidade vestibular**, para
+  quem movimento na tela causa tontura/náusea de fato. Também foi registrado que
+  **o projeto já trata isso em três lugares** (posição estática do avião/pin,
+  autoplay do carrossel desligado, zoom da foto no hover sob `motion-safe:`).
+  A decisão que falta: com o motion novo, ou **tudo aparece parado e pronto**
+  (padrão do mercado, mais seguro) ou **fade suave sem deslocamento**.
 - **`design/design.md` §19 (Motion principles) está desatualizado**: marcado
   `[PROVISÓRIO — nada implementado ainda]`, mas o pin/avião está em produção
   desde 2026-07-15. Atualizar ao fim desta rodada.
@@ -1194,19 +1231,57 @@ ele antes de continuar gastando** se a sessão esticar.
   (no Windows o script vai para foreground — rodar com `run_in_background: true`).
 - Reiniciar com o **mesmo `--project-dir`** reaproveita a porta e a aba do Pedro
   reconecta sozinha. Conexão em `.superpowers/brainstorm/<sessão>/state/server-info`.
-- **O servidor foi encerrado pelo sistema no fim desta sessão** (processo de
-  background morto). Basta relançar com o mesmo `--project-dir`: a porta é
-  reaproveitada e a aba do Pedro reconecta sozinha. Ao relançar, empurrar de
-  novo a última tela (`cards-reveal.html`) — o servidor serve o arquivo mais
-  recente por data de modificação.
-- Telas já produzidas (em `.superpowers/brainstorm/45279-1785194673/content/`):
+- **O servidor já morreu uma vez** (processo de background encerrado pelo
+  sistema) e foi relançado com sucesso. A aba do Pedro mostra "Companion
+  paused" quando isso acontece e **reconecta sozinha** assim que o servidor
+  volta — ele não precisa de URL nova.
+- **Armadilha descoberta ao relançar:** o mesmo `--project-dir` reaproveita
+  **porta e chave** (a URL continua idêntica), mas cria uma **pasta de sessão
+  nova** e serve só o conteúdo dela. Sessão antiga: `45279-1785194673`
+  (marcada com `state/server-stopped`); sessão atual: **`53862-1785278528`**.
+  Ao relançar é preciso **copiar as telas** da pasta antiga para o
+  `content/` da nova e dar `touch` na que deve aparecer — o servidor serve o
+  arquivo de **mtime mais recente**, e uma cópia em lote deixa todas com o
+  mesmo horário.
+- Telas em `.superpowers/brainstorm/53862-1785278528/content/`:
   `personalidade-motion.html`, `scroll-cadencia.html`, `hero-entrada.html`,
-  `cards-reveal.html`.
+  `cards-reveal.html` e **`cards-reveal-v2.html` (a que está no ar,
+  aguardando resposta)**.
   **`.superpowers/` está no `.gitignore`** — os arquivos ficam no disco, fora do
   git. Sobrevivem a desligamento, mas não a um clone novo.
 
 ### Estado do repositório
 
-`HEAD` = `origin/main` = `46fca6d`, tudo pushado, deploy Vercel `READY`.
-Modificações desta sessão: `.gitignore` (+ `references/mobile/` — screenshots do
-Galaxy A53 da sessão §24; + `.superpowers/` — mockups do companion) e este §25.
+**O código do site está intocado desde `46fca6d`** (deploy Vercel `READY`).
+Todos os commits desta sessão são `docs:` — nenhuma linha de `src/` foi alterada.
+`HEAD` = `origin/main`, working tree limpo, tudo pushado.
+
+| Commit | Conteúdo |
+|---|---|
+| `2e649b2` | handoff preventivo §25 + `.gitignore` (`references/mobile/`, `.superpowers/`) |
+| `ca9082c` | Hero decidida + acento 2 apresentado + aprendizados do código |
+| `860fd1f` | levantamento técnico do acento 3 |
+| (este) | decisões de Diferenciais e mobile, orientação de `prefers-reduced-motion`, comparação C × C+B |
+
+### COMEÇAR AQUI na próxima sessão
+
+Retomar o brainstorming exatamente no passo 3 do checklist (perguntas). **Não
+pular para código: o hard-gate continua ativo e a spec ainda não existe.**
+
+1. **Relançar o companion** (ver armadilha da pasta de sessão acima) e reempurrar
+   `cards-reveal-v2.html`. A aba do Pedro reconecta sozinha.
+2. **Fechar o acento 2**: C sozinho ou C+B. Tendência declarada: C.
+3. **Preparar e mostrar as opções de microinteração dos CTAs** — é o único item
+   em que o Pedro está esperando material meu, não decisão dele.
+4. **Fechar `prefers-reduced-motion`**: tudo parado, ou fade sem deslocamento.
+   Ele já entende o que é; falta escolher.
+5. Com isso, **todas as decisões estarão tomadas** → escrever a spec em
+   `docs/superpowers/specs/2026-07-XX-gsap-sofisticacoes-design.md`, auto-revisar,
+   submeter ao Pedro, e só então invocar `writing-plans` (e, na implementação, a
+   skill `gsap`).
+
+**Contexto de relacionamento útil:** o Pedro pediu explicitamente para ser
+avisado se o companion visual começar a ficar caro em tokens — ele autorizou o
+gasto, mas quer reavaliar durante o processo. Ele também **discordou de uma
+ressalva minha com argumento técnico correto** (o conflito avião × foto): vale
+apresentar ressalvas como hipóteses a testar, não como veredito.
