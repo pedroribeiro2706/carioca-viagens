@@ -1138,13 +1138,51 @@ sob `motion-safe:` e `group-hover:`. Candidatos ainda não tratados: a seta
 
 **Ainda não iniciados:**
 - Acento 3 — Diferenciais: item da lista acende quando o slide correspondente
-  fica ativo (backlog item 3).
+  fica ativo (backlog item 3). **Levantamento técnico já feito** (ver abaixo) —
+  falta só a decisão de design.
 - Microinterações de CTAs/botões (o Pedro pediu explicitamente "algo sutil e
   elegante" nos CTAs).
 - `prefers-reduced-motion` e comportamento no mobile — **não decididos**.
 - **`design/design.md` §19 (Motion principles) está desatualizado**: marcado
   `[PROVISÓRIO — nada implementado ainda]`, mas o pin/avião está em produção
   desde 2026-07-15. Atualizar ao fim desta rodada.
+
+### Levantamento técnico do acento 3 (feito nesta sessão, sem decisão de design)
+
+Executado enquanto o brainstorming estava bloqueado aguardando o Pedro. **Nenhuma
+decisão de design foi tomada aqui** — só verificação do que o código já permite.
+
+**O pareamento lista ↔ slides já existe no conteúdo** (`src/lib/content.ts`):
+a lista tem **4 itens**, o carrossel tem **5 slides**, e as legendas dos slides
+2–5 já numeram `01 ·` a `04 ·` com os mesmos rótulos dos itens.
+
+| Lista (`diferenciais.items`) | Slide (`diferenciais.slides`) |
+|---|---|
+| — | `— FLAVINHA SALLES · GESTORA` |
+| Agilidade no atendimento | `— 01 · AGILIDADE NO ATENDIMENTO` |
+| Eficiência nos processos de viagens | `— 02 · EFICIÊNCIA NOS PROCESSOS DE VIAGENS` |
+| Melhores preços e condições de pagamento | `— 03 · MELHORES PREÇOS E CONDIÇÕES DE PAGAMENTO` |
+| Soluções operacionais | `— 04 · SOLUÇÕES OPERACIONAIS` |
+
+Sync é **1:1 com offset de 1**: `item[i]` ↔ `slide[i+1]`. O slide da Flavinha não
+tem item correspondente — **única decisão de design pendente do acento 3**: o que
+a lista faz enquanto ele está ativo (nenhum item aceso? estado neutro?).
+
+**Custo de implementação: baixo.** `diferenciais-carousel.tsx` **já rastreia o
+índice ativo** (`const [current, setCurrent] = useState(0)` alimentado por
+`api.on("select", () => setCurrent(api.selectedScrollSnap()))`) e já usa esse
+valor para trocar a legenda. Falta apenas elevar esse estado ao pai
+(`diferenciais.tsx`, que renderiza lista e carrossel lado a lado no mesmo grid)
+via callback ou lift state. O caminho inverso (clicar no item da lista e ir ao
+slide) sai de graça com `api.scrollTo(i + 1)`.
+
+**Precedentes a respeitar nesse componente:** autoplay de 3s com `setInterval`,
+pausa no hover (`hoveringRef`) e **`prefers-reduced-motion` já tratado** —
+quando o usuário pede movimento reduzido, o autoplay não inicia. Seguir o mesmo
+padrão no resto do motion desta rodada em vez de inventar outro.
+
+**Dependências já instaladas** (não precisa adicionar nada): `gsap@^3.15.0`,
+`@gsap/react@^2.1.2`, `embla-carousel-react@^8.6.0`.
 
 ### Companion visual do brainstorming (como retomar)
 
