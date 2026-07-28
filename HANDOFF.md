@@ -1091,7 +1091,14 @@ o brainstorming pode invocar ao terminar é `writing-plans`.
 
 ### PENDENTE — retomar exatamente aqui
 
-**Acento 1 (Hero) — 3 opções apresentadas, AGUARDANDO a escolha do Pedro.**
+**Acento 1 (Hero) — DECIDIDO: opção C, "Chegada / wayfinding".** Escolhida pelo
+Pedro após ver as três animadas ("gostei muito"). É a única das três que estende
+o vocabulário do avião/pin já em produção em vez de criar um segundo idioma de
+movimento. Comportamento: faixa utilitária entra lateralmente (painel de
+aeroporto) → logo → **linha colorida de 3px do rodapé corre da esquerda para a
+direita** (`scaleX 0→1`, `transform-origin: left`, ~1,4s) como rota sendo
+traçada → bloco principal (eyebrow, h1, subtítulo, CTAs) chega logo atrás em
+intervalo curto (~80ms entre elementos). Total ~1,9s.
 Estrutura real da Hero já mapeada: faixa utilitária → logo + CTA outline → chip
 de sede → eyebrow → `<h1>` em duas partes ("Nossa agência." em Manrope 800 +
 "Sua agência." em Fraunces itálico `light-blue`) → subtítulo → 2 CTAs, tudo
@@ -1105,9 +1112,31 @@ ancorado embaixo sobre o vídeo. Opções na mesa:
 
 Combinação é possível e foi oferecida (o beat do B dentro do ritmo do C).
 
+**Acento 2 (cards de Atendimento) — 3 opções de reveal apresentadas, AGUARDANDO
+resposta.** O Pedro avisou que ia sair; a tela ficou no ar sem resposta. Grade
+real do card já mapeada (`aspect-square`, `grid-rows-[27fr_10fr_20fr_3fr_40fr]`:
+ícone+micro / título em 2 linhas com réguas / index + desc + seta `ArrowUpRight`
+/ zona de foto 2,5:1). Opções:
+
+| Opção | Conceito | Ressalva |
+|---|---|---|
+| **A · Só o stagger** | a base C, 140ms entre cards, nada além | a seção não ganha nada que a distinga — e é um acento justamente por merecer mais |
+| **B · Réguas desenhando** ← recomendada | o card assenta e as réguas horizontais **correm da esquerda para a direita**, mesmo gesto da linha de rota da Hero C: vira sistema | réguas têm **0,75px** — discreto num monitor comum. Proposta: engrossar durante o traço e devolver à espessura no fim |
+| **C · A foto preenche** | zona de imagem sobe de baixo para cima depois da moldura; valoriza a mídia do Higgsfield | é a mais chamativa e a que mais compete com o avião que cruza a seção no mesmo instante |
+
+**Aprendizado do código a respeitar aqui** (comentário em
+`atendimento-cards.tsx`): a 1ª versão prendia a escala da foto ao scroll via
+GSAP e **o Pedro não percebia o movimento** — "12% diluídos por centenas de
+pixels de scroll ficam abaixo do limiar". No hover, os mesmos 6% são imediatos e
+legíveis. Princípio: **movimento diluído em scroll longo não é percebido** —
+motion perceptível precisa acontecer num intervalo curto.
+
+**Hover/press já existente nos cards** (não inventar do zero): a foto faz
+`scale(1.06)` em 500ms `ease-out` e há uma lâmina que clareia, tudo em CSS puro
+sob `motion-safe:` e `group-hover:`. Candidatos ainda não tratados: a seta
+`ArrowUpRight` (52px, deslocamento diagonal), lift/sombra do card inteiro.
+
 **Ainda não iniciados:**
-- Acento 2 — cards de Atendimento: reveal com peso + hover/press. Precisa
-  conversar com a trajetória do avião que já cruza a seção, não competir.
 - Acento 3 — Diferenciais: item da lista acende quando o slide correspondente
   fica ativo (backlog item 3).
 - Microinterações de CTAs/botões (o Pedro pediu explicitamente "algo sutil e
@@ -1127,8 +1156,14 @@ ele antes de continuar gastando** se a sessão esticar.
   (no Windows o script vai para foreground — rodar com `run_in_background: true`).
 - Reiniciar com o **mesmo `--project-dir`** reaproveita a porta e a aba do Pedro
   reconecta sozinha. Conexão em `.superpowers/brainstorm/<sessão>/state/server-info`.
+- **O servidor foi encerrado pelo sistema no fim desta sessão** (processo de
+  background morto). Basta relançar com o mesmo `--project-dir`: a porta é
+  reaproveitada e a aba do Pedro reconecta sozinha. Ao relançar, empurrar de
+  novo a última tela (`cards-reveal.html`) — o servidor serve o arquivo mais
+  recente por data de modificação.
 - Telas já produzidas (em `.superpowers/brainstorm/45279-1785194673/content/`):
-  `personalidade-motion.html`, `scroll-cadencia.html`, `hero-entrada.html`.
+  `personalidade-motion.html`, `scroll-cadencia.html`, `hero-entrada.html`,
+  `cards-reveal.html`.
   **`.superpowers/` está no `.gitignore`** — os arquivos ficam no disco, fora do
   git. Sobrevivem a desligamento, mas não a um clone novo.
 
